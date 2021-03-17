@@ -49,7 +49,7 @@ android {
 }
 
 dependencies {
-    implementation(project(path = ":domain"))
+    implementation(project(path = ":data"))
     implementation(Libraries.kotlinStdLib)
     implementation(Libraries.coroutines)
     implementation(Libraries.kotlinxSerialization)
