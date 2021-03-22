@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Minsk GURU</string>
+
+  <!--bottom navigation-->
+    <string name="bottom_navigation_achievements">Achievements</string>
+    <string name="bottom_navigation_places">Places</string>
+    <string name="bottom_navigation_profile">Profile</string>
+</resources>
