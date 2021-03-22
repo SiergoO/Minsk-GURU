@@ -43,6 +43,8 @@ android {
 }
 
 dependencies {
+    implementation(project(path = ":data"))
+    implementation(project(path = ":domain"))
 
     implementation(Libraries.kotlinStdLib)
     implementation(Libraries.ktxCore)
@@ -59,6 +61,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.4")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.4")
+    implementation(Libraries.retrofit)
+    implementation(Libraries.gson)
+    implementation(Libraries.converterGson)
+    implementation(Libraries.okHttp)
 
     koinAndroid()
     glide()

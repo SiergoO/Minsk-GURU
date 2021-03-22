@@ -6,17 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentAchievementsBinding
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AchievementsFragment(private val layout: Int = R.layout.fragment_achievements) : Fragment(layout) {
+class AchievementsFragment(private val layout: Int = R.layout.fragment_achievements) :
+    Fragment(layout) {
 
     private val viewModel: AchievementsViewModel by viewModel()
 
     private var _binding: FragmentAchievementsBinding? = null
     val binding: FragmentAchievementsBinding
         get() = _binding!!
+
+    init {
+        lifecycleScope.launchWhenStarted {
+            withContext(coroutineContext) {
+                val placesObserver = Observer<String> { places ->
+                    binding.test.text = places
+                }
+                viewModel.places.observe(viewLifecycleOwner, placesObserver)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

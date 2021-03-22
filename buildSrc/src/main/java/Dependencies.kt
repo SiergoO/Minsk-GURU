@@ -21,6 +21,10 @@ object Libraries {
         const val cameraX = "1.0.0-beta08"
         const val paging = "2.1.2"
         const val firebaseBom = "26.3.0"
+        const val retrofit = "2.6.0"
+        const val gson = "2.8.5"
+        const val converterGson = "2.5.0"
+        const val okHttp = "3.12.0"
     }
 
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
@@ -40,6 +44,10 @@ object Libraries {
     const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:" +
             Versions.serialization
 
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
+    const val converterGson = "com.squareup.retrofit2:converter-gson:${Versions.converterGson}"
+    const val okHttp = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
 
     private const val fuelPrefix = "com.github.kittinunf.fuel"
 
