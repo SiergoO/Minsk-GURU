@@ -1,10 +1,9 @@
 package com.minsk.guru.ui.achievements
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import android.util.Log
+import androidx.lifecycle.*
 import com.minsk.guru.domain.usecase.places.GetPlacesUseCase
+import kotlinx.coroutines.launch
 
 class AchievementsViewModel(private val getPlacesUseCase: GetPlacesUseCase) : ViewModel() {
 
@@ -12,6 +11,8 @@ class AchievementsViewModel(private val getPlacesUseCase: GetPlacesUseCase) : Vi
 
     init {
         places = liveData { emit(getPlacesUseCase.getPlaces("Музеи").toString()) }
-//      Log.e("PLACES", getPlacesUseCase.getPlaces("Музеи").toString())
+        viewModelScope.launch {
+            Log.e("PLACES", getPlacesUseCase.getPlaces("Музеи").toString())
+        }
     }
 }

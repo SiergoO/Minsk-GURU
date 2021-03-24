@@ -1,8 +1,10 @@
 package com.minsk.guru.data.model
 
+import com.google.gson.annotations.SerializedName
+import com.minsk.guru.domain.model.Geometry
+
 data class NetGeometry(
-    val coordinates: List<Double>,
-    val type: String
+    @field:SerializedName("coordinates") val coordinates: List<Double>,
 )
 
-fun NetGeometry.toDomainModel() = com.minsk.guru.domain.model.Geometry(coordinates, type)
+fun NetGeometry.toDomainModel() = Geometry(coordinates)

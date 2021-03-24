@@ -1,9 +1,11 @@
 package com.minsk.guru.data.model
 
+import com.google.gson.annotations.SerializedName
+import com.minsk.guru.domain.model.Hours
+
 data class NetHours(
-    val availabilities: List<NetAvailability>,
-    val text: String
+    @field:SerializedName("text") val text: String,
+    @field:SerializedName("Availabilities") val availabilities: List<NetAvailability>
 )
 
-fun NetHours.toDomainModel() =
-    com.minsk.guru.domain.model.Hours(availabilities.map { it.toDomainModel() }, text)
+fun NetHours.toDomainModel() = Hours(text, availabilities.map { it.toDomainModel() })
