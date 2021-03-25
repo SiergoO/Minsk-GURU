@@ -1,13 +1,10 @@
 package com.minsk.guru.data.model
 
-data class NetPlaces(
-    val features: List<NetFeature>,
-    val properties: NetPropertiesX,
-    val type: String
+import com.google.gson.annotations.SerializedName
+import com.minsk.guru.domain.model.Places
+
+data class NetPlacesResponse(
+    @field:SerializedName("features") val places: List<NetPlace>,
 )
 
-fun NetPlaces.toDomainModel() = com.minsk.guru.domain.model.Places(
-    features.map { it.toDomainModel() },
-    properties.toDomainModel(),
-    type
-)
+fun NetPlacesResponse.toDomainModel() = Places(places.map { it.toDomainModel() })

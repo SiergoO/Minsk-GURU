@@ -1,8 +1,11 @@
 package com.minsk.guru.data.model
 
+import com.google.gson.annotations.SerializedName
+import com.minsk.guru.domain.model.Category
+
 data class NetCategory(
-    val `class`: String,
-    val name: String
+    @field:SerializedName("class") val `class`: String,
+    @field:SerializedName("name") val name: String
 )
 
-fun NetCategory.toDomainModel() = com.minsk.guru.domain.model.Category(`class`, name)
+fun NetCategory.toDomainModel() = Category(`class`, name)

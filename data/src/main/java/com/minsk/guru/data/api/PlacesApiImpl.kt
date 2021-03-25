@@ -1,5 +1,6 @@
-package com.minsk.guru.data.repository.api
+package com.minsk.guru.data.api
 
+import com.minsk.guru.data.model.toDomainModel
 import com.minsk.guru.domain.api.PlacesApi
 import com.minsk.guru.domain.model.Places
 import kotlinx.coroutines.Dispatchers
@@ -9,12 +10,8 @@ class PlacesApiImpl(private val apiHelper: ApiHelper) : PlacesApi {
 
     override suspend fun getPlaces(
         text: String,
-        type: String,
-        lang: String,
-        ll: String,
-        spn: String,
-        apikey: String
-    ): Places = withContext(Dispatchers.IO) {
-        apiHelper.getPlaces()
+    ): Places =
+        withContext(Dispatchers.IO) {
+            apiHelper.getPlaces(text).toDomainModel()
     }
 }

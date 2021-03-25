@@ -1,10 +1,10 @@
 package com.minsk.guru.data.model
 
+import com.google.gson.annotations.SerializedName
+import com.minsk.guru.domain.model.Properties
+
 data class NetProperties(
-    val companyMetaData: NetCompanyMetaData,
-    val boundedBy: List<List<Double>>,
-    val description: String,
-    val name: String
+    @field:SerializedName("CompanyMetaData") val placeMetaData: NetPlaceMetaData?,
 )
 
-fun NetProperties.toDomainModel() = com.minsk.guru.domain.model.Properties(companyMetaData.toDomainModel(), boundedBy, description, name)
+fun NetProperties.toDomainModel() = Properties(placeMetaData?.toDomainModel())
