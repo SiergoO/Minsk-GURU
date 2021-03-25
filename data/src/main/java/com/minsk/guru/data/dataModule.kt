@@ -2,9 +2,11 @@ package com.minsk.guru.data
 
 import android.app.Application
 import android.content.Context
+import androidx.room.Room
 import com.minsk.guru.data.api.ApiHelper
 import com.minsk.guru.data.api.PlacesApiImpl
 import com.minsk.guru.data.api.YandexPlacesApi
+import com.minsk.guru.data.repository.AppDatabase
 import com.minsk.guru.domain.api.PlacesApi
 import com.minsk.guru.domain.domainModule
 import io.ktor.client.*
@@ -16,8 +18,6 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-private const val BASE_URL = "https://search-maps.yandex.ru"
 
 val dataModule = module(override = true) {
 
@@ -33,10 +33,18 @@ val dataModule = module(override = true) {
 
     single {
         Retrofit.Builder()
-            .baseUrl(BASE_URL) // BuildConfig.BASE_URL
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(YandexPlacesApi::class.java)
+    }
+
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            AppDatabase::class.java,
+            BuildConfig.DATABASE_NAME
+        ).build()
     }
 
     single {

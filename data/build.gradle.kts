@@ -37,10 +37,16 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "DATABASE_NAME", "\"DemoApplicationDatabase\"")
+            buildConfigField("String", "DATABASE_NAME", "\"MinskGuruDatabase\"")
         }
         getByName("debug") {
-            buildConfigField("String", "DATABASE_NAME", "\"DemoApplicationDebugDatabase\"")
+            buildConfigField("String", "DATABASE_NAME", "\"MinskGuruDebugDatabase\"")
+        }
+        getByName("release"){
+            buildConfigField("String", "BASE_URL", "\"https://search-maps.yandex.ru\"")
+        }
+        getByName("debug"){
+            buildConfigField("String", "BASE_URL", "\"https://search-maps.yandex.ru\"")
         }
     }
     buildFeatures {
