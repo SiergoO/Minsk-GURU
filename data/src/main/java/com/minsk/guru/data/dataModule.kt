@@ -2,9 +2,9 @@ package com.minsk.guru.data
 
 import android.app.Application
 import android.content.Context
-import com.minsk.guru.data.repository.api.ApiHelper
-import com.minsk.guru.data.repository.api.PlacesApiImpl
-import com.minsk.guru.data.repository.api.YandexPlacesApi
+import com.minsk.guru.data.api.ApiHelper
+import com.minsk.guru.data.api.PlacesApiImpl
+import com.minsk.guru.data.api.YandexPlacesApi
 import com.minsk.guru.domain.api.PlacesApi
 import com.minsk.guru.domain.domainModule
 import io.ktor.client.*

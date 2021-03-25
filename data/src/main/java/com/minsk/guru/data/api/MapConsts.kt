@@ -1,4 +1,4 @@
-package com.minsk.guru.data.repository.api
+package com.minsk.guru.data.api
 
 object MapConsts {
 

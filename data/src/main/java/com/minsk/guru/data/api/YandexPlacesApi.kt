@@ -1,10 +1,8 @@
-package com.minsk.guru.data.repository.api
+package com.minsk.guru.data.api
 
 import com.minsk.guru.data.model.NetPlacesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
-
-
 
 interface YandexPlacesApi {
 

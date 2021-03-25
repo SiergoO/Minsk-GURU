@@ -1,4 +1,4 @@
-package com.minsk.guru.data.repository.api
+package com.minsk.guru.data.api
 
 import com.minsk.guru.data.model.NetPlacesResponse
 import kotlinx.coroutines.coroutineScope
