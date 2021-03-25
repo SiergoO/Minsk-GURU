@@ -3,9 +3,10 @@ package com.minsk.guru.data.repository.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.minsk.guru.domain.model.*
 
-@Entity(tableName = PlacesEntity.TABLE_NAME)
-data class PlacesEntity(
+@Entity(tableName = LocalPlace.TABLE_NAME)
+data class LocalPlace(
     @PrimaryKey
     @ColumnInfo(name = PLACE_ID)
     val id: String,
@@ -30,3 +31,26 @@ data class PlacesEntity(
         const val PLACE_CATEGORY = "place_category"
     }
 }
+
+fun Place.toLocalPlace() = LocalPlace(
+    properties.PlaceMetaData?.id.toString(),
+    properties.PlaceMetaData?.name ?: "",
+    properties.PlaceMetaData?.address ?: "",
+    properties.PlaceMetaData?.Phones?.joinToString { it.formatted } ?: "",
+    properties.PlaceMetaData?.url ?: "",
+    properties.PlaceMetaData?.Categories?.joinToString { it.name } ?: ""
+)
+
+fun LocalPlace.toDomainPlace() = Place(
+    Geometry(emptyList()), Properties(
+        PlaceMetaData(
+            id,
+            name,
+            address,
+            url,
+            listOf(Phone(phone, "")),
+            listOf(Category("", category)),
+            null
+        )
+    )
+)

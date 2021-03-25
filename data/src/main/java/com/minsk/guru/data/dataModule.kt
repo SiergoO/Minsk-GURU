@@ -7,8 +7,12 @@ import com.minsk.guru.data.api.ApiHelper
 import com.minsk.guru.data.api.PlacesApiImpl
 import com.minsk.guru.data.api.YandexPlacesApi
 import com.minsk.guru.data.repository.AppDatabase
+import com.minsk.guru.data.repository.places.PlacesLocalRepositoryImpl
+import com.minsk.guru.data.repository.places.PlacesRepositoryImpl
 import com.minsk.guru.domain.api.PlacesApi
 import com.minsk.guru.domain.domainModule
+import com.minsk.guru.domain.repository.places.PlacesLocalRepository
+import com.minsk.guru.domain.repository.places.PlacesRepository
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.websocket.*
@@ -28,9 +32,6 @@ val dataModule = module(override = true) {
         )
     }
 
-    single<PlacesApi> { PlacesApiImpl(get()) }
-    single { ApiHelper(get()) }
-
     single {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
@@ -39,6 +40,9 @@ val dataModule = module(override = true) {
             .create(YandexPlacesApi::class.java)
     }
 
+    single<PlacesApi> { PlacesApiImpl(get()) }
+    single { ApiHelper(get()) }
+
     single {
         Room.databaseBuilder(
             androidContext(),
@@ -46,6 +50,10 @@ val dataModule = module(override = true) {
             BuildConfig.DATABASE_NAME
         ).build()
     }
+
+    single { get<AppDatabase>().placesDao() }
+    single<PlacesRepository> { PlacesRepositoryImpl(get(), get()) }
+    single<PlacesLocalRepository> { PlacesLocalRepositoryImpl(get()) }
 
     single {
         HttpClient(OkHttp) {

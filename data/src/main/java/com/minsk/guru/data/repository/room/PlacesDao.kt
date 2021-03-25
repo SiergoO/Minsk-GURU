@@ -9,27 +9,27 @@ import com.minsk.guru.domain.model.Places
 interface PlacesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPlace(place: Place)
+    fun insertPlace(place: LocalPlace)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllPlaces(places: Places)
+    fun insertAllPlaces(places: List<LocalPlace>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updatePlace(place: Place)
+    fun updatePlace(place: LocalPlace)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updatePlaces(places: Places)
+    fun updatePlaces(places: List<LocalPlace>)
 
     @Delete
-    fun deletePlace(place: Place)
+    fun deletePlace(place: LocalPlace)
 
     @Delete
-    fun deleteAllPlaces(places: Places)
+    fun deleteAllPlaces(places: List<LocalPlace>)
 
     @Query("SELECT * FROM places order by place_id")
-    fun loadAllGifs(): DataSource.Factory<Int, Place>
+    suspend fun loadAllPlaces(): List<LocalPlace>
 
     @Query("SELECT * FROM places where place_category LIKE :category order by place_id")
-    fun loadAllGifsByCategory(category: String): DataSource.Factory<Int, Place>
+    suspend fun loadPlacesByCategory(category: String): List<LocalPlace>
 
 }
