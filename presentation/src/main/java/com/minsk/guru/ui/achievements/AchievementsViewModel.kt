@@ -7,10 +7,16 @@ import kotlinx.coroutines.launch
 
 class AchievementsViewModel(private val getPlacesUseCase: GetPlacesUseCase) : ViewModel() {
 
-    var places: LiveData<String> = MutableLiveData<String>()
+    var places: LiveData<String> = MutableLiveData()
 
     init {
-        places = liveData { emit(getPlacesUseCase.getPlaces("Музеи").toString()) }
+        places = liveData {
+            emit(
+                getPlacesUseCase.getPlaces(
+                    "Музеи",
+                ).toString()
+            )
+        }
         viewModelScope.launch {
             Log.e("PLACES", getPlacesUseCase.getPlaces("Музеи").toString())
         }

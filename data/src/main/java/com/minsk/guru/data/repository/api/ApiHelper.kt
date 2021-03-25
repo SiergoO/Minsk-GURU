@@ -1,10 +1,16 @@
 package com.minsk.guru.data.repository.api
 
 import com.minsk.guru.data.model.NetPlacesResponse
-import com.minsk.guru.domain.api.PlacesApi
 import kotlinx.coroutines.coroutineScope
 
-class ApiHelper(private val apiService: PlacesApi) {
+class ApiHelper(private val yandexPlacesApi: YandexPlacesApi) {
 
-    suspend fun getPlaces(): NetPlacesResponse = coroutineScope { apiService.getPlaces("Музеи") }
+    suspend fun getPlaces(
+        text: String,
+        type: String = MapConsts.TYPE,
+        lang: String = MapConsts.LANG,
+        ll: String = MapConsts.LAT_LONG,
+        spn: String = MapConsts.SPN,
+        apikey: String = MapConsts.API_KEY
+    ): NetPlacesResponse = coroutineScope { yandexPlacesApi.getPlaces("Музеи") }
 }

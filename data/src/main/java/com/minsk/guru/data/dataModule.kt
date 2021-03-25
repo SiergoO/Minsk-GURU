@@ -2,13 +2,14 @@ package com.minsk.guru.data
 
 import android.app.Application
 import android.content.Context
+import com.minsk.guru.data.repository.api.ApiHelper
 import com.minsk.guru.data.repository.api.PlacesApiImpl
+import com.minsk.guru.data.repository.api.YandexPlacesApi
 import com.minsk.guru.domain.api.PlacesApi
 import com.minsk.guru.domain.domainModule
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.features.websocket.WebSockets
-import kotlinx.serialization.json.Json
+import io.ktor.client.*
+import io.ktor.client.engine.okhttp.*
+import io.ktor.client.features.websocket.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -28,13 +29,14 @@ val dataModule = module(override = true) {
     }
 
     single<PlacesApi> { PlacesApiImpl(get()) }
+    single { ApiHelper(get()) }
 
     single {
         Retrofit.Builder()
             .baseUrl(BASE_URL) // BuildConfig.BASE_URL
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(PlacesApi::class.java)
+            .create(YandexPlacesApi::class.java)
     }
 
     single {
