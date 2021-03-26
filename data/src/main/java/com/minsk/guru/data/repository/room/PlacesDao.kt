@@ -32,4 +32,6 @@ interface PlacesDao {
     @Query("SELECT * FROM places where place_category LIKE :category order by place_id")
     suspend fun loadPlacesByCategory(category: String): List<LocalPlace>
 
+    @Query("SELECT * FROM places LIMIT 1")
+    suspend fun getAnyPlace():LocalPlace?
 }

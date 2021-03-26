@@ -8,6 +8,7 @@ interface PlacesRepository {
     val localRepository: PlacesLocalRepository
     val placesApi: PlacesApi
 
+    suspend fun isNeedToLoadData(): Boolean
     suspend fun loadAndSave(query: String)
     suspend fun getAll(): List<Place>
     suspend fun getByCategory(category: String): List<Place>

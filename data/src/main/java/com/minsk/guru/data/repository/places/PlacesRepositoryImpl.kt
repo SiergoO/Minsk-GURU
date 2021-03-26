@@ -12,15 +12,17 @@ class PlacesRepositoryImpl(
     override val localRepository: PlacesLocalRepository
 ) : PlacesRepository {
 
+    override suspend fun isNeedToLoadData(): Boolean = localRepository.isDatabaseEmpty()
+
     override suspend fun loadAndSave(query: String) = withContext(Dispatchers.IO) {
         val places: List<Place> = placesApi.getPlaces(query).places
         localRepository.save(places)
     }
 
-    override suspend fun getAll(): List<Place> = withContext(Dispatchers.IO) { localRepository.getAll() }
+    override suspend fun getAll(): List<Place> =
+        withContext(Dispatchers.IO) { localRepository.getAll() }
 
-
-    override suspend fun getByCategory(category: String): List<Place> = withContext(Dispatchers.IO) {
-        localRepository.getByCategory(category) }
+    override suspend fun getByCategory(category: String): List<Place> =
+        withContext(Dispatchers.IO) { localRepository.getByCategory(category) }
 
 }

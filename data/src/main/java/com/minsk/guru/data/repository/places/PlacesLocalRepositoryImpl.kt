@@ -7,9 +7,11 @@ import com.minsk.guru.domain.model.Place
 import com.minsk.guru.domain.repository.places.PlacesLocalRepository
 
 class PlacesLocalRepositoryImpl(private val placesDao: PlacesDao) : PlacesLocalRepository {
-    override suspend fun save(places: List<Place>) {
+
+    override suspend fun isDatabaseEmpty(): Boolean = placesDao.getAnyPlace() == null
+
+    override suspend fun save(places: List<Place>) =
         places.forEach { place -> placesDao.insertPlace(place.toLocalPlace()) }
-    }
 
     override suspend fun getAll(): List<Place> =
         placesDao.loadAllPlaces().map { it.toDomainPlace() }

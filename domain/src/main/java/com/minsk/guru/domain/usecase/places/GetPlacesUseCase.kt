@@ -8,8 +8,9 @@ class GetPlacesUseCase(private val placesRepository: PlacesRepository) {
     suspend fun getPlaces(
         text: String,
     ): List<Place> {
-        placesRepository.loadAndSave(text)
+        if (placesRepository.isNeedToLoadData()) {
+            placesRepository.loadAndSave(text)
+        }
         return placesRepository.getAll()
     }
 }
-
