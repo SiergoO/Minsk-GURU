@@ -1,7 +1,7 @@
 package com.minsk.guru.domain.model
 
 data class Availability(
-    val Intervals: List<Interval>,
+    val Intervals: List<Interval>?,
     val Monday: Boolean?,
     val Tuesday: Boolean?,
     val Wednesday: Boolean?,

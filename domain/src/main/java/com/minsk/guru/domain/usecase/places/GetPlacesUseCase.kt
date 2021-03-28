@@ -6,10 +6,10 @@ import com.minsk.guru.domain.repository.places.PlacesRepository
 class GetPlacesUseCase(private val placesRepository: PlacesRepository) {
 
     suspend fun getPlaces(
-        text: String,
+        categoryNames: List<String>,
     ): List<Place> {
         if (placesRepository.isNeedToLoadData()) {
-            placesRepository.loadAndSave(text)
+            placesRepository.loadAndSave(categoryNames)
         }
         return placesRepository.getAll()
     }

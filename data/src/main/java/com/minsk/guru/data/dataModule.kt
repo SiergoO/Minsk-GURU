@@ -48,7 +48,7 @@ val dataModule = module(override = true) {
             androidContext(),
             AppDatabase::class.java,
             BuildConfig.DATABASE_NAME
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     single { get<AppDatabase>().placesDao() }

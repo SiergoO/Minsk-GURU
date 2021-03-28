@@ -14,8 +14,11 @@ class PlacesRepositoryImpl(
 
     override suspend fun isNeedToLoadData(): Boolean = localRepository.isDatabaseEmpty()
 
-    override suspend fun loadAndSave(query: String) = withContext(Dispatchers.IO) {
-        val places: List<Place> = placesApi.getPlaces(query).places
+    override suspend fun loadAndSave(categoryNames: List<String>) = withContext(Dispatchers.IO) {
+        val places: MutableList<Place> = mutableListOf()
+        for (element in categoryNames) {
+            placesApi.getPlaces(element).places.forEach { places.add(it) }
+        }
         localRepository.save(places)
     }
 

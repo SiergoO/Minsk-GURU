@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.minsk.guru.domain.model.Availability
 
 data class NetAvailability(
-    @field:SerializedName("Intervals") val intervals: List<NetInterval>,
+    @field:SerializedName("Intervals") val intervals: List<NetInterval>?,
     @field:SerializedName("monday") val monday: Boolean?,
     @field:SerializedName("tuesday") val tuesday: Boolean?,
     @field:SerializedName("wednesday") val wednesday: Boolean?,
@@ -16,7 +16,7 @@ data class NetAvailability(
 )
 
 fun NetAvailability.toDomainModel() = Availability(
-    intervals.map { it.toDomainModel() },
+    intervals?.map { it.toDomainModel() },
     monday,
     tuesday,
     wednesday,

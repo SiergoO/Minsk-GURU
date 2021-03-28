@@ -1,9 +1,6 @@
 package com.minsk.guru.data.repository.room
 
-import androidx.paging.DataSource
 import androidx.room.*
-import com.minsk.guru.domain.model.Place
-import com.minsk.guru.domain.model.Places
 
 @Dao
 interface PlacesDao {

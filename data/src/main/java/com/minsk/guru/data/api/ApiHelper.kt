@@ -12,5 +12,5 @@ class ApiHelper(private val yandexPlacesApi: YandexPlacesApi) {
         ll: String = MapConsts.LAT_LONG,
         spn: String = MapConsts.SPN,
         apikey: String = MapConsts.API_KEY
-    ): NetPlacesResponse = coroutineScope { yandexPlacesApi.getPlaces("Музеи") }
+    ): NetPlacesResponse = coroutineScope { yandexPlacesApi.getPlaces(text) }
 }

@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.minsk.guru.data.repository.room.PlacesDao
 import com.minsk.guru.data.repository.room.LocalPlace
 
-@Database(entities = [LocalPlace::class], version = 1)
+@Database(entities = [LocalPlace::class], version = 5)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun placesDao(): PlacesDao
 }
