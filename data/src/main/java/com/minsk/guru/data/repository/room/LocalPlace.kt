@@ -8,39 +8,39 @@ import com.minsk.guru.domain.model.*
 @Entity(tableName = LocalPlace.TABLE_NAME)
 data class LocalPlace(
     @PrimaryKey
-    @ColumnInfo(name = PLACE_ID)
+    @ColumnInfo(name = ID)
     val id: String,
-    @ColumnInfo(name = PLACE_NAME)
+    @ColumnInfo(name = NAME)
     val name: String,
-    @ColumnInfo(name = PLACE_ADDRESS)
+    @ColumnInfo(name = ADDRESS)
     val address: String,
-    @ColumnInfo(name = PLACE_LONGITUDE)
+    @ColumnInfo(name = LONGITUDE)
     val longitude: Double,
-    @ColumnInfo(name = PLACE_LATITUDE)
+    @ColumnInfo(name = LATITUDE)
     val latitude: Double,
-    @ColumnInfo(name = PLACE_OPENING_HOURS)
+    @ColumnInfo(name = OPENING_HOURS)
     val openingHours: String,
-    @ColumnInfo(name = PLACE_PHONE)
+    @ColumnInfo(name = PHONE)
     val phone: String,
-    @ColumnInfo(name = PLACE_URL)
+    @ColumnInfo(name = URL)
     val url: String,
-    @ColumnInfo(name = PLACE_CATEGORY)
+    @ColumnInfo(name = CATEGORY)
     val category: String,
-    @ColumnInfo(name = PLACE_IS_VISITED)
+    @ColumnInfo(name = IS_VISITED)
     val isVisited: Boolean
 ) {
     companion object {
         const val TABLE_NAME = "places"
-        const val PLACE_ID = "place_id"
-        const val PLACE_NAME = "place_name"
-        const val PLACE_ADDRESS = "place_address"
-        const val PLACE_LATITUDE = "place_latitude"
-        const val PLACE_LONGITUDE = "place_longitude"
-        const val PLACE_OPENING_HOURS = "place_opening_hours"
-        const val PLACE_PHONE = "place_phone"
-        const val PLACE_URL = "place_url"
-        const val PLACE_CATEGORY = "place_category"
-        const val PLACE_IS_VISITED = "place_is_visited"
+        const val ID = "place_id"
+        const val NAME = "place_name"
+        const val ADDRESS = "place_address"
+        const val LATITUDE = "place_latitude"
+        const val LONGITUDE = "place_longitude"
+        const val OPENING_HOURS = "place_opening_hours"
+        const val PHONE = "place_phone"
+        const val URL = "place_url"
+        const val CATEGORY = "place_category"
+        const val IS_VISITED = "place_is_visited"
     }
 }
 
