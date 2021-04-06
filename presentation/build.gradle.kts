@@ -58,6 +58,7 @@ dependencies {
     implementation(Libraries.firebaseAnalytics)
     implementation(Libraries.firebaseCrashlytics)
     implementation(Libraries.firebasePerformance)
+    implementation(Libraries.firebaseDatabase)
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.4")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.4")

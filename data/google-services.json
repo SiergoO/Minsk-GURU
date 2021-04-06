@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:32592949700:android:04fd8d4bc5dff5def3b491",
         "android_client_info": {
-          "package_name": "com.minsk.guru"
+          "package_name": "com.minsk.guru.data"
         }
       },
       "oauth_client": [

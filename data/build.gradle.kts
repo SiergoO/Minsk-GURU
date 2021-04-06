@@ -10,6 +10,7 @@ plugins {
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinKapt)
     id(BuildPlugins.serialization)
+    id(BuildPlugins.googleServicesPlugin)
 }
 
 android {
@@ -67,6 +68,7 @@ dependencies {
     implementation(Libraries.gson)
     implementation(Libraries.converterGson)
     implementation(Libraries.okHttp)
+    implementation(Libraries.firebaseDatabase)
     koinAndroid()
     room()
     implementation("io.ktor:ktor-client-websockets:1.5.1")

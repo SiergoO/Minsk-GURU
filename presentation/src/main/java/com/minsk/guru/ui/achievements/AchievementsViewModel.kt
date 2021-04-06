@@ -9,24 +9,10 @@ import com.minsk.guru.domain.usecase.places.GetPlacesUseCase
 class AchievementsViewModel(private val getPlacesUseCase: GetPlacesUseCase) : ViewModel() {
 
     var places: LiveData<String> = MutableLiveData()
-    var placesNames: List<String> = listOf(
-        "Кофейня",
-        "Бар",
-        "Столовая",
-        "Пиццерия",
-        "Суши-бар",
-        "Шаурма",
-        "Ресторан",
-        "Кино",
-        "Музей",
-        "Театр",
-        "Торговый центр",
-        "Парк"
-    )
 
     init {
         places = liveData {
-            emit(getPlacesUseCase.getPlaces(placesNames).toString())
+            emit(getPlacesUseCase.getPlaces().toString())
         }
 //        viewModelScope.launch {
 //            for (i in 0 until (placesNames.size)) {

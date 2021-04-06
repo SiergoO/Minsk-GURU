@@ -1,31 +1,36 @@
 package com.minsk.guru.data.repository.places
 
-import com.minsk.guru.domain.api.PlacesApi
-import com.minsk.guru.domain.model.Place
-import com.minsk.guru.domain.repository.places.PlacesLocalRepository
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.minsk.guru.domain.model.Places
 import com.minsk.guru.domain.repository.places.PlacesRepository
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class PlacesRepositoryImpl(
-    override val placesApi: PlacesApi,
-    override val localRepository: PlacesLocalRepository
-) : PlacesRepository {
+class PlacesRepositoryImpl() : PlacesRepository {
 
-    override suspend fun isNeedToLoadData(): Boolean = localRepository.isDatabaseEmpty()
+    override suspend fun getAll(): Places =
+        withContext(Dispatchers.IO) {
+            val placesDeferred = CompletableDeferred<Places>()
+            val db = FirebaseDatabase.getInstance().reference
+            db.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
 
-    override suspend fun loadAndSave(categoryNames: List<String>) = withContext(Dispatchers.IO) {
-        val places: MutableList<Place> = mutableListOf()
-        for (element in categoryNames) {
-            placesApi.getPlaces(element).places.forEach { places.add(it) }
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val places = snapshot.getValue(Places::class.java) ?: Places(mutableListOf())
+//                    val function = { place: Place -> place.category.split(", ") }
+//                    val categories = places.places
+//                        .flatMap(function).toSet().joinToString("\n")
+                    placesDeferred.complete(places)
+                }
+            })
+            return@withContext placesDeferred.await()
         }
-        localRepository.save(places)
-    }
 
-    override suspend fun getAll(): List<Place> =
-        withContext(Dispatchers.IO) { localRepository.getAll() }
-
-    override suspend fun getByCategory(category: String): List<Place> =
-        withContext(Dispatchers.IO) { localRepository.getByCategory(category) }
 
 }
