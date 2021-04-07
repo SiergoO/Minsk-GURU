@@ -1,2 +1,2 @@
-include ':data', ':domain', ':presentation'
+include ':app'
 rootProject.name = "Minsk GURU"
