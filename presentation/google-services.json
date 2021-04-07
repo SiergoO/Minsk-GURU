@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "32592949700",
+    "firebase_url": "https://minsk-guru-default-rtdb.firebaseio.com",
+    "project_id": "minsk-guru",
+    "storage_bucket": "minsk-guru.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32592949700:android:04fd8d4bc5dff5def3b491",
+        "android_client_info": {
+          "package_name": "com.minsk.guru"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32592949700-grvivcdjvt09d7hd1vu3p611foka3hhh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.minsk.guru",
+            "certificate_hash": "302303e913bc128d26df9d7aa455b749a706600e"
+          }
+        },
+        {
+          "client_id": "32592949700-2dr054ss7q2r3r79gf9hquv5g3grop65.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR9h61rdpz8VyjcA-WNhCa5A-Eo1mNLIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32592949700-2dr054ss7q2r3r79gf9hquv5g3grop65.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
