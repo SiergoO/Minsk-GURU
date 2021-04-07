@@ -2,8 +2,10 @@ package com.minsk.guru.data
 
 import android.app.Application
 import android.content.Context
+import com.minsk.guru.data.repository.places.AchievementsRepositoryImpl
 import com.minsk.guru.data.repository.places.PlacesRepositoryImpl
 import com.minsk.guru.domain.domainModule
+import com.minsk.guru.domain.repository.places.AchievementsRepository
 import com.minsk.guru.domain.repository.places.PlacesRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -23,6 +25,7 @@ val dataModule = module(override = true) {
     }
 
     single<PlacesRepository> { PlacesRepositoryImpl() }
+    single<AchievementsRepository> { AchievementsRepositoryImpl() }
 
     single {
         HttpClient(OkHttp) {

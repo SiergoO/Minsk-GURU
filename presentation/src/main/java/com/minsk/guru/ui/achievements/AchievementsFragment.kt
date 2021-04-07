@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentAchievementsBinding
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,7 +26,7 @@ class AchievementsFragment(private val layout: Int = R.layout.fragment_achieveme
         lifecycleScope.launchWhenStarted {
             withContext(coroutineContext) {
                 val placesObserver = Observer<String> { places ->
-                    binding.test.text = places
+                    binding.tvAchievements.text = places
                 }
                 viewModel.places.observe(viewLifecycleOwner, placesObserver)
             }

@@ -4,7 +4,6 @@ class Place {
     var address: String = ""
     var category: String = ""
     var id: String = ""
-    var is_visited: Boolean = false
     var latitude: Double = 0.0
     var longitude: Double = 0.0
     var name: String = ""
@@ -18,7 +17,6 @@ class Place {
         address: String,
         category: String,
         id: String,
-        is_visited: Boolean,
         latitude: Double,
         longitude: Double,
         name: String,
@@ -29,7 +27,6 @@ class Place {
         this.address = address
         this.category = category
         this.id = id
-        this.is_visited = is_visited
         this.latitude = latitude
         this.longitude = longitude
         this.name = name

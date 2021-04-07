@@ -6,7 +6,6 @@ data class NetPlace(
     val address: String,
     val category: String,
     val id: String,
-    val is_visited: Boolean,
     val latitude: Double,
     val longitude: Double,
     val name: String,
@@ -16,4 +15,4 @@ data class NetPlace(
 )
 
 fun NetPlace.toDomainModel() = Place(address,
-    category, id, is_visited, latitude, longitude, name, opening_hours, phone, url)
+    category, id, latitude, longitude, name, opening_hours, phone, url)

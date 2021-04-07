@@ -19,7 +19,7 @@ import org.koin.dsl.module
 val presentationModule = module {
 
     viewModel { AchievementsViewModel(get()) }
-    viewModel { PlacesViewModel() }
+    viewModel { PlacesViewModel(get()) }
     viewModel { ProfileViewModel() }
 }
 

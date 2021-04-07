@@ -10,7 +10,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class PlacesRepositoryImpl() : PlacesRepository {
+class PlacesRepositoryImpl : PlacesRepository {
 
     override suspend fun getAll(): Places =
         withContext(Dispatchers.IO) {
@@ -22,15 +22,11 @@ class PlacesRepositoryImpl() : PlacesRepository {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val places = snapshot.getValue(Places::class.java) ?: Places(mutableListOf())
-//                    val function = { place: Place -> place.category.split(", ") }
-//                    val categories = places.places
-//                        .flatMap(function).toSet().joinToString("\n")
+                    val places = snapshot.getValue(Places::class.java)
+                        ?: Places(mutableListOf())
                     placesDeferred.complete(places)
                 }
             })
             return@withContext placesDeferred.await()
         }
-
-
 }
