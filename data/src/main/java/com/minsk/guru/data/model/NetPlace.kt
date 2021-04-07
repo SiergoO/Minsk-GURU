@@ -1,11 +1,18 @@
 package com.minsk.guru.data.model
 
-import com.google.gson.annotations.SerializedName
 import com.minsk.guru.domain.model.Place
 
 data class NetPlace(
-    @field:SerializedName("geometry") val geometry: NetGeometry,
-    @field:SerializedName("properties") val properties: NetProperties
+    val address: String,
+    val category: String,
+    val id: String,
+    val latitude: Double,
+    val longitude: Double,
+    val name: String,
+    val opening_hours: String,
+    val phone: String,
+    val url: String
 )
 
-fun NetPlace.toDomainModel() = Place(geometry.toDomainModel(), properties.toDomainModel())
+fun NetPlace.toDomainModel() = Place(address,
+    category, id, latitude, longitude, name, opening_hours, phone, url)

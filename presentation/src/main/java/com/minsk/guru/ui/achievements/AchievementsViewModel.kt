@@ -1,24 +1,18 @@
 package com.minsk.guru.ui.achievements
 
-import android.util.Log
-import androidx.lifecycle.*
-import com.minsk.guru.domain.usecase.places.GetPlacesUseCase
-import kotlinx.coroutines.launch
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import com.minsk.guru.domain.usecase.places.GetAchievementsUseCase
 
-class AchievementsViewModel(private val getPlacesUseCase: GetPlacesUseCase) : ViewModel() {
+class AchievementsViewModel(private val getAchievementsUseCase: GetAchievementsUseCase) : ViewModel() {
 
     var places: LiveData<String> = MutableLiveData()
 
     init {
         places = liveData {
-            emit(
-                getPlacesUseCase.getPlaces(
-                    "Музеи",
-                ).toString()
-            )
-        }
-        viewModelScope.launch {
-            Log.e("PLACES", getPlacesUseCase.getPlaces("Музеи").toString())
+            emit(getAchievementsUseCase.getAchievements().toString())
         }
     }
 }

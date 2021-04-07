@@ -2,22 +2,18 @@ package com.minsk.guru.data
 
 import android.app.Application
 import android.content.Context
-import com.minsk.guru.data.api.ApiHelper
-import com.minsk.guru.data.api.PlacesApiImpl
-import com.minsk.guru.data.api.YandexPlacesApi
-import com.minsk.guru.domain.api.PlacesApi
+import com.minsk.guru.data.repository.places.AchievementsRepositoryImpl
+import com.minsk.guru.data.repository.places.PlacesRepositoryImpl
 import com.minsk.guru.domain.domainModule
-import io.ktor.client.*
-import io.ktor.client.engine.okhttp.*
-import io.ktor.client.features.websocket.*
+import com.minsk.guru.domain.repository.places.AchievementsRepository
+import com.minsk.guru.domain.repository.places.PlacesRepository
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.features.websocket.WebSockets
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-
-private const val BASE_URL = "https://search-maps.yandex.ru"
 
 val dataModule = module(override = true) {
 
@@ -28,16 +24,8 @@ val dataModule = module(override = true) {
         )
     }
 
-    single<PlacesApi> { PlacesApiImpl(get()) }
-    single { ApiHelper(get()) }
-
-    single {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL) // BuildConfig.BASE_URL
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(YandexPlacesApi::class.java)
-    }
+    single<PlacesRepository> { PlacesRepositoryImpl() }
+    single<AchievementsRepository> { AchievementsRepositoryImpl() }
 
     single {
         HttpClient(OkHttp) {
