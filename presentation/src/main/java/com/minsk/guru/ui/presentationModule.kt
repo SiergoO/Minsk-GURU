@@ -4,6 +4,7 @@ import android.app.Application
 import com.minsk.guru.data.dataModule
 import com.minsk.guru.domain.domainModule
 import com.minsk.guru.ui.achievements.AchievementsViewModel
+import com.minsk.guru.ui.auth.AuthViewModel
 import com.minsk.guru.ui.places.PlacesViewModel
 import com.minsk.guru.ui.profile.ProfileViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,6 +19,7 @@ import org.koin.dsl.module
 @ExperimentalCoroutinesApi
 val presentationModule = module {
 
+    viewModel { AuthViewModel(get()) }
     viewModel { AchievementsViewModel(get()) }
     viewModel { PlacesViewModel(get()) }
     viewModel { ProfileViewModel() }

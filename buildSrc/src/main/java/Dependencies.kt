@@ -22,6 +22,7 @@ object Libraries {
         const val paging = "2.1.2"
         const val firebaseDatabase = "19.2.1"
         const val firebaseBom = "26.3.0"
+        const val firebaseAuth = "20.0.3"
         const val retrofit = "2.6.0"
         const val gson = "2.8.5"
         const val converterGson = "2.5.0"
@@ -29,6 +30,7 @@ object Libraries {
     }
 
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
+    const val firebaseAuth = "com.google.firebase:firebase-auth:${Versions.firebaseAuth}"
     const val firebaseDatabase = "com.google.firebase:firebase-database:${Versions.firebaseDatabase}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"

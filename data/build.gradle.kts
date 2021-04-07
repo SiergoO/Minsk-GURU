@@ -69,6 +69,7 @@ dependencies {
     implementation(Libraries.converterGson)
     implementation(Libraries.okHttp)
     implementation(Libraries.firebaseDatabase)
+    implementation(Libraries.firebaseAuth)
     koinAndroid()
     room()
     implementation("io.ktor:ktor-client-websockets:1.5.1")

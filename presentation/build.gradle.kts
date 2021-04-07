@@ -49,7 +49,6 @@ dependencies {
     implementation(Libraries.kotlinStdLib)
     implementation(Libraries.ktxCore)
     implementation(Libraries.fragmentKtx)
-    implementation("com.android.support:support-compat:28.0.0")
 
     implementation(Libraries.coroutines)
     implementation(Libraries.coroutinesAndroid)
@@ -59,6 +58,7 @@ dependencies {
     implementation(Libraries.firebaseCrashlytics)
     implementation(Libraries.firebasePerformance)
     implementation(Libraries.firebaseDatabase)
+    implementation(Libraries.firebaseAuth)
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.4")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.4")

@@ -1,4 +1,4 @@
-package com.minsk.guru.domain.repository.places
+package com.minsk.guru.domain.repository.achievements
 
 import com.minsk.guru.domain.model.Achievements
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/achievementsFragment">
+    app:startDestination="@id/authFragment">
 
     <fragment
         android:id="@+id/achievementsFragment"
@@ -22,5 +22,11 @@
         android:name="com.minsk.guru.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile"/>
+
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.minsk.guru.ui.auth.AuthFragment"
+        android:label="AuthFragment"
+        tools:layout="@layout/fragment_auth"/>
 
 </navigation>
