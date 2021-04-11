@@ -1,6 +1,7 @@
 package com.minsk.guru.ui.auth
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -19,7 +20,4 @@ class AuthActivity: BaseActivity() {
             R.layout.activity_auth
         )
     }
-
-    private fun getNavigationController(): NavController =
-        binding.authNavHostFragment.findNavController()
 }

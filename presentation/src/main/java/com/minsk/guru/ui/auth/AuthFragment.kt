@@ -1,5 +1,7 @@
 package com.minsk.guru.ui.auth
 
+import android.app.ActivityOptions.makeSceneTransitionAnimation
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentAuthBinding
+import com.minsk.guru.ui.home.HomeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AuthFragment(private val layout: Int = R.layout.fragment_auth) : Fragment(layout) {
@@ -32,21 +35,25 @@ class AuthFragment(private val layout: Int = R.layout.fragment_auth) : Fragment(
             false
         )
         binding.lifecycleOwner = this
+        viewModel.exceptionLiveData.observe(viewLifecycleOwner) {
+            if (it.isNullOrEmpty()) {
+                val intent = Intent(activity, HomeActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.signIn.setOnClickListener {
 
-            if (viewModel.signIn(
-                    binding.email.text.toString(),
-                    binding.password.text.toString()
-                ).isCompleted) {
-                findNavController().navigate(R.id.home_nav_graph)
-            } else {
-                Toast.makeText(context, "Smth wrong", Toast.LENGTH_SHORT).show()
-            }
+        binding.signIn.setOnClickListener {
+            viewModel.signIn(
+                binding.email.text.toString(),
+                binding.password.text.toString()
+            )
         }
     }
 }

@@ -27,6 +27,7 @@ class HomeActivity : BaseActivity() {
             binding.bottomNavigation,
             getNavigationController()
         )
+        getNavigationController().setGraph(R.navigation.navigation_home)
     }
 
     private fun getNavigationController(): NavController =

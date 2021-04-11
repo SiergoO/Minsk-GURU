@@ -36,6 +36,7 @@
             android:layout_margin="8dp"
             android:layout_marginTop="12dp"
             android:textColor="@color/black"
+            android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="@id/email"
             app:layout_constraintStart_toStartOf="@id/email"
             app:layout_constraintTop_toBottomOf="@id/email"
