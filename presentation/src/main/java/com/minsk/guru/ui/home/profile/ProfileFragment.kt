@@ -1,4 +1,4 @@
-package com.minsk.guru.ui.profile
+package com.minsk.guru.ui.home.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater

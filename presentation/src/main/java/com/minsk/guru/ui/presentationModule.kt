@@ -3,10 +3,10 @@ package com.minsk.guru.ui
 import android.app.Application
 import com.minsk.guru.data.dataModule
 import com.minsk.guru.domain.domainModule
-import com.minsk.guru.ui.achievements.AchievementsViewModel
+import com.minsk.guru.ui.home.achievements.AchievementsViewModel
 import com.minsk.guru.ui.auth.AuthViewModel
-import com.minsk.guru.ui.places.PlacesViewModel
-import com.minsk.guru.ui.profile.ProfileViewModel
+import com.minsk.guru.ui.home.places.PlacesViewModel
+import com.minsk.guru.ui.home.profile.ProfileViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import org.koin.android.ext.koin.androidContext

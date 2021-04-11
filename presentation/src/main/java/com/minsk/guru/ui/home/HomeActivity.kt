@@ -1,4 +1,4 @@
-package com.minsk.guru.ui.main
+package com.minsk.guru.ui.home
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -6,18 +6,18 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.minsk.guru.R
-import com.minsk.guru.databinding.ActivityMainBinding
-import com.minsk.guru.ui.base.BaseActivity
+import com.minsk.guru.databinding.ActivityHomeBinding
+import com.minsk.guru.ui.home.base.BaseActivity
 
-class MainActivity : BaseActivity() {
+class HomeActivity : BaseActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
             this,
-            R.layout.activity_main
+            R.layout.activity_home
         )
     }
 
@@ -30,5 +30,5 @@ class MainActivity : BaseActivity() {
     }
 
     private fun getNavigationController(): NavController =
-        binding.navHostFragment.findNavController()
+        binding.homeNavHostFragment.findNavController()
 }

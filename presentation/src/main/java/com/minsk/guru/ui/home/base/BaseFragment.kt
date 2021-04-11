@@ -1,4 +1,4 @@
-package com.minsk.guru.ui.base
+package com.minsk.guru.ui.home.base
 
 import androidx.fragment.app.Fragment
 

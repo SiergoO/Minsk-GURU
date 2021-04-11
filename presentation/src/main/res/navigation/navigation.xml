@@ -3,30 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/authFragment">
+    app:startDestination="@id/auth_nav_graph">
 
-    <fragment
-        android:id="@+id/achievementsFragment"
-        android:name="com.minsk.guru.ui.achievements.AchievementsFragment"
-        android:label="AchievementsFragment"
-        tools:layout="@layout/fragment_achievements"/>
+    <navigation
+        android:id="@+id/auth_nav_graph"
+        app:startDestination="@id/authFragment">
 
-    <fragment
-        android:id="@+id/placesFragment"
-        android:name="com.minsk.guru.ui.places.PlacesFragment"
-        android:label="PlacesFragment"
-        tools:layout="@layout/fragment_places"/>
+        <fragment
+            android:id="@+id/authFragment"
+            android:name="com.minsk.guru.ui.auth.AuthFragment"
+            android:label="AuthFragment"
+            tools:layout="@layout/fragment_auth">
 
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.minsk.guru.ui.profile.ProfileFragment"
-        android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
+        </fragment>
 
-    <fragment
-        android:id="@+id/authFragment"
-        android:name="com.minsk.guru.ui.auth.AuthFragment"
-        android:label="AuthFragment"
-        tools:layout="@layout/fragment_auth"/>
+    </navigation>
+
+    <navigation
+        android:id="@+id/home_nav_graph"
+        app:startDestination="@id/achievementsFragment">
+
+        <fragment
+            android:id="@+id/achievementsFragment"
+            android:name="com.minsk.guru.ui.home.achievements.AchievementsFragment"
+            android:label="AchievementsFragment"
+            tools:layout="@layout/fragment_achievements" />
+
+        <fragment
+            android:id="@+id/placesFragment"
+            android:name="com.minsk.guru.ui.home.places.PlacesFragment"
+            android:label="PlacesFragment"
+            tools:layout="@layout/fragment_places" />
+
+        <fragment
+            android:id="@+id/profileFragment"
+            android:name="com.minsk.guru.ui.home.profile.ProfileFragment"
+            android:label="ProfileFragment"
+            tools:layout="@layout/fragment_profile" />
+
+    </navigation>
 
 </navigation>
