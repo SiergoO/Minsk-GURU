@@ -1,4 +1,4 @@
-package com.minsk.guru.ui.auth
+package com.minsk.guru.ui.auth.signin
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -9,13 +9,13 @@ import com.minsk.guru.domain.usecase.auth.SignInUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
-class AuthViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
+class SignInViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
 
-    var exceptionLiveData = MutableLiveData<String>()
+    var exceptionLiveData = MutableLiveData<Throwable?>()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        exceptionLiveData.value = throwable.message
-        Log.e("AUTH", throwable.message.toString())
+        exceptionLiveData.value = throwable
+        Log.e("Auth", throwable.message.toString())
     }
 
     fun signIn(email: String, password: String) = viewModelScope.launch(exceptionHandler) {

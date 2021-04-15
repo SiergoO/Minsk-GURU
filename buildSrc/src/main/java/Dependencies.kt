@@ -7,6 +7,7 @@ object Libraries {
         const val navigation = "2.3.3"
         const val navigationCompose = "1.0.0-alpha06"
         const val jetpack = "1.2.0"
+        const val material = "1.1.0"
         const val constraintLayout = "2.0.4"
         const val ktx = "1.3.1"
         const val ktxFragment = "1.2.5"
@@ -85,6 +86,8 @@ object Libraries {
     const val androidxNavigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
     const val androidxNavigationFeatures =  "androidx.navigation:navigation-dynamic-features-fragment:${Versions.navigation}"
     const val androidxNavigationCompose = "androidx.navigation:navigation-compose:${Versions.navigationCompose}"
+
+    const val materialDesign = "com.google.android.material:material:${Versions.material}"
 
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerview}"
     const val recyclerViewSelection = "androidx.recyclerview:recyclerview-selection:" +

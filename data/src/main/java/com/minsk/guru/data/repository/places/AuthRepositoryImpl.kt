@@ -3,30 +3,28 @@ package com.minsk.guru.data.repository.places
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.minsk.guru.domain.repository.auth.AuthRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import java.lang.Exception
 
 class AuthRepositoryImpl : AuthRepository {
 
+    @InternalCoroutinesApi
     override suspend fun signIn(email: String, password: String) {
-
         val mAuth = FirebaseAuth.getInstance()
+        val exception = CompletableDeferred<Throwable?>()
         val task = withContext(Dispatchers.IO) {
-            val s = async {
-                mAuth.signInWithEmailAndPassword(
-                    email,
-                    password
-                )
-            }
-            s.await()
+            mAuth.signInWithEmailAndPassword(
+                email,
+                password
+            )
         }
-        if (task.isSuccessful) {
+        task.addOnSuccessListener {
             Log.e("Auth", "success")
-        } else {
-            Log.e("Auth", task.exception?.message.toString())
-            throw task.exception ?: Exception()
+            exception.complete(null)
+        }.addOnFailureListener {
+            Log.e("Auth", it.message.toString())
+            exception.complete(task.exception)
         }
+        throw exception.await() as Throwable
     }
 }

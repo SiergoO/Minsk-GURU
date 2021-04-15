@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">Minsk GURU</string>
 
-  <!--bottom navigation-->
+    <!--bottom navigation-->
     <string name="bottom_navigation_achievements">Achievements</string>
     <string name="bottom_navigation_places">Places</string>
     <string name="bottom_navigation_profile">Profile</string>
+
+    <!--auth-->
+    <string name="auth_button_sign_in">SIGN IN</string>
+    <string name="auth_button_sign_up"><u>Sign up!</u></string>
+    <string name="auth_forgot_password"><u>forgot password?</u></string>
+    <string name="auth_don_t_have_an_account">Don\'t have an account?</string>
+    <string name="auth_sign_up"><u>Sign up!</u></string>
 </resources>

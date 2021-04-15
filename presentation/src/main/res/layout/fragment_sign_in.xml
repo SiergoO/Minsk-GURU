@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.minsk.guru.ui.auth.signin.SignInViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/auth_background">
+
+        <ImageView
+            android:layout_width="256dp"
+            android:layout_height="256dp"
+            android:src="@drawable/logo"
+            app:layout_constraintBottom_toTopOf="@id/layout_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_email"
+            style="@style/text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="E-mail"
+                tools:hint="pinsk-style@mail.ru">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_password"
+            style="@style/text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="@id/layout_email"
+            app:layout_constraintStart_toStartOf="@id/layout_email"
+            app:layout_constraintTop_toBottomOf="@id/layout_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                tools:hint="********">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/auth_forgot_password"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/layout_password"
+            app:layout_constraintTop_toBottomOf="@id/layout_password" />
+
+        <LinearLayout
+            android:id="@+id/container_sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/layout_password"
+            app:layout_constraintStart_toStartOf="@id/layout_password"
+            app:layout_constraintTop_toBottomOf="@id/forgot_password">
+
+            <TextView
+                android:id="@+id/sign_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:includeFontPadding="true"
+                android:paddingBottom="4dp"
+                android:text="@string/auth_button_sign_in"
+                android:textColor="@color/white"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/sign_in"
+                app:layout_constraintStart_toStartOf="@id/sign_in"
+                app:layout_constraintTop_toBottomOf="@id/sign_in" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/layout_password"
+            app:layout_constraintStart_toStartOf="@id/layout_password"
+            app:layout_constraintTop_toBottomOf="@id/container_sign_in">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auth_don_t_have_an_account" />
+
+            <TextView
+                android:id="@+id/sign_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/auth_sign_up"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
