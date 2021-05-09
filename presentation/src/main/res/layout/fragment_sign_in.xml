@@ -17,20 +17,20 @@
         android:background="@drawable/auth_background">
 
         <ImageView
-            android:layout_width="256dp"
-            android:layout_height="256dp"
+            android:layout_width="@dimen/logo_icon_width"
+            android:layout_height="@dimen/logo_icon_height"
             android:src="@drawable/logo"
-            app:layout_constraintBottom_toTopOf="@id/layout_email"
+            app:layout_constraintBottom_toTopOf="@id/layout_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_email"
-            style="@style/text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            app:endIconMode="clear_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
                 android:id="@+id/edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="E-mail"
+                android:hint="@string/email"
                 tools:hint="pinsk-style@mail.ru">
 
             </com.google.android.material.textfield.TextInputEditText>
@@ -50,7 +50,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_password"
-            style="@style/text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -63,9 +62,8 @@
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="textPassword"
-                tools:hint="********">
+                android:hint="@string/password"
+                android:inputType="textPassword">
 
             </com.google.android.material.textfield.TextInputEditText>
 
@@ -81,38 +79,27 @@
             android:text="@string/auth_forgot_password"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/layout_password"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_password" />
 
         <LinearLayout
-            android:id="@+id/container_sign_in"
+            android:id="@+id/layout_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@id/layout_password"
             app:layout_constraintStart_toStartOf="@id/layout_password"
             app:layout_constraintTop_toBottomOf="@id/forgot_password">
 
             <TextView
-                android:id="@+id/sign_in"
+                android:id="@+id/btn_sign_in"
+                style="@style/App.Button.Transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:includeFontPadding="true"
-                android:paddingBottom="4dp"
-                android:text="@string/auth_button_sign_in"
-                android:textColor="@color/white"
-                android:textSize="24dp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/white"
-                app:layout_constraintEnd_toEndOf="@id/sign_in"
-                app:layout_constraintStart_toStartOf="@id/sign_in"
-                app:layout_constraintTop_toBottomOf="@id/sign_in" />
+                android:text="@string/auth_button_sign_in" />
 
         </LinearLayout>
 
@@ -123,7 +110,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/layout_password"
             app:layout_constraintStart_toStartOf="@id/layout_password"
-            app:layout_constraintTop_toBottomOf="@id/container_sign_in">
+            app:layout_constraintTop_toBottomOf="@id/layout_sign_in">
 
             <TextView
                 android:layout_width="wrap_content"

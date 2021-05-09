@@ -37,6 +37,7 @@ class SignInFragment(private val layout: Int = R.layout.fragment_sign_in) : Frag
             false
         )
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         viewModel.exceptionLiveData.observe(viewLifecycleOwner) {
             if (it is NullPointerException) {
                 val intent = Intent(activity, HomeActivity::class.java)

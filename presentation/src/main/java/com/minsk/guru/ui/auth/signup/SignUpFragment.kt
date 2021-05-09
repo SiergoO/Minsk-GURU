@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentSignUpBinding
 
@@ -21,7 +20,7 @@ class SignUpFragment (private val layout: Int = R.layout.fragment_sign_up) : Fra
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DataBindingUtil.inflate(
             inflater,
             layout,
@@ -29,6 +28,7 @@ class SignUpFragment (private val layout: Int = R.layout.fragment_sign_up) : Fra
             false
         )
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         return binding.root
     }
 }
