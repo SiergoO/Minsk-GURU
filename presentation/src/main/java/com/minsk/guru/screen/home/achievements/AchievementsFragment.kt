@@ -1,4 +1,4 @@
-package com.minsk.guru.ui.home.achievements
+package com.minsk.guru.screen.home.achievements
 
 import android.os.Bundle
 import android.view.LayoutInflater

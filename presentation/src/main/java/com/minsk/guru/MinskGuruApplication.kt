@@ -1,4 +1,4 @@
-package com.minsk.guru.ui
+package com.minsk.guru
 
 import android.app.Application
 import kotlinx.coroutines.ExperimentalCoroutinesApi

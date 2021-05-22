@@ -1,6 +1,5 @@
-package com.minsk.guru.ui.auth.signup
+package com.minsk.guru.screen.auth.signup
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +12,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.minsk.guru.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.minsk.guru.databinding.FragmentSignUpBinding
-import com.minsk.guru.ui.home.HomeActivity
+import com.minsk.guru.screen.home.HomeActivity
 import java.lang.NullPointerException
 
 class SignUpFragment (private val layout: Int = R.layout.fragment_sign_up) : Fragment(layout) {

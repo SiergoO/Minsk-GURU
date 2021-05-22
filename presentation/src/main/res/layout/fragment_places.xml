@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.minsk.guru.ui.home.places.PlacesViewModel" />
+            type="com.minsk.guru.screen.home.places.PlacesViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"

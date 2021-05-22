@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/achievementsFragment"
-        android:name="com.minsk.guru.ui.home.achievements.AchievementsFragment"
+        android:name="com.minsk.guru.screen.home.achievements.AchievementsFragment"
         android:label="AchievementsFragment"
         tools:layout="@layout/fragment_achievements" />
 
     <fragment
         android:id="@+id/placesFragment"
-        android:name="com.minsk.guru.ui.home.places.PlacesFragment"
+        android:name="com.minsk.guru.screen.home.places.PlacesFragment"
         android:label="PlacesFragment"
         tools:layout="@layout/fragment_places" />
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.minsk.guru.ui.home.profile.ProfileFragment"
+        android:name="com.minsk.guru.screen.home.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 

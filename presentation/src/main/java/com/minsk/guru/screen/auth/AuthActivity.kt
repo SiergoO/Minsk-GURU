@@ -1,10 +1,10 @@
-package com.minsk.guru.ui.auth
+package com.minsk.guru.screen.auth
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.minsk.guru.R
 import com.minsk.guru.databinding.ActivityAuthBinding
-import com.minsk.guru.ui.home.base.BaseActivity
+import com.minsk.guru.screen.home.base.BaseActivity
 
 class AuthActivity: BaseActivity() {
     lateinit var binding: ActivityAuthBinding

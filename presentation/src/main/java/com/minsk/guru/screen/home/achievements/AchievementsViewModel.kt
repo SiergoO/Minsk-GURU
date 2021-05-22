@@ -1,4 +1,4 @@
-package com.minsk.guru.ui.home.achievements
+package com.minsk.guru.screen.home.achievements
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

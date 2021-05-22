@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.minsk.guru.ui.auth.signin.SignInFragment"
+        android:name="com.minsk.guru.screen.auth.signin.SignInFragment"
         android:label="SignInFragment"
         tools:layout="@layout/fragment_sign_in" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.minsk.guru.ui.auth.signup.SignUpFragment"
+        android:name="com.minsk.guru.screen.auth.signup.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up" />
 

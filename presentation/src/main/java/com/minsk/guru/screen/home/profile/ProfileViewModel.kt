@@ -1,4 +1,4 @@
-package com.minsk.guru.ui.home.profile
+package com.minsk.guru.screen.home.profile
 
 import androidx.lifecycle.ViewModel
 

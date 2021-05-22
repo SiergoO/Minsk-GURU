@@ -1,4 +1,4 @@
-package com.minsk.guru.ui.home.places
+package com.minsk.guru.screen.home.places
 
 import android.os.Bundle
 import android.view.LayoutInflater

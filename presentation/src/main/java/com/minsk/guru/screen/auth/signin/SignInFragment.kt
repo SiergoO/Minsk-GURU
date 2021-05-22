@@ -1,4 +1,4 @@
-package com.minsk.guru.ui.auth.signin
+package com.minsk.guru.screen.auth.signin
 
 import android.app.ActivityOptions.makeSceneTransitionAnimation
 import android.content.Intent
@@ -13,9 +13,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentSignInBinding
-import com.minsk.guru.ui.home.HomeActivity
+import com.minsk.guru.screen.home.HomeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.lang.NullPointerException
 
 class SignInFragment(private val layout: Int = R.layout.fragment_sign_in) : Fragment(layout) {
 
@@ -38,13 +37,13 @@ class SignInFragment(private val layout: Int = R.layout.fragment_sign_in) : Frag
         )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        viewModel.exceptionLiveData.observe(viewLifecycleOwner) {
-            if (it is NullPointerException) {
-                val intent = Intent(activity, HomeActivity::class.java)
-                startActivity(intent,makeSceneTransitionAnimation(activity).toBundle())
-            } else {
-                Snackbar.make(this.requireView(), it?.message.toString(), Snackbar.LENGTH_LONG).show()
-            }
+        viewModel.resultLiveData.observe(viewLifecycleOwner) {
+            val intent = Intent(activity, HomeActivity::class.java)
+            startActivity(intent, makeSceneTransitionAnimation(activity).toBundle())
+        }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            Snackbar.make(this.requireView(), it.cause?.message.toString(), Snackbar.LENGTH_LONG)
+                .show()
         }
         return binding.root
     }

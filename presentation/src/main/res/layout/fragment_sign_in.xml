@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.minsk.guru.ui.auth.signin.SignInViewModel" />
+            type="com.minsk.guru.screen.auth.signin.SignInViewModel" />
 
     </data>
 

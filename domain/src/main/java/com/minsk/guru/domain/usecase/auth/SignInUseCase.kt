@@ -1,8 +1,13 @@
 package com.minsk.guru.domain.usecase.auth
 
-import com.minsk.guru.domain.repository.auth.AuthRepository
+import com.minsk.guru.domain.usecase.SingleResultUseCase
 
-class SignInUseCase(private val authRepository: AuthRepository) {
+interface SignInUseCase : SingleResultUseCase<SignInUseCase.Param, SignInUseCase.Result> {
 
-    suspend fun signIn(email: String, password: String) = authRepository.signIn(email, password)
+    data class Param(val email: String, val password: String)
+
+    sealed class Result {
+        object Success : Result()
+        data class Failure(val error: Throwable) : Result()
+    }
 }

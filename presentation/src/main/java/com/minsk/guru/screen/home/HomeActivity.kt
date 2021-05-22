@@ -1,4 +1,4 @@
-package com.minsk.guru.ui.home
+package com.minsk.guru.screen.home
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -7,7 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.minsk.guru.R
 import com.minsk.guru.databinding.ActivityHomeBinding
-import com.minsk.guru.ui.home.base.BaseActivity
+import com.minsk.guru.screen.home.base.BaseActivity
 
 class HomeActivity : BaseActivity() {
 

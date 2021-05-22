@@ -1,6 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="BaseAppTheme" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="BaseAppTheme" parent="Theme.MaterialComponents.NoActionBar.Bridge">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowTranslucentStatus">true</item>
@@ -39,7 +39,7 @@
         <item name="textAllCaps">true</item>
     </style>
 
-    <style name="App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+    <style name="App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextAppearance">@style/App.TextInputLayout.HintText</item>
         <item name="errorTextAppearance">@style/App.TextInputLayout.ErrorText</item>
         <item name="android:textColorHint">@color/hint</item>
