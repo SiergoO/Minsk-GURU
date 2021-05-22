@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="BaseAppTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:windowActionBar">false</item>

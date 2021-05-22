@@ -5,6 +5,7 @@ import com.minsk.guru.data.dataModule
 import com.minsk.guru.domain.domainModule
 import com.minsk.guru.ui.home.achievements.AchievementsViewModel
 import com.minsk.guru.ui.auth.signin.SignInViewModel
+import com.minsk.guru.ui.auth.signup.SignUpViewModel
 import com.minsk.guru.ui.home.places.PlacesViewModel
 import com.minsk.guru.ui.home.profile.ProfileViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,6 +21,7 @@ import org.koin.dsl.module
 val presentationModule = module {
 
     viewModel { SignInViewModel(get()) }
+    viewModel { SignUpViewModel(get()) }
     viewModel { AchievementsViewModel(get()) }
     viewModel { PlacesViewModel(get()) }
     viewModel { ProfileViewModel() }

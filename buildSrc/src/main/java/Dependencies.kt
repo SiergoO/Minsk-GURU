@@ -7,7 +7,7 @@ object Libraries {
         const val navigation = "2.3.3"
         const val navigationCompose = "1.0.0-alpha06"
         const val jetpack = "1.2.0"
-        const val material = "1.3.0"
+        const val material = "1.2.0"
         const val constraintLayout = "2.0.4"
         const val ktx = "1.3.1"
         const val ktxFragment = "1.2.5"

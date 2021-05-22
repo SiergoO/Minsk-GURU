@@ -53,7 +53,7 @@ class SignInFragment(private val layout: Int = R.layout.fragment_sign_in) : Frag
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            signIn.setOnClickListener {
+            btnSignIn.setOnClickListener {
                 viewModel?.signIn(
                     (binding.layoutEmail.findViewById(R.id.edit_email) as TextInputEditText).text.toString(),
                     (binding.layoutPassword.findViewById(R.id.edit_password) as TextInputEditText).text.toString()
