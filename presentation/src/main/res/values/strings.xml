@@ -20,6 +20,5 @@
     <string name="surname">Surname</string>
 
     <!--achievements-->
-    <string name="achievements_percentage">%1$d%</string>
-    <string name="achievements_progress">%1$d/%1$d</string>
+    <string name="achievements_percentage">%1$d%%</string>
 </resources>

@@ -1,16 +1,17 @@
 package com.minsk.guru.screen.home.achievements
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.R
+import com.minsk.guru.databinding.ItemAchievementBinding
 import com.minsk.guru.domain.model.Achievement
 
 class AdapterAchievementsList(
-    context: Context?,
+    private val context: Context?,
     callback: Callback? = null
 ) : RecyclerView.Adapter<AdapterAchievementsList.ViewHolder>() {
 
@@ -31,8 +32,7 @@ class AdapterAchievementsList(
         items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(layoutInflater.inflate(R.layout.item_achievement, parent, false))
-
+        ViewHolder(ItemAchievementBinding.inflate(LayoutInflater.from(context), parent, false))
 
     override fun onBindViewHolder(holder: AdapterAchievementsList.ViewHolder, position: Int) {
         holder.bind(items[position])
@@ -45,13 +45,13 @@ class AdapterAchievementsList(
 
 
     inner class ViewHolder(
-        rootView: View
-    ) : RecyclerView.ViewHolder(rootView) {
+        private val binding: ItemAchievementBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val title: TextView = rootView.findViewById(R.id.category)
+        private val progress: Double = Math.random()
 
         init {
-            rootView.setOnClickListener {
+            binding.root.setOnClickListener {
                 adapterPosition.let { position ->
                     if (RecyclerView.NO_POSITION != position) {
                         handleItemClicked(position)
@@ -60,8 +60,22 @@ class AdapterAchievementsList(
             }
         }
 
+        @SuppressLint("SetTextI18n")
         fun bind(achievement: Achievement) {
-            title.text = achievement.category
+            if (achievement.count == 0) {
+                achievement.count = 1
+            }
+            binding.apply {
+                category.text = achievement.category
+                cardStatistic.findViewById<TextView>(R.id.tv_percentage).text =
+                    context?.getString(
+                        R.string.achievements_percentage,
+                        ((progress * achievement.count).toInt() / achievement.count) * 100
+                    )
+                cardStatistic.findViewById<TextView>(R.id.tv_progress).text =
+                    "${(progress * achievement.count).toInt()}/${achievement.count}"
+                progressAchievements.progress = (progress * 100.0).toInt()
+            }
         }
     }
 
