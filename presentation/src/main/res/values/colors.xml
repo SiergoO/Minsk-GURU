@@ -9,4 +9,5 @@
     <color name="grey">#7E7E7E</color>
     <color name="hint">#D8D8D8</color>
     <color name="hint_error">#CF6679</color>
+    <color name="card_statistic">#F3F3F3</color>
 </resources>

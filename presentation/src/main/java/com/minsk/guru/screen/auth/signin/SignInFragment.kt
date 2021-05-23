@@ -16,7 +16,7 @@ import com.minsk.guru.databinding.FragmentSignInBinding
 import com.minsk.guru.screen.home.HomeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SignInFragment(private val layout: Int = R.layout.fragment_sign_in) : Fragment(layout) {
+class SignInFragment(layout: Int = R.layout.fragment_sign_in) : Fragment(layout) {
 
     private val viewModel: SignInViewModel by viewModel()
 
@@ -29,9 +29,8 @@ class SignInFragment(private val layout: Int = R.layout.fragment_sign_in) : Frag
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(
+        _binding = FragmentSignInBinding.inflate(
             inflater,
-            layout,
             container,
             false
         )
