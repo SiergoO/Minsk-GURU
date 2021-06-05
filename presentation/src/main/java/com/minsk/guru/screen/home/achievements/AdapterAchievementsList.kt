@@ -70,7 +70,7 @@ class AdapterAchievementsList(
                 cardStatistic.findViewById<TextView>(R.id.tv_percentage).text =
                     context?.getString(
                         R.string.achievements_percentage,
-                        ((progress * achievement.count).toInt() / achievement.count) * 100
+                        ((progress * 100.0).toInt())
                     )
                 cardStatistic.findViewById<TextView>(R.id.tv_progress).text =
                     "${(progress * achievement.count).toInt()}/${achievement.count}"
