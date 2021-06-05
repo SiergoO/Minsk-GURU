@@ -14,7 +14,7 @@ buildscript {
         classpath(BuildPlugins.firebaseCrashlyticsClasspath)
         classpath(BuildPlugins.firebasePerformanceClasspath)
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        classpath("com.google.gms:google-services:4.3.5")
+        classpath("com.google.gms:google-services:4.3.8")
     }
 }
 

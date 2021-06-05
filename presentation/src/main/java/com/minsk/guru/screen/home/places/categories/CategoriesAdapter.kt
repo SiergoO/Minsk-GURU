@@ -1,4 +1,4 @@
-package com.minsk.guru.screen.home.achievements
+package com.minsk.guru.screen.home.places.categories
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.R
-import com.minsk.guru.databinding.ItemAchievementBinding
+import com.minsk.guru.databinding.ItemCategoryBinding
 import com.minsk.guru.domain.model.Achievement
 
-class AdapterAchievementsList(
+class CategoriesAdapter(
     private val context: Context?,
     callback: Callback? = null
-) : RecyclerView.Adapter<AdapterAchievementsList.ViewHolder>() {
+) : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
     var callback: Callback? = null
     private val layoutInflater = LayoutInflater.from(context)
@@ -32,20 +32,20 @@ class AdapterAchievementsList(
         items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(ItemAchievementBinding.inflate(LayoutInflater.from(context), parent, false))
+        ViewHolder(ItemCategoryBinding.inflate(LayoutInflater.from(context), parent, false))
 
-    override fun onBindViewHolder(holder: AdapterAchievementsList.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoriesAdapter.ViewHolder, position: Int) {
         holder.bind(items[position])
     }
 
     private fun handleItemClicked(position: Int) {
         val achievement = items[position]
-        callback?.onPurchaseClicked(achievement)
+        callback?.onCategoryClicked(achievement)
     }
 
 
     inner class ViewHolder(
-        private val binding: ItemAchievementBinding
+        private val binding: ItemCategoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val progress: Double = Math.random()
@@ -61,10 +61,7 @@ class AdapterAchievementsList(
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(achievement: Achievement) {
-            if (achievement.count == 0) {
-                achievement.count = 1
-            }
+        fun bind(achievement: Achievement) { // exchange with Category containing places list, name..
             binding.apply {
                 category.text = achievement.category
                 cardStatistic.findViewById<TextView>(R.id.tv_percentage).text =
@@ -80,6 +77,6 @@ class AdapterAchievementsList(
     }
 
     interface Callback {
-        fun onPurchaseClicked(achievement: Achievement)
+        fun onCategoryClicked(achievement: Achievement)
     }
 }

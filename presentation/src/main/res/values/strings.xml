@@ -6,8 +6,8 @@
     <string name="confirm_password">Confirm password</string>
 
     <!--bottom navigation-->
-    <string name="bottom_navigation_achievements">Achievements</string>
     <string name="bottom_navigation_places">Places</string>
+    <string name="bottom_navigation_add_place">Add Place</string>
     <string name="bottom_navigation_profile">Profile</string>
 
     <!--auth-->

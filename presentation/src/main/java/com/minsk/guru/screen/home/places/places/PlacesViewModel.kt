@@ -1,4 +1,4 @@
-package com.minsk.guru.screen.home.places
+package com.minsk.guru.screen.home.places.places
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.minsk.guru.screen.home.achievements.AchievementsViewModel" />
+            type="com.minsk.guru.screen.home.places.categories.CategoriesViewModel" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -15,6 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:scrollbars="vertical"
-        tools:listitem="@layout/item_achievement" />
+        tools:listitem="@layout/item_category" />
 
 </layout>
