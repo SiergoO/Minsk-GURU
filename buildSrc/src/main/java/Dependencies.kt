@@ -7,6 +7,7 @@ object Libraries {
         const val navigation = "2.3.3"
         const val navigationCompose = "1.0.0-alpha06"
         const val jetpack = "1.2.0"
+        const val material = "1.4.0-beta01"
         const val constraintLayout = "2.0.4"
         const val ktx = "1.3.1"
         const val ktxFragment = "1.2.5"
@@ -22,6 +23,7 @@ object Libraries {
         const val paging = "2.1.2"
         const val firebaseDatabase = "19.2.1"
         const val firebaseBom = "26.3.0"
+        const val firebaseAuth = "20.0.3"
         const val retrofit = "2.6.0"
         const val gson = "2.8.5"
         const val converterGson = "2.5.0"
@@ -29,6 +31,7 @@ object Libraries {
     }
 
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
+    const val firebaseAuth = "com.google.firebase:firebase-auth:${Versions.firebaseAuth}"
     const val firebaseDatabase = "com.google.firebase:firebase-database:${Versions.firebaseDatabase}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
@@ -42,6 +45,8 @@ object Libraries {
     const val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.ktxFragment}"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:" +
+            Versions.coroutines
+    const val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:" +
             Versions.coroutines
     const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:" +
             Versions.serialization
@@ -83,6 +88,8 @@ object Libraries {
     const val androidxNavigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
     const val androidxNavigationFeatures =  "androidx.navigation:navigation-dynamic-features-fragment:${Versions.navigation}"
     const val androidxNavigationCompose = "androidx.navigation:navigation-compose:${Versions.navigationCompose}"
+
+    const val materialDesign = "com.google.android.material:material:${Versions.material}"
 
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerview}"
     const val recyclerViewSelection = "androidx.recyclerview:recyclerview-selection:" +

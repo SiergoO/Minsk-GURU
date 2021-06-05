@@ -1,22 +1,58 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="Theme.MinskGURU" parent="Theme.MaterialComponents">
+    <style name="BaseAppTheme" parent="Theme.MaterialComponents.NoActionBar.Bridge">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="AppTheme" parent="BaseAppTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorSecondary</item>
         <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/colorSecondary</item>
+        <item name="android:textViewStyle">@style/App.TextView</item>
+        <item name="buttonStyle">@style/App.Button</item>
+        <item name="textInputStyle">@style/App.TextInputLayout</item>
+        <item name="bottomNavigationStyle">@style/App.Navigation</item>
     </style>
 
-    <style name="Navigation" parent="Widget.Design.BottomNavigationView">
+    <style name="App.TextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+    </style>
+
+    <style name="App.TextView.Title">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="App.Button" parent="Widget.AppCompat.Button">
+        <item name="android:textAppearance">@style/App.TextView</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="App.Button.Transparent">
+        <item name="android:textSize">22sp</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/hint</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingStart">60dp</item>
+        <item name="android:paddingEnd">60dp</item>
+    </style>
+
+    <style name="App.Navigation" parent="Widget.Design.BottomNavigationView">
         <item name="android:background">@color/white</item>
         <item name="itemIconSize">@dimen/icon_navigation_size</item>
         <item name="itemIconTint">@color/grey</item>
         <item name="labelVisibilityMode">unlabeled</item>
     </style>
-    
-    <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="titleTextColor">@color/white</item>
-    </style>
+
 
 </resources>

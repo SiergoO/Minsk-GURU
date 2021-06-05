@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+
     <dimen name="icon_navigation_size">40dp</dimen>
+    <dimen name="btn_text_size">24sp</dimen>
+    <dimen name="logo_icon_width">216dp</dimen>
+    <dimen name="logo_icon_height">192dp</dimen>
+
 </resources>

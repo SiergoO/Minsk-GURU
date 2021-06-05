@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.minsk.guru.ui.profile.ProfileViewModel" />
+            type="com.minsk.guru.screen.home.profile.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

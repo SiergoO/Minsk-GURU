@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/achievementsFragment">
+
+    <fragment
+        android:id="@+id/achievementsFragment"
+        android:name="com.minsk.guru.screen.home.achievements.AchievementsFragment"
+        android:label="AchievementsFragment"
+        tools:layout="@layout/fragment_achievements" />
+
+    <fragment
+        android:id="@+id/placesFragment"
+        android:name="com.minsk.guru.screen.home.places.PlacesFragment"
+        android:label="PlacesFragment"
+        tools:layout="@layout/fragment_places" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.minsk.guru.screen.home.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
+
+</navigation>
