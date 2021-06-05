@@ -12,13 +12,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="70dp">
 
         <ProgressBar
             android:id="@+id/progress_achievements"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="88dp"
+            android:layout_height="match_parent"
             android:indeterminate="false"
             android:progressTint="@color/colorPrimary"
             android:progressBackgroundTint="@android:color/transparent"
