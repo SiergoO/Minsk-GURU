@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -57,7 +58,8 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
             categoriesAdapter = CategoriesAdapter(context,
                 object : CategoriesAdapter.Callback {
                     override fun onCategoryClicked(achievement: Achievement) {
-                        findNavController().navigate(R.id.action_categoriesFragment_to_placesFragment)
+                        val bundle = bundleOf("categoryName" to achievement.category)
+                        findNavController().navigate(R.id.action_categoriesFragment_to_placesFragment, bundle)
                     }
                 })
             this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)

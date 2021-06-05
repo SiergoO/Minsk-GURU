@@ -2,11 +2,11 @@ package com.minsk.guru.domain.model
 
  class Places {
 
-     var places: MutableList<Place> = mutableListOf()
+     var places: List<Place> = listOf()
 
      constructor() : super()
 
-     constructor(places: MutableList<Place>) {
+     constructor(places: List<Place>) {
          this.places = places
      }
 

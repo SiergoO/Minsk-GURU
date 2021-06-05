@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentPlacesBinding
+import com.minsk.guru.domain.model.Place
 import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -24,8 +25,9 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
     init {
         lifecycleScope.launchWhenStarted {
             withContext(coroutineContext) {
-                val placesObserver = Observer<String> { places ->
-                    binding.tvPlaces.text = places
+                viewModel.getPlacesByCategory(arguments?.getString("categoryName"))
+                val placesObserver = Observer<List<Place>> { places ->
+                    binding.tvPlaces.text = places.toString()
                 }
                 viewModel.places.observe(viewLifecycleOwner, placesObserver)
             }
