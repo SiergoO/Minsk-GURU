@@ -1,8 +1,8 @@
 package com.minsk.guru.data.repository.places
 
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.minsk.guru.data.firebase.process
 import com.minsk.guru.domain.model.User
 import com.minsk.guru.domain.repository.auth.AuthRepository
 
@@ -10,10 +10,11 @@ class AuthRepositoryImpl : AuthRepository {
 
     override fun signIn(email: String, password: String) {
         val mAuth = FirebaseAuth.getInstance()
-        mAuth.signInWithEmailAndPassword(
+        val task = mAuth.signInWithEmailAndPassword(
             email,
             password
-        ).process()
+        )
+        Tasks.await(task)
     }
 
     override fun signUp(email: String, password: String, name: String, surname: String) {

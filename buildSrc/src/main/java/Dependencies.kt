@@ -46,6 +46,8 @@ object Libraries {
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:" +
             Versions.coroutines
+    const val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:" +
+            Versions.coroutines
     const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:" +
             Versions.serialization
 

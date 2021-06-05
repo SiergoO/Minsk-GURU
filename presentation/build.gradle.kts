@@ -53,6 +53,7 @@ dependencies {
 
     implementation(Libraries.coroutines)
     implementation(Libraries.coroutinesAndroid)
+    implementation(Libraries.coroutinesPlayServices)
 
     implementation(platform(Libraries.firebaseBom))
     implementation(Libraries.firebaseAnalytics)

@@ -20,7 +20,11 @@ class SignInViewModel(
         taskSignIn.start(SignInUseCase.Param(email, password))
 
     private fun handleSignInResult(data: SignInUseCase.Result) {
-        resultLiveData.value = data
+        when (data) {
+            is SignInUseCase.Result.Failure -> errorLiveData.value = data.error
+            is SignInUseCase.Result.Success -> resultLiveData.value = data
+            else -> Unit
+        }
     }
 
     private fun handleSignInError(error: Throwable) {
