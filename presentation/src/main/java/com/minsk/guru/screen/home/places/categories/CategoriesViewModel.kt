@@ -1,4 +1,4 @@
-package com.minsk.guru.screen.home.achievements
+package com.minsk.guru.screen.home.places.categories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +7,7 @@ import androidx.lifecycle.liveData
 import com.minsk.guru.domain.model.Achievement
 import com.minsk.guru.domain.usecase.achievements.GetAchievementsUseCase
 
-class AchievementsViewModel(private val getAchievementsUseCase: GetAchievementsUseCase) : ViewModel() {
+class CategoriesViewModel(private val getAchievementsUseCase: GetAchievementsUseCase) : ViewModel() {
 
     var places: LiveData<List<Achievement>> = MutableLiveData()
 
