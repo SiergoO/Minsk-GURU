@@ -22,6 +22,7 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
     Fragment(layout) {
 
     private val viewModel: CategoriesViewModel by viewModel()
+
     private var _binding: FragmentCategoriesBinding? = null
     val binding: FragmentCategoriesBinding
         get() = _binding!!
