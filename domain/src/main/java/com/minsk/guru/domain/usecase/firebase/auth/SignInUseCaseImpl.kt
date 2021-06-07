@@ -1,6 +1,6 @@
-package com.minsk.guru.domain.usecase.auth
+package com.minsk.guru.domain.usecase.firebase.auth
 
-import com.minsk.guru.domain.repository.auth.AuthRepository
+import com.minsk.guru.domain.repository.firebase.auth.AuthRepository
 import com.minsk.guru.domain.usecase.CoroutineSingleResultUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

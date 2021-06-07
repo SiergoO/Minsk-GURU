@@ -1,4 +1,4 @@
-package com.minsk.guru.domain.usecase.auth
+package com.minsk.guru.domain.usecase.firebase.auth
 
 import com.minsk.guru.domain.usecase.SingleResultUseCase
 

@@ -1,8 +1,8 @@
-package com.minsk.guru.domain.usecase.places
+package com.minsk.guru.domain.usecase.firebase.places
 
 import com.minsk.guru.domain.model.Place
 import com.minsk.guru.domain.model.Places
-import com.minsk.guru.domain.repository.places.PlacesRepository
+import com.minsk.guru.domain.repository.firebase.places.PlacesRepository
 
 class GetPlacesUseCase(private val placesRepository: PlacesRepository) {
 

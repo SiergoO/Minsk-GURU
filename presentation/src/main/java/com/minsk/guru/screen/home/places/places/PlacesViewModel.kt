@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.minsk.guru.domain.model.Place
 import com.minsk.guru.domain.model.Places
-import com.minsk.guru.domain.usecase.places.GetPlacesUseCase
+import com.minsk.guru.domain.usecase.firebase.places.GetPlacesUseCase
 
 class PlacesViewModel(private val getPlacesUseCase: GetPlacesUseCase) : ViewModel() {
 
