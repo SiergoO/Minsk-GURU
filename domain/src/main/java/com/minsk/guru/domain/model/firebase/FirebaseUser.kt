@@ -1,19 +1,19 @@
 package com.minsk.guru.domain.model
 
 class FirebaseUser {
-    var surname: String = ""
-    var name: String = ""
     var email: String = ""
+    var name: String = ""
+    var surname: String = ""
 
     constructor() : super()
 
     constructor(
-        surname: String,
+        email: String,
         name: String,
-        email: String
+        surname: String
     ) {
-        this.surname = surname
-        this.name = name
         this.email = email
+        this.name = name
+        this.surname = surname
     }
 }

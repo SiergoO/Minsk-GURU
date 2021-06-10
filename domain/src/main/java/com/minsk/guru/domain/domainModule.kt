@@ -13,7 +13,7 @@ val domainModule = module {
     factory { GetAchievementsUseCase(get()) }
     factory<SignInUseCase> { SignInUseCaseImpl(get()) }
     factory<GetCurrentUserUseCase> { GetCurrentUserUseCaseImpl(get()) }
-    factory { SignUpUseCase(get()) }
+    factory<SignUpUseCase> { SignUpUseCaseImpl(get()) }
     factory<InsertUserUseCase> { InsertUserUseCaseImpl(get()) }
 }
 

@@ -1,8 +1,13 @@
 package com.minsk.guru.domain.usecase.firebase.auth
 
-import com.minsk.guru.domain.repository.firebase.auth.AuthRepository
+import com.minsk.guru.domain.usecase.SingleResultUseCase
 
-class SignUpUseCase(private val authRepository: AuthRepository) {
+interface SignUpUseCase : SingleResultUseCase<SignUpUseCase.Param, SignUpUseCase.Result> {
 
-    suspend fun signUp(email: String, password: String, name: String, surname: String) = authRepository.signUp(email, password, name, surname)
+    data class Param(val email: String, val password: String, val name: String, val surname: String)
+
+    sealed class Result {
+        object Success : Result()
+        data class Failure(val error: Throwable) : Result()
+    }
 }

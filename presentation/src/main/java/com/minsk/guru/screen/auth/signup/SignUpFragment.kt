@@ -1,5 +1,6 @@
 package com.minsk.guru.screen.auth.signup
 
+import android.app.ActivityOptions.makeSceneTransitionAnimation
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +9,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import com.minsk.guru.R
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.minsk.guru.databinding.FragmentSignUpBinding
 import com.minsk.guru.screen.home.HomeActivity
-import java.lang.NullPointerException
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SignUpFragment (private val layout: Int = R.layout.fragment_sign_up) : Fragment(layout) {
+class SignUpFragment(private val layout: Int = R.layout.fragment_sign_up) : Fragment(layout) {
 
     private val viewModel: SignUpViewModel by viewModel()
 
@@ -35,13 +34,13 @@ class SignUpFragment (private val layout: Int = R.layout.fragment_sign_up) : Fra
         )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        viewModel.exceptionLiveData.observe(viewLifecycleOwner) {
-            if (it is NullPointerException) {
-                val intent = Intent(activity, HomeActivity::class.java)
-                startActivity(intent)
-            } else {
-                Snackbar.make(this.requireView(), it?.message.toString(), Snackbar.LENGTH_LONG).show()
-            }
+        viewModel.resultLiveData.observe(viewLifecycleOwner) {
+            val intent = Intent(activity, HomeActivity::class.java)
+            startActivity(intent, makeSceneTransitionAnimation(activity).toBundle())
+        }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            Snackbar.make(this.requireView(), it.cause?.message.toString(), Snackbar.LENGTH_LONG)
+                .show()
         }
         return binding.root
     }
@@ -52,12 +51,11 @@ class SignUpFragment (private val layout: Int = R.layout.fragment_sign_up) : Fra
         binding.apply {
             btnSignUp.setOnClickListener {
                 viewModel?.signUp(
-                    (binding.layoutEmail.findViewById(R.id.edit_email) as TextInputEditText).text.toString(),
-                    (binding.layoutPassword.findViewById(R.id.edit_password) as TextInputEditText).text.toString(),
-                    (binding.layoutName.findViewById(R.id.edit_name) as TextInputEditText).text.toString(),
-                    (binding.layoutSurname.findViewById(R.id.edit_surname) as TextInputEditText).text.toString()
+                    binding.editEmail.text.toString(),
+                    binding.editPassword.text.toString(),
+                    binding.editName.text.toString(),
+                    binding.editSurname.text.toString()
                 )
-
             }
         }
     }
