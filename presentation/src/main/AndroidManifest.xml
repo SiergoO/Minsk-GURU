@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".screen.home.HomeActivity" />
+        <activity android:name=".screen.home.HomeFragment" />
 
     </application>
 

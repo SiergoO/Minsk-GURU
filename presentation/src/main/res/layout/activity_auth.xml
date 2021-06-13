@@ -9,6 +9,6 @@
         android:layout_height="match_parent"
         android:background="@color/background"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/navigation_auth" />
+        app:navGraph="@navigation/nav_graph_auth" />
 
 </layout>

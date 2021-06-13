@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home_nav_graph"
+    android:id="@+id/nav_graph_home_places"
     app:startDestination="@id/categoriesFragment">
 
     <fragment
@@ -16,18 +16,6 @@
             app:destination="@id/placesFragment" />
 
     </fragment>
-
-    <fragment
-        android:id="@+id/addPlaceFragment"
-        android:name="com.minsk.guru.screen.home.addplaces.AddPlacesFragment"
-        android:label="AddPlacesFragment"
-        tools:layout="@layout/fragment_add_places" />
-
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.minsk.guru.screen.home.profile.ProfileFragment"
-        android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/placesFragment"

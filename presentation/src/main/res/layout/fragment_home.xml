@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".screen.home.HomeActivity">
+        tools:context=".screen.home.HomeFragment">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/home_nav_host_fragment"
@@ -18,7 +18,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/navigation_home" />
+            app:navGraph="@navigation/nav_graph_home" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
@@ -27,7 +27,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/menu_bottom" />
+            app:menu="@menu/home_menu_bottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
