@@ -1,5 +1,7 @@
 package com.minsk.guru.domain.model.firebase
 
+import com.minsk.guru.domain.model.User
+
 class FirebaseUser {
     var email: String = ""
     var name: String = ""
@@ -16,4 +18,6 @@ class FirebaseUser {
         this.name = name
         this.surname = surname
     }
+
+    fun toDomainModel() = User("UNKNOWN", email, name, surname, null)
 }

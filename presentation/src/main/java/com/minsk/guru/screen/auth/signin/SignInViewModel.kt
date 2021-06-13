@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.minsk.guru.domain.usecase.firebase.auth.GetCurrentUserUseCase
 import com.minsk.guru.domain.usecase.firebase.auth.SignInUseCase
 import com.minsk.guru.domain.usecase.user.InsertUserUseCase
-import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
+import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 
 class SignInViewModel(
     private val signInUseCase: SignInUseCase,
@@ -57,15 +57,8 @@ class SignInViewModel(
         }
     }
 
-    private fun handleSignInError(error: Throwable) {
-        errorLiveData.value = error
-    }
 
-    private fun handleGetCurrentUserError(error: Throwable) {
-        errorLiveData.value = error
-    }
-
-    private fun handleUpdateUserError(error: Throwable) {
+    private fun handleError(error: Throwable) {
         errorLiveData.value = error
     }
 
@@ -73,20 +66,20 @@ class SignInViewModel(
         taskExecutorFactory.createTaskExecutor<SignInUseCase.Param, SignInUseCase.Result>(
             singleResultUseCaseTaskProvider { signInUseCase },
             { data -> handleSignInResult(data) },
-            { error -> handleSignInError(error) }
+            { error -> handleError(error) }
         )
 
     private fun createGetCurrentUserTask() =
         taskExecutorFactory.createTaskExecutor<GetCurrentUserUseCase.Param, GetCurrentUserUseCase.Result>(
             singleResultUseCaseTaskProvider { getCurrentUserUseCase },
             { data -> handleGetCurrentUserResult(data) },
-            { error -> handleGetCurrentUserError(error) }
+            { error -> handleError(error) }
         )
 
     private fun createUpdateUserTask() =
         taskExecutorFactory.createTaskExecutor<InsertUserUseCase.Param, InsertUserUseCase.Result>(
             singleResultUseCaseTaskProvider { insertUserUseCase },
             { data -> handleUpdateUserResult(data) },
-            { error -> handleUpdateUserError(error) }
+            { error -> handleError(error) }
         )
 }

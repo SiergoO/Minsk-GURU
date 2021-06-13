@@ -6,7 +6,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.minsk.guru.domain.model.User
 import com.minsk.guru.domain.model.firebase.FirebaseUser
 import com.minsk.guru.domain.repository.firebase.auth.AuthRepository
-import java.util.concurrent.TimeUnit
 
 class AuthRepositoryImpl(
     private val firebaseDatabase: FirebaseDatabase,
@@ -32,22 +31,12 @@ class AuthRepositoryImpl(
     }
 
     override fun getCurrentUser(): User {
-        var user: User? = null
+        val userUId: String = firebaseAuth.currentUser!!.uid
         val taskGetUser =
-            firebaseDatabase.reference.child("users").child(firebaseAuth.currentUser.uid).get()
-        taskGetUser.addOnSuccessListener {
-            it.getValue(FirebaseUser::class.java).let { firebaseUser ->
-                user = User(
-                    it.key ?: "",
-                    firebaseUser?.email ?: "",
-                    firebaseUser?.name ?: "",
-                    firebaseUser?.surname ?: "",
-                    null
-                )
-            }
+            firebaseDatabase.reference.child("users").child(userUId).get()
+        Tasks.await(taskGetUser).getValue(FirebaseUser::class.java).let { firebaseUser ->
+            return firebaseUser?.toDomainModel()!!.copy(id = userUId)
         }
-        Tasks.await(taskGetUser, 15L, TimeUnit.SECONDS)
-        return user!!
     }
 
     private fun createUser(id: String, user: FirebaseUser) {

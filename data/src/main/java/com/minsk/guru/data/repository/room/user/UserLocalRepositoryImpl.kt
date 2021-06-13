@@ -7,14 +7,10 @@ class UserLocalRepositoryImpl(private val userDao: UserDao) : UserLocalRepositor
     override fun getUser(): User = userDao.getUser().toDomainUser()
 
     override fun updateUser(user: User) {
-        if (userDao.getUser() != user.toLocalUser()) {
-            userDao.updateUser(user.toLocalUser())
-        }
+        userDao.updateUser(user.toLocalUser())
     }
 
     override fun insertUser(user: User) {
-        if (getUser() != user) {
-            userDao.insertUser(user.toLocalUser())
-        } else updateUser(user)
+        userDao.insertUser(user.toLocalUser())
     }
 }

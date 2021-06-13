@@ -25,5 +25,5 @@ class FirebaseAchievement {
         this.placesIds = placesIds
     }
 
-    fun toDomainModel() = Achievement(-1, name, description, count) // TODO
+    fun toDomainModel() = Achievement(-1, name, description, count)
 }

@@ -10,7 +10,7 @@ interface AchievementsDao {
     @Query("SELECT * FROM achievements WHERE achievement_id=:id")
     fun getAchievementById(id: Int): LocalAchievement
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAchievements(achievements: List<LocalAchievement>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
