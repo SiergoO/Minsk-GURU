@@ -1,9 +1,15 @@
 package com.minsk.guru.domain.usecase.firebase.achievements
 
-import com.minsk.guru.domain.model.Achievements
-import com.minsk.guru.domain.repository.firebase.achievements.AchievementsRepository
+import com.minsk.guru.domain.model.Achievement
+import com.minsk.guru.domain.usecase.SingleResultUseCase
 
-class GetAchievementsUseCase(private val achievementsRepository: AchievementsRepository) {
+interface GetAchievementsUseCase:
+    SingleResultUseCase<GetAchievementsUseCase.Param, GetAchievementsUseCase.Result> {
 
-    suspend fun getAchievements(): Achievements = achievementsRepository.getAchievements()
+    object Param
+
+    sealed class Result {
+        data class Success(val achievements: List<Achievement>) : Result()
+        data class Failure(val error: Throwable) : Result()
+    }
 }

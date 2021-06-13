@@ -1,7 +1,7 @@
 package com.minsk.guru.domain.repository.firebase.achievements
 
-import com.minsk.guru.domain.model.Achievements
+import com.minsk.guru.domain.model.Achievement
 
 interface AchievementsRepository {
-    suspend fun getAchievements(): Achievements
+    fun getAchievements(): List<Achievement>
 }

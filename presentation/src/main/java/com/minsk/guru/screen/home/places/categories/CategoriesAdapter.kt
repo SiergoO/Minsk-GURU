@@ -61,22 +61,22 @@ class CategoriesAdapter(
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(achievement: Achievement) { // exchange with Category containing places list, name..
+        fun bind(firebaseAchievement: Achievement) { // exchange with Category containing places list, name..
             binding.apply {
-                category.text = achievement.category
+                category.text = firebaseAchievement.description
                 cardStatistic.findViewById<TextView>(R.id.tv_percentage).text =
                     context?.getString(
                         R.string.achievements_percentage,
                         ((progress * 100.0).toInt())
                     )
                 cardStatistic.findViewById<TextView>(R.id.tv_progress).text =
-                    "${(progress * achievement.count).toInt()}/${achievement.count}"
+                    "${(progress * firebaseAchievement.count).toInt()}/${firebaseAchievement.count}"
                 progressAchievements.progress = (progress * 100.0).toInt()
             }
         }
     }
 
     interface Callback {
-        fun onCategoryClicked(achievement: Achievement)
+        fun onCategoryClicked(firebaseAchievement: Achievement)
     }
 }

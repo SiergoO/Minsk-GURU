@@ -1,4 +1,4 @@
-package com.minsk.guru.domain.model
+package com.minsk.guru.domain.model.firebase
 
 class FirebaseUser {
     var email: String = ""

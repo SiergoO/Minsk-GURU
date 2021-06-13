@@ -9,20 +9,21 @@ import com.minsk.guru.data.repository.AppDatabase
 import com.minsk.guru.data.repository.firebase.AchievementsRepositoryImpl
 import com.minsk.guru.data.repository.firebase.AuthRepositoryImpl
 import com.minsk.guru.data.repository.firebase.PlacesRepositoryImpl
+import com.minsk.guru.data.repository.room.achievements.AchievementsLocalRepositoryImpl
 import com.minsk.guru.data.repository.room.user.UserLocalRepositoryImpl
 import com.minsk.guru.domain.domainModule
 import com.minsk.guru.domain.repository.firebase.achievements.AchievementsRepository
 import com.minsk.guru.domain.repository.firebase.auth.AuthRepository
 import com.minsk.guru.domain.repository.firebase.places.PlacesRepository
+import com.minsk.guru.domain.repository.room.AchievementsLocalRepository
 import com.minsk.guru.domain.repository.room.UserLocalRepository
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.features.websocket.WebSockets
+import io.ktor.client.*
+import io.ktor.client.engine.okhttp.*
+import io.ktor.client.features.websocket.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
-import kotlin.math.sin
 
 val dataModule = module(override = true) {
 
@@ -49,7 +50,9 @@ val dataModule = module(override = true) {
         ).build()
     }
     single { get<AppDatabase>().userDao() }
+    single { get<AppDatabase>().achievementsDao() }
     single<UserLocalRepository> { UserLocalRepositoryImpl(get()) }
+    single<AchievementsLocalRepository> { AchievementsLocalRepositoryImpl(get()) }
 
     single {
         HttpClient(OkHttp) {

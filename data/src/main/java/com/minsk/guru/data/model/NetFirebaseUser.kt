@@ -1,6 +1,6 @@
 package com.minsk.guru.data.model
 
-import com.minsk.guru.domain.model.FirebaseUser
+import com.minsk.guru.domain.model.firebase.FirebaseUser
 
 data class NetFirebaseUser(
     var email: String,

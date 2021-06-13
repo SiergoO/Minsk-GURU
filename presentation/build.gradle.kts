@@ -36,6 +36,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            multiDexEnabled = true
         }
     }
     buildFeatures {
@@ -63,8 +64,8 @@ dependencies {
     implementation(Libraries.firebaseDatabase)
     implementation(Libraries.firebaseAuth)
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.4")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.4")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
     implementation(Libraries.materialDesign)
     implementation(Libraries.retrofit)
     implementation(Libraries.gson)
@@ -74,6 +75,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.android.support:recyclerview-v7:28.0.0")
 
     koinAndroid()
     glide()

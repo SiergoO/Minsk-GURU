@@ -1,16 +1,17 @@
 package com.minsk.guru.domain.model
 
+import com.minsk.guru.domain.model.firebase.FirebaseAchievement
+
 class Achievements {
 
-    var achievements: MutableList<Achievement> = mutableListOf()
+    var firebaseAchievements = listOf<FirebaseAchievement>()
+    constructor() : super()
 
-    constructor(): super()
-
-    constructor(achievements: MutableList<Achievement>) {
-        this.achievements = achievements
+    constructor(firebaseAchievements: List<FirebaseAchievement>) {
+        this.firebaseAchievements = firebaseAchievements
     }
 
     override fun toString(): String {
-        return achievements.joinToString("\n") { it.name + " - " + it.description }
+        return firebaseAchievements.joinToString("\n") { "${it.name} - ${it.description}" }
     }
 }

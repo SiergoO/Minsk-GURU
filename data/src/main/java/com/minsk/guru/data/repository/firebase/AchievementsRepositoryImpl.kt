@@ -1,31 +1,30 @@
 package com.minsk.guru.data.repository.firebase
 
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.minsk.guru.domain.model.Achievements
+import com.google.firebase.database.*
+import com.minsk.guru.domain.model.Achievement
+import com.minsk.guru.domain.model.firebase.FirebaseAchievement
 import com.minsk.guru.domain.repository.firebase.achievements.AchievementsRepository
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class AchievementsRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) :
     AchievementsRepository {
-    override suspend fun getAchievements() = withContext(Dispatchers.IO) {
-        val achievementsDeferred = CompletableDeferred<Achievements>()
-        val db = firebaseDatabase.reference
-        db.addValueEventListener(object : ValueEventListener {
+    override fun getAchievements(): List<Achievement> {
+        val achievementsDeferred = CompletableDeferred<List<Achievement>>()
+        val db = firebaseDatabase.reference.child("achievements")
+        db.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
-
+                /** do nothing **/
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                val achievements =
-                    snapshot.getValue(Achievements::class.java) ?: Achievements(mutableListOf())
-                achievementsDeferred.complete(achievements)
+                val achievements = snapshot.getValue(
+                    object : GenericTypeIndicator<List<FirebaseAchievement>>() {}
+                ) ?: listOf()
+                achievementsDeferred.complete(achievements.map {
+                    it.toDomainModel().copy(id = achievements.indexOf(it))
+                })
             }
         })
-        return@withContext achievementsDeferred.await()
+        return achievementsDeferred.getCompleted()
     }
 }

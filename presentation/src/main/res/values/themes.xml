@@ -23,11 +23,6 @@
         <item name="android:lineSpacingExtra">3sp</item>
     </style>
 
-    <style name="App.TextView.Title">
-        <item name="android:textSize">22sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="App.Button" parent="Widget.AppCompat.Button">
         <item name="android:textAppearance">@style/App.TextView</item>
         <item name="android:padding">12dp</item>

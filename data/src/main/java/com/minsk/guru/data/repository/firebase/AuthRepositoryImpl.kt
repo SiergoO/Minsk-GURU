@@ -3,8 +3,8 @@ package com.minsk.guru.data.repository.firebase
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.minsk.guru.domain.model.FirebaseUser
 import com.minsk.guru.domain.model.User
+import com.minsk.guru.domain.model.firebase.FirebaseUser
 import com.minsk.guru.domain.repository.firebase.auth.AuthRepository
 import java.util.concurrent.TimeUnit
 
