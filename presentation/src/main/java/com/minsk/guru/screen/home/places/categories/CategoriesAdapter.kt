@@ -63,7 +63,7 @@ class CategoriesAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(firebaseAchievement: Achievement) { // exchange with Category containing places list, name..
             binding.apply {
-                category.text = firebaseAchievement.description
+                category.text = firebaseAchievement.name
                 cardStatistic.findViewById<TextView>(R.id.tv_percentage).text =
                     context?.getString(
                         R.string.achievements_percentage,

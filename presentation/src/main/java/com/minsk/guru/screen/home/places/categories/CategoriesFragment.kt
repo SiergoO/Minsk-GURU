@@ -38,10 +38,10 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
         )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        viewModel.getAchievements()
         viewModel.resultLiveData.observe(viewLifecycleOwner) {
             categoriesAdapter.set(it)
         }
-        viewModel.getAchievements()
         return binding.root
     }
 

@@ -25,7 +25,8 @@ class CategoriesViewModel(
     private val taskInsertAchievements = createInsertAchievementsTask()
     private val taskGetAchievements = createGetAchievementsTask()
 
-    fun getAchievements() = taskGetAchievements.start(GetAchievementsUseCase.Param)
+    fun getAchievements() =
+        taskGetAchievements.start(GetAchievementsUseCase.Param)
 
     private fun handleInsertAchievementsResult(data: InsertAchievementsUseCase.Result) {
         when (data) {
