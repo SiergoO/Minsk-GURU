@@ -5,6 +5,8 @@ import com.minsk.guru.domain.usecase.achievement.InsertAchievementsUseCaseImpl
 import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCase
 import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCaseImpl
 import com.minsk.guru.domain.usecase.firebase.auth.*
+import com.minsk.guru.domain.usecase.firebase.places.GetCategoriesUseCase
+import com.minsk.guru.domain.usecase.firebase.places.GetCategoriesUseCaseImpl
 import com.minsk.guru.domain.usecase.firebase.places.GetPlacesUseCase
 import com.minsk.guru.domain.usecase.user.InsertUserUseCase
 import com.minsk.guru.domain.usecase.user.InsertUserUseCaseImpl
@@ -20,6 +22,7 @@ val domainModule = module {
     factory<InsertUserUseCase> { InsertUserUseCaseImpl(get()) }
     factory<GetAchievementsUseCase> { GetAchievementsUseCaseImpl(get()) }
     factory<InsertAchievementsUseCase> { InsertAchievementsUseCaseImpl(get()) }
+    factory<GetCategoriesUseCase> { GetCategoriesUseCaseImpl(get()) }
 }
 
 val startDomainKoin = {

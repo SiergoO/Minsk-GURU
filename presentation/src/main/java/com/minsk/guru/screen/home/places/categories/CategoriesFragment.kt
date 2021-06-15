@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentCategoriesBinding
-import com.minsk.guru.domain.model.Achievement
+import com.minsk.guru.domain.model.Category
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategoriesFragment(private val layout: Int = R.layout.fragment_categories) :
@@ -38,7 +38,7 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
         )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        viewModel.getAchievements()
+        viewModel.getCategories()
         viewModel.resultLiveData.observe(viewLifecycleOwner) {
             categoriesAdapter.set(it)
         }
@@ -49,9 +49,10 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
         binding.achievements.apply {
             categoriesAdapter = CategoriesAdapter(context,
                 object : CategoriesAdapter.Callback {
-                    override fun onCategoryClicked(firebaseAchievement: Achievement) {
+
+                    override fun onCategoryClicked(category: Category) {
                         val bundle =
-                            bundleOf("categoryName" to firebaseAchievement.description) // WTF
+                            bundleOf("categoryName" to category.name)
                         findNavController().navigate(
                             R.id.action_categoriesFragment_to_placesFragment,
                             bundle

@@ -3,11 +3,12 @@ package com.minsk.guru.screen.home.places.categories
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.minsk.guru.domain.model.Achievement
+import com.minsk.guru.domain.model.Category
 import com.minsk.guru.domain.model.firebase.FirebaseAchievement
 import com.minsk.guru.domain.usecase.achievement.InsertAchievementsUseCase
 import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCase
 import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCaseImpl
+import com.minsk.guru.domain.usecase.firebase.places.GetCategoriesUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
 import com.minsk.guru.utils.singleResultUseCaseTaskProvider
@@ -15,18 +16,33 @@ import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 class CategoriesViewModel(
     private val getAchievementsUseCase: GetAchievementsUseCaseImpl,
     private val insertAchievementsUseCase: InsertAchievementsUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val taskExecutorFactory: TaskExecutorFactory
 ) : ViewModel() {
 
     var places: LiveData<List<FirebaseAchievement>> = MutableLiveData()
 
     var errorLiveData = MutableLiveData<Throwable>()
-    var resultLiveData = MutableLiveData<List<Achievement>>()
-    private val taskInsertAchievements = createInsertAchievementsTask()
+    var resultLiveData = MutableLiveData<List<Category>>()
     private val taskGetAchievements = createGetAchievementsTask()
+    private val taskInsertAchievements = createInsertAchievementsTask()
+    private val taskGetCategories = createGetCategoriesTask()
 
-    fun getAchievements() =
+    init {
         taskGetAchievements.start(GetAchievementsUseCase.Param)
+    }
+
+    fun getCategories() = taskGetCategories.start(GetCategoriesUseCase.Param)
+
+    private fun handleGetAchievementsResult(data: GetAchievementsUseCase.Result) {
+        when (data) {
+            is GetAchievementsUseCase.Result.Failure -> errorLiveData.value = data.error
+            is GetAchievementsUseCase.Result.Success -> {
+                taskInsertAchievements.start(InsertAchievementsUseCase.Param(data.achievements))
+            }
+            else -> Unit
+        }
+    }
 
     private fun handleInsertAchievementsResult(data: InsertAchievementsUseCase.Result) {
         when (data) {
@@ -35,36 +51,37 @@ class CategoriesViewModel(
         }
     }
 
-    private fun handleGetAchievementsResult(data: GetAchievementsUseCase.Result) {
+
+    private fun handleGetCategoriesResult(data: GetCategoriesUseCase.Result) {
         when (data) {
-            is GetAchievementsUseCase.Result.Failure -> errorLiveData.value = data.error
-            is GetAchievementsUseCase.Result.Success -> {
-                resultLiveData.value = data.achievements
-                taskInsertAchievements.start(InsertAchievementsUseCase.Param(data.achievements))
-            }
+            is GetCategoriesUseCase.Result.Failure -> errorLiveData.value = data.error
+            is GetCategoriesUseCase.Result.Success -> resultLiveData.value = data.categories
             else -> Unit
         }
     }
 
-    private fun handleInsertAchievementError(error: Throwable) {
+    private fun handleError(error: Throwable) {
         errorLiveData.value = error
     }
-
-    private fun handleGetAchievementsError(error: Throwable) {
-        errorLiveData.value = error
-    }
-
-    private fun createInsertAchievementsTask() =
-        taskExecutorFactory.createTaskExecutor<InsertAchievementsUseCase.Param, InsertAchievementsUseCase.Result>(
-            singleResultUseCaseTaskProvider { insertAchievementsUseCase },
-            { data -> handleInsertAchievementsResult(data) },
-            { error -> handleInsertAchievementError(error) }
-        )
 
     private fun createGetAchievementsTask() =
         taskExecutorFactory.createTaskExecutor<GetAchievementsUseCase.Param, GetAchievementsUseCase.Result>(
             singleResultUseCaseTaskProvider { getAchievementsUseCase },
             { data -> handleGetAchievementsResult(data) },
-            { error -> handleGetAchievementsError(error) }
+            { error -> handleError(error) }
+        )
+
+    private fun createInsertAchievementsTask() =
+        taskExecutorFactory.createTaskExecutor<InsertAchievementsUseCase.Param, InsertAchievementsUseCase.Result>(
+            singleResultUseCaseTaskProvider { insertAchievementsUseCase },
+            { data -> handleInsertAchievementsResult(data) },
+            { error -> handleError(error) }
+        )
+
+    private fun createGetCategoriesTask() =
+        taskExecutorFactory.createTaskExecutor<GetCategoriesUseCase.Param, GetCategoriesUseCase.Result>(
+            singleResultUseCaseTaskProvider { getCategoriesUseCase },
+            { data -> handleGetCategoriesResult(data) },
+            { error -> handleError(error) }
         )
 }

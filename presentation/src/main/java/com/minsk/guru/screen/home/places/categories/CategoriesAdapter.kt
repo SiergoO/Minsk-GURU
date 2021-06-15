@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.R
 import com.minsk.guru.databinding.ItemCategoryBinding
-import com.minsk.guru.domain.model.Achievement
+import com.minsk.guru.domain.model.Category
+import kotlin.math.roundToInt
 
 class CategoriesAdapter(
     private val context: Context?,
@@ -17,13 +17,13 @@ class CategoriesAdapter(
 
     var callback: Callback? = null
     private val layoutInflater = LayoutInflater.from(context)
-    private var items: List<Achievement> = listOf()
+    private var items: List<Category> = listOf()
 
     init {
         this.callback = callback
     }
 
-    fun set(items: List<Achievement>) {
+    fun set(items: List<Category>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -39,16 +39,14 @@ class CategoriesAdapter(
     }
 
     private fun handleItemClicked(position: Int) {
-        val achievement = items[position]
-        callback?.onCategoryClicked(achievement)
+        val category = items[position]
+        callback?.onCategoryClicked(category)
     }
 
 
     inner class ViewHolder(
         private val binding: ItemCategoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
-        private val progress: Double = Math.random()
 
         init {
             binding.root.setOnClickListener {
@@ -61,22 +59,20 @@ class CategoriesAdapter(
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(firebaseAchievement: Achievement) { // exchange with Category containing places list, name..
+        fun bind(item: Category) {
             binding.apply {
-                category.text = firebaseAchievement.name
-                cardStatistic.findViewById<TextView>(R.id.tv_percentage).text =
-                    context?.getString(
-                        R.string.achievements_percentage,
-                        ((progress * 100.0).toInt())
-                    )
-                cardStatistic.findViewById<TextView>(R.id.tv_progress).text =
-                    "${(progress * firebaseAchievement.count).toInt()}/${firebaseAchievement.count}"
-                progressAchievements.progress = (progress * 100.0).toInt()
+                val placesAmount = item.placesIds.size
+                val visitedAmount = (0..placesAmount).random()
+                val percentage = (visitedAmount.toDouble() / placesAmount.toDouble() * 100.0).roundToInt()
+                category.text = item.name
+                tvPercentage.text = context?.getString(R.string.achievements_percentage, percentage)
+                tvProgress.text = "$visitedAmount/$placesAmount"
+                progressAchievements.progress = percentage
             }
         }
     }
 
     interface Callback {
-        fun onCategoryClicked(firebaseAchievement: Achievement)
+        fun onCategoryClicked(category: Category)
     }
 }
