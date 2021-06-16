@@ -40,7 +40,7 @@ val presentationModule = module {
     viewModel { CategoriesViewModel(get(), get(), get(), get()) }
 
     fragment { PlacesFragment() }
-    viewModel { PlacesViewModel(get()) }
+    viewModel { PlacesViewModel(get(), get(), get(),get()) }
 
     fragment { ProfileFragment() }
     viewModel { ProfileViewModel() }

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.minsk.guru.domain.usecase.firebase.auth.GetCurrentUserUseCase
 import com.minsk.guru.domain.usecase.firebase.auth.SignUpUseCase
-import com.minsk.guru.domain.usecase.user.InsertUserUseCase
+import com.minsk.guru.domain.usecase.local.user.InsertUserUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
 import com.minsk.guru.utils.singleResultUseCaseTaskProvider

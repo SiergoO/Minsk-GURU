@@ -1,4 +1,4 @@
-package com.minsk.guru.domain.usecase.user
+package com.minsk.guru.domain.usecase.local.user
 
 import com.minsk.guru.domain.model.User
 import com.minsk.guru.domain.usecase.SingleResultUseCase

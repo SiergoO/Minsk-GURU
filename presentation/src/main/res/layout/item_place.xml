@@ -70,7 +70,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_place_is_visited"
+            app:layout_constraintEnd_toStartOf="@+id/checkbox_is_visited"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_place_address"
@@ -81,10 +81,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="start"
-            app:constraint_referenced_ids="tv_place_is_visited" />
+            app:constraint_referenced_ids="checkbox_is_visited" />
 
         <CheckBox
-            android:id="@+id/tv_place_is_visited"
+            android:id="@+id/checkbox_is_visited"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"

@@ -55,9 +55,13 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.places.apply {
-            placesAdapter = PlacesAdapter(context, object : PlacesAdapter.Callback {
+            placesAdapter = PlacesAdapter(context, object : PlacesAdapter.OnPlaceClickListener {
                 override fun onPlaceClicked(place: Place) {
                     Toast.makeText(context, "${place.id} clicked", Toast.LENGTH_SHORT).show()
+                }
+            }, object : PlacesAdapter.OnIsVisitedCheckboxClickListener {
+                override fun onIsVisitedCheckboxClicked(place: Place, isVisited: Boolean) {
+                    viewModel.updateLocalPlace(place, isVisited)
                 }
             })
             this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)

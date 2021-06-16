@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.minsk.guru.domain.model.Category
 import com.minsk.guru.domain.model.firebase.FirebaseAchievement
-import com.minsk.guru.domain.usecase.achievement.InsertAchievementsUseCase
+import com.minsk.guru.domain.usecase.InsertLocalAchievementsUseCase
 import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCase
 import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCaseImpl
 import com.minsk.guru.domain.usecase.firebase.places.GetCategoriesUseCase
@@ -15,7 +15,7 @@ import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 
 class CategoriesViewModel(
     private val getAchievementsUseCase: GetAchievementsUseCaseImpl,
-    private val insertAchievementsUseCase: InsertAchievementsUseCase,
+    private val insertLocalAchievementsUseCase: InsertLocalAchievementsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val taskExecutorFactory: TaskExecutorFactory
 ) : ViewModel() {
@@ -38,15 +38,15 @@ class CategoriesViewModel(
         when (data) {
             is GetAchievementsUseCase.Result.Failure -> errorLiveData.value = data.error
             is GetAchievementsUseCase.Result.Success -> {
-                taskInsertAchievements.start(InsertAchievementsUseCase.Param(data.achievements))
+                taskInsertAchievements.start(InsertLocalAchievementsUseCase.Param(data.achievements))
             }
             else -> Unit
         }
     }
 
-    private fun handleInsertAchievementsResult(data: InsertAchievementsUseCase.Result) {
+    private fun handleInsertAchievementsResult(data: InsertLocalAchievementsUseCase.Result) {
         when (data) {
-            is InsertAchievementsUseCase.Result.Failure -> errorLiveData.value = data.error
+            is InsertLocalAchievementsUseCase.Result.Failure -> errorLiveData.value = data.error
             else -> Unit
         }
     }
@@ -72,8 +72,8 @@ class CategoriesViewModel(
         )
 
     private fun createInsertAchievementsTask() =
-        taskExecutorFactory.createTaskExecutor<InsertAchievementsUseCase.Param, InsertAchievementsUseCase.Result>(
-            singleResultUseCaseTaskProvider { insertAchievementsUseCase },
+        taskExecutorFactory.createTaskExecutor<InsertLocalAchievementsUseCase.Param, InsertLocalAchievementsUseCase.Result>(
+            singleResultUseCaseTaskProvider { insertLocalAchievementsUseCase },
             { data -> handleInsertAchievementsResult(data) },
             { error -> handleError(error) }
         )

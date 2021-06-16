@@ -7,18 +7,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.databinding.ItemPlaceBinding
 import com.minsk.guru.domain.model.Place
-import kotlin.time.days
 
 class PlacesAdapter(
     private val context: Context?,
-    callback: Callback? = null
+    placeClickListener: OnPlaceClickListener?,
+    isVisitedCheckboxClickListener: OnIsVisitedCheckboxClickListener?,
 ) : RecyclerView.Adapter<PlacesAdapter.ViewHolder>() {
 
-    var callback: Callback? = null
+    var placeClickListener: OnPlaceClickListener? = null
+    var isVisitedCheckboxClickListener: OnIsVisitedCheckboxClickListener? = null
     private var items: List<Place> = listOf()
 
     init {
-        this.callback = callback
+        this.placeClickListener = placeClickListener
+        this.isVisitedCheckboxClickListener = isVisitedCheckboxClickListener
     }
 
     fun set(items: List<Place>) {
@@ -38,9 +40,13 @@ class PlacesAdapter(
 
     private fun handleItemClicked(position: Int) {
         val place = items[position]
-        callback?.onPlaceClicked(place)
+        placeClickListener?.onPlaceClicked(place)
     }
 
+    private fun handleItemIsVisitedCheckboxClicked(position: Int, isChecked: Boolean) {
+        val place = items[position]
+        isVisitedCheckboxClickListener?.onIsVisitedCheckboxClicked(place, isChecked)
+    }
 
     inner class ViewHolder(
         private val binding: ItemPlaceBinding
@@ -54,6 +60,13 @@ class PlacesAdapter(
                     }
                 }
             }
+            binding.checkboxIsVisited.setOnClickListener {
+                adapterPosition.let { position ->
+                    if (RecyclerView.NO_POSITION != position) {
+                        handleItemIsVisitedCheckboxClicked(position, binding.checkboxIsVisited.isChecked)
+                    }
+                }
+            }
         }
 
         @SuppressLint("SetTextI18n")
@@ -62,12 +75,16 @@ class PlacesAdapter(
                 tvPlaceName.text = place.name
                 tvPlaceAddress.text = place.address
                 tvPlaceCategory.text = place.category
-                tvPlaceIsVisited.text = "Visited yet?"
+                checkboxIsVisited.text = "Visited yet?"
             }
         }
     }
 
-    interface Callback {
+    interface OnPlaceClickListener {
         fun onPlaceClicked(place: Place)
+    }
+
+    interface OnIsVisitedCheckboxClickListener {
+        fun onIsVisitedCheckboxClicked(place: Place, isVisited: Boolean)
     }
 }

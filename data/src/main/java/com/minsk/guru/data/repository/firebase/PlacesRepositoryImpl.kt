@@ -69,7 +69,7 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
             this.category.split(',').map { it.trim().capitalize(Locale.getDefault()) }
         for (category in splitCategoriesList) {
             list.add(
-                Place(address, category, id, latitude, longitude, name, opening_hours, phone, url)
+                Place(address, category, id, latitude, longitude, name, openingHours, phone, url)
             )
         }
         return list
