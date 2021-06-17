@@ -8,8 +8,9 @@ import kotlinx.coroutines.Dispatchers
 class GetCategoriesUseCaseImpl(
     private val placesRepository: PlacesRepository,
     ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : CoroutineSingleResultUseCase<GetCategoriesUseCase.Param, GetCategoriesUseCase.Result>(ioDispatcher),
-    GetCategoriesUseCase {
+) : CoroutineSingleResultUseCase<GetCategoriesUseCase.Param, GetCategoriesUseCase.Result>(
+    ioDispatcher
+), GetCategoriesUseCase {
 
     override suspend fun run(param: GetCategoriesUseCase.Param): GetCategoriesUseCase.Result =
         try {

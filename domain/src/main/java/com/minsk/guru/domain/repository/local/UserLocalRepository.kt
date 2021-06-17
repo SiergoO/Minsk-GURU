@@ -1,4 +1,4 @@
-package com.minsk.guru.domain.repository.room
+package com.minsk.guru.domain.repository.local
 
 import com.minsk.guru.domain.model.User
 

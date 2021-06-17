@@ -1,6 +1,6 @@
 package com.minsk.guru.domain.usecase.local.user
 
-import com.minsk.guru.domain.repository.room.UserLocalRepository
+import com.minsk.guru.domain.repository.local.UserLocalRepository
 import com.minsk.guru.domain.usecase.CoroutineSingleResultUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

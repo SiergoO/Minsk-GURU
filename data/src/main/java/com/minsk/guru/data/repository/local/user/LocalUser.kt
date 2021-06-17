@@ -1,9 +1,9 @@
-package com.minsk.guru.data.repository.room.user
+package com.minsk.guru.data.repository.local.user
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.minsk.guru.data.repository.room.user.LocalUser.Companion.TABLE_NAME
+import com.minsk.guru.data.repository.local.user.LocalUser.Companion.TABLE_NAME
 import com.minsk.guru.domain.model.User
 
 @Entity(tableName = TABLE_NAME)

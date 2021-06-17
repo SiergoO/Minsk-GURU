@@ -1,6 +1,6 @@
 package com.minsk.guru.domain.usecase
 
-import com.minsk.guru.domain.repository.room.AchievementsLocalRepository
+import com.minsk.guru.domain.repository.local.AchievementsLocalRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 

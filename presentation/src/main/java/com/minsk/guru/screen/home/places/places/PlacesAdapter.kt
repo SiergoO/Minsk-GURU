@@ -16,35 +16,41 @@ class PlacesAdapter(
 
     var placeClickListener: OnPlaceClickListener? = null
     var isVisitedCheckboxClickListener: OnIsVisitedCheckboxClickListener? = null
-    private var items: List<Place> = listOf()
+    private var places: List<Place> = listOf()
+    private var visitedPlaces: List<Place> = listOf()
 
     init {
         this.placeClickListener = placeClickListener
         this.isVisitedCheckboxClickListener = isVisitedCheckboxClickListener
     }
 
-    fun set(items: List<Place>) {
-        this.items = items
+    fun setAllPlaces(places: List<Place>) {
+        this.places = places
+        notifyDataSetChanged()
+    }
+
+    fun setVisitedPlaces(visitedPlaces: List<Place>) {
+        this.visitedPlaces = visitedPlaces
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int =
-        items.size
+        places.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(ItemPlaceBinding.inflate(LayoutInflater.from(context), parent, false))
 
     override fun onBindViewHolder(holder: PlacesAdapter.ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(places[position], visitedPlaces.any { it.id == places[position].id })
     }
 
     private fun handleItemClicked(position: Int) {
-        val place = items[position]
+        val place = places[position]
         placeClickListener?.onPlaceClicked(place)
     }
 
     private fun handleItemIsVisitedCheckboxClicked(position: Int, isChecked: Boolean) {
-        val place = items[position]
+        val place = places[position]
         isVisitedCheckboxClickListener?.onIsVisitedCheckboxClicked(place, isChecked)
     }
 
@@ -63,19 +69,23 @@ class PlacesAdapter(
             binding.checkboxIsVisited.setOnClickListener {
                 adapterPosition.let { position ->
                     if (RecyclerView.NO_POSITION != position) {
-                        handleItemIsVisitedCheckboxClicked(position, binding.checkboxIsVisited.isChecked)
+                        handleItemIsVisitedCheckboxClicked(
+                            position,
+                            binding.checkboxIsVisited.isChecked
+                        )
                     }
                 }
             }
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(place: Place) {
+        fun bind(place: Place, isVisited: Boolean) {
             binding.apply {
                 tvPlaceName.text = place.name
                 tvPlaceAddress.text = place.address
                 tvPlaceCategory.text = place.category
                 checkboxIsVisited.text = "Visited yet?"
+                checkboxIsVisited.isChecked = isVisited
             }
         }
     }

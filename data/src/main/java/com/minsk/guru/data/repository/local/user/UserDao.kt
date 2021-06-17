@@ -1,4 +1,4 @@
-package com.minsk.guru.data.repository.room.user
+package com.minsk.guru.data.repository.local.user
 
 import androidx.room.*
 

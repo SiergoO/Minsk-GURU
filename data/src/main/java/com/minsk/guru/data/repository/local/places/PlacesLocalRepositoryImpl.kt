@@ -1,7 +1,7 @@
-package com.minsk.guru.data.repository.room.places
+package com.minsk.guru.data.repository.local.places
 
 import com.minsk.guru.domain.model.Place
-import com.minsk.guru.domain.repository.room.PlacesLocalRepository
+import com.minsk.guru.domain.repository.local.PlacesLocalRepository
 
 class PlacesLocalRepositoryImpl(private val placesDao: PlacesDao) :
     PlacesLocalRepository {
@@ -11,6 +11,9 @@ class PlacesLocalRepositoryImpl(private val placesDao: PlacesDao) :
 
     override fun getPlaceById(id: Int): Place =
         placesDao.getPlaceById(id).toDomainPlace()
+
+    override fun getPlacesByCategory(categoryName: String?): List<Place> =
+        placesDao.getPlacesByCategory(categoryName).map { it.toDomainPlace() }
 
     override fun updatePlace(place: Place) {
         placesDao.updatePlace(place.toLocalPlace())

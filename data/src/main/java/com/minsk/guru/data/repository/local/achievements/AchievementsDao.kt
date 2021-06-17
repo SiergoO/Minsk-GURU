@@ -1,4 +1,4 @@
-package com.minsk.guru.data.repository.room.achievements
+package com.minsk.guru.data.repository.local.achievements
 
 import androidx.room.*
 

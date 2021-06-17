@@ -1,6 +1,6 @@
 package com.minsk.guru.domain.usecase.local.places
 
-import com.minsk.guru.domain.repository.room.PlacesLocalRepository
+import com.minsk.guru.domain.repository.local.PlacesLocalRepository
 import com.minsk.guru.domain.usecase.CoroutineSingleResultUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

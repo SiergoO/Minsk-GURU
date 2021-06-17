@@ -1,9 +1,9 @@
-package com.minsk.guru.data.repository.room.achievements
+package com.minsk.guru.data.repository.local.achievements
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.minsk.guru.data.repository.room.achievements.LocalAchievement.Companion.TABLE_NAME
+import com.minsk.guru.data.repository.local.achievements.LocalAchievement.Companion.TABLE_NAME
 import com.minsk.guru.domain.model.Achievement
 
 @Entity(tableName = TABLE_NAME)

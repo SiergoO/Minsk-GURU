@@ -1,7 +1,7 @@
-package com.minsk.guru.data.repository.room.achievements
+package com.minsk.guru.data.repository.local.achievements
 
 import com.minsk.guru.domain.model.Achievement
-import com.minsk.guru.domain.repository.room.AchievementsLocalRepository
+import com.minsk.guru.domain.repository.local.AchievementsLocalRepository
 
 class AchievementsLocalRepositoryImpl(private val achievementsDao: AchievementsDao) :
     AchievementsLocalRepository {

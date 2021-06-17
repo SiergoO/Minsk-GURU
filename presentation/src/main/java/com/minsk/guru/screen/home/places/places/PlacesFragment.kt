@@ -7,14 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentPlacesBinding
 import com.minsk.guru.domain.model.Place
-import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragment(layout) {
@@ -25,18 +22,6 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
     val binding: FragmentPlacesBinding
         get() = _binding!!
     private lateinit var placesAdapter: PlacesAdapter
-
-    init {
-        lifecycleScope.launchWhenStarted {
-            withContext(coroutineContext) {
-                viewModel.getPlacesByCategory(arguments?.getString("categoryName"))
-                val placesObserver = Observer<List<Place>> { places ->
-                    placesAdapter.set(places)
-                }
-                viewModel.places.observe(viewLifecycleOwner, placesObserver)
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +35,14 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
             false
         )
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        viewModel.getPlacesByCategory(arguments?.getString("categoryName"))
+        viewModel.allPlacesByCategoryLiveData.observe(viewLifecycleOwner) { all ->
+            placesAdapter.setAllPlaces(all)
+        }
+        viewModel.visitedPlacesByCategoryLiveData.observe(viewLifecycleOwner) { visited ->
+            placesAdapter.setVisitedPlaces(visited)
+        }
         return binding.root
     }
 

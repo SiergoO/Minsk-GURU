@@ -1,4 +1,4 @@
-package com.minsk.guru.data.repository.room.places
+package com.minsk.guru.data.repository.local.places
 
 import androidx.room.*
 
@@ -9,6 +9,9 @@ interface PlacesDao {
 
     @Query("SELECT * FROM places WHERE place_id=:id")
     fun getPlaceById(id: Int): LocalPlace
+
+    @Query("SELECT * FROM places WHERE place_category LIKE '%' || :categoryName || '%'")
+    fun getPlacesByCategory(categoryName: String?): List<LocalPlace>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlace(place: LocalPlace)

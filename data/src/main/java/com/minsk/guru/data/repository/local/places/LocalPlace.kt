@@ -1,9 +1,9 @@
-package com.minsk.guru.data.repository.room.places
+package com.minsk.guru.data.repository.local.places
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.minsk.guru.data.repository.room.places.LocalPlace.Companion.TABLE_NAME
+import com.minsk.guru.data.repository.local.places.LocalPlace.Companion.TABLE_NAME
 import com.minsk.guru.domain.model.Place
 
 @Entity(tableName = TABLE_NAME)
