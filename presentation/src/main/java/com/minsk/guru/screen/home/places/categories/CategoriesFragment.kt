@@ -39,8 +39,11 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         viewModel.getCategories()
-        viewModel.categoriesResultLiveData.observe(viewLifecycleOwner) {
-            categoriesAdapter.set(it)
+        viewModel.categoriesResultLiveData.observe(viewLifecycleOwner) { categories ->
+            categoriesAdapter.setCategories(categories)
+        }
+        viewModel.visitedPlacesResultLiveData.observe(viewLifecycleOwner) { visitedPlaces ->
+            categoriesAdapter.setVisitedPlaces(visitedPlaces)
         }
         return binding.root
     }
