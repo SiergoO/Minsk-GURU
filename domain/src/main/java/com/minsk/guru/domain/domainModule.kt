@@ -24,8 +24,8 @@ val domainModule = module {
     factory<GetAchievementsUseCase> { GetAchievementsUseCaseImpl(get()) }
     factory<InsertLocalAchievementsUseCase> { InsertLocalAchievementsUseCaseImpl(get()) }
     factory<GetCategoriesUseCase> { GetCategoriesUseCaseImpl(get()) }
-    factory<InsertLocalPlaceUseCase> { InsertLocalPlaceUseCaseImpl(get()) }
-    factory<DeleteLocalPlaceUseCase> { DeleteLocalPlaceUseCaseImpl(get()) }
+    factory<InsertLocalPlaceUseCase> { InsertLocalPlaceUseCaseImpl(get(), get()) }
+    factory<DeleteLocalPlaceUseCase> { DeleteLocalPlaceUseCaseImpl(get(), get() ) }
     factory<GetRemotePlacesByCategoryUseCase> { GetRemotePlacesByCategoryUseCaseImpl(get()) }
     factory<GetVisitedLocalPlacesByCategoryUseCase> { GetVisitedLocalPlacesByCategoryUseCaseImpl(get()) }
     factory<GetVisitedLocalPlacesUseCase> { GetVisitedLocalPlacesUseCaseImpl(get()) }

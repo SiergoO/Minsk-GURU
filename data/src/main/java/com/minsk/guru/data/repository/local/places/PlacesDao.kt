@@ -7,6 +7,9 @@ interface PlacesDao {
     @Query("SELECT * FROM places")
     fun getPlaces(): List<LocalPlace>
 
+//    @Query("SELECT * FROM places WHERE place_id IN (SELECT * FROM user_places WHERE place_id=:userId)")
+//    fun getUserVisitedPlaces(userId: String): List<LocalPlace>
+
     @Query("SELECT * FROM places WHERE place_id=:id")
     fun getPlaceById(id: Int): LocalPlace
 

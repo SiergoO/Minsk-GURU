@@ -37,9 +37,9 @@ class PlacesViewModel(
 
     fun updateLocalPlace(place: Place, isVisited: Boolean) {
         if (isVisited) {
-            taskInsertPlace.start(InsertLocalPlaceUseCase.Param(place))
+            taskInsertPlace.start(InsertLocalPlaceUseCase.Param("orcyLIhh9QZq4XwmHLlqfGhzOY53", place)) //TODO
         } else {
-            taskDeletePlace.start(DeleteLocalPlaceUseCase.Param(place))
+            taskDeletePlace.start(DeleteLocalPlaceUseCase.Param("orcyLIhh9QZq4XwmHLlqfGhzOY53", place))
         }
     }
 

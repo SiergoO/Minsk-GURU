@@ -6,7 +6,7 @@ import com.minsk.guru.domain.usecase.SingleResultUseCase
 interface DeleteLocalPlaceUseCase :
     SingleResultUseCase<DeleteLocalPlaceUseCase.Param, DeleteLocalPlaceUseCase.Result> {
 
-    data class Param(val place: Place)
+    data class Param(val userId: String, val place: Place)
 
     sealed class Result {
         object Success : Result()

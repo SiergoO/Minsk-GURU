@@ -6,7 +6,7 @@ import com.minsk.guru.domain.usecase.SingleResultUseCase
 interface InsertLocalPlaceUseCase :
     SingleResultUseCase<InsertLocalPlaceUseCase.Param, InsertLocalPlaceUseCase.Result> {
 
-    data class Param(val place: Place)
+    data class Param(val userId: String, val place: Place)
 
     sealed class Result {
         object Success : Result()
