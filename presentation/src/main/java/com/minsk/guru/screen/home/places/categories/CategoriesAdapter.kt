@@ -4,11 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.R
 import com.minsk.guru.databinding.ItemCategoryBinding
-import com.minsk.guru.domain.model.Achievement
+import com.minsk.guru.domain.model.Category
+import com.minsk.guru.domain.model.Place
+import kotlin.math.roundToInt
 
 class CategoriesAdapter(
     private val context: Context?,
@@ -17,38 +18,44 @@ class CategoriesAdapter(
 
     var callback: Callback? = null
     private val layoutInflater = LayoutInflater.from(context)
-    private var items: List<Achievement> = listOf()
+    private var categories: List<Category> = listOf()
+    private var visitedPlaces: List<Place> = listOf()
 
     init {
         this.callback = callback
     }
 
-    fun set(items: List<Achievement>) {
-        this.items = items
+    fun setCategories(items: List<Category>) {
+        this.categories = items
+        notifyDataSetChanged()
+    }
+
+    fun setVisitedPlaces(items: List<Place>) {
+        this.visitedPlaces = items
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int =
-        items.size
+        categories.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(ItemCategoryBinding.inflate(LayoutInflater.from(context), parent, false))
 
     override fun onBindViewHolder(holder: CategoriesAdapter.ViewHolder, position: Int) {
-        holder.bind(items[position])
+        categories[position].let { category ->
+            holder.bind(category, visitedPlaces.filter { it.category.contains(category.name) })
+        }
     }
 
     private fun handleItemClicked(position: Int) {
-        val achievement = items[position]
-        callback?.onCategoryClicked(achievement)
+        val category = categories[position]
+        callback?.onCategoryClicked(category)
     }
 
 
     inner class ViewHolder(
         private val binding: ItemCategoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
-        private val progress: Double = Math.random()
 
         init {
             binding.root.setOnClickListener {
@@ -61,22 +68,19 @@ class CategoriesAdapter(
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(achievement: Achievement) { // exchange with Category containing places list, name..
+        fun bind(item: Category, visitedPlaces: List<Place>) {
             binding.apply {
-                category.text = achievement.category
-                cardStatistic.findViewById<TextView>(R.id.tv_percentage).text =
-                    context?.getString(
-                        R.string.achievements_percentage,
-                        ((progress * 100.0).toInt())
-                    )
-                cardStatistic.findViewById<TextView>(R.id.tv_progress).text =
-                    "${(progress * achievement.count).toInt()}/${achievement.count}"
-                progressAchievements.progress = (progress * 100.0).toInt()
+                val placesAmount = item.placesIds.size
+                val percentage = (visitedPlaces.size / placesAmount.toDouble() * 100.0).roundToInt()
+                category.text = item.name
+                tvPercentage.text = context?.getString(R.string.achievements_percentage, percentage)
+                tvProgress.text = "${visitedPlaces.size}/$placesAmount"
+                progressAchievements.progress = percentage
             }
         }
     }
 
     interface Callback {
-        fun onCategoryClicked(achievement: Achievement)
+        fun onCategoryClicked(category: Category)
     }
 }

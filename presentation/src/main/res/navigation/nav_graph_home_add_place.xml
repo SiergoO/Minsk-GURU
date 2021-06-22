@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_home_add_place"
+    app:startDestination="@id/addPlaceFragment">
+
+    <fragment
+        android:id="@+id/addPlaceFragment"
+        android:name="com.minsk.guru.screen.home.addplaces.AddPlacesFragment"
+        android:label="AddPlacesFragment"
+        tools:layout="@layout/fragment_add_places" />
+
+</navigation>

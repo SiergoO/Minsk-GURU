@@ -17,7 +17,7 @@ object Libraries {
         const val koin = "2.2.2"
         const val recyclerview = "1.1.0"
         const val recyclerViewSelection = "1.0.0"
-        const val room = "2.2.6"
+        const val room = "2.3.0"
         const val glide = "4.11.0"
         const val cameraX = "1.0.0-beta08"
         const val paging = "2.1.2"

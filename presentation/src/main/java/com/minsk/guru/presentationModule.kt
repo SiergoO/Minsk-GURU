@@ -4,11 +4,11 @@ import android.app.Application
 import com.minsk.guru.data.dataModule
 import com.minsk.guru.domain.domainModule
 import com.minsk.guru.screen.auth.signin.SignInFragment
-import com.minsk.guru.screen.home.places.categories.CategoriesViewModel
 import com.minsk.guru.screen.auth.signin.SignInViewModel
 import com.minsk.guru.screen.auth.signup.SignUpFragment
 import com.minsk.guru.screen.auth.signup.SignUpViewModel
 import com.minsk.guru.screen.home.places.categories.CategoriesFragment
+import com.minsk.guru.screen.home.places.categories.CategoriesViewModel
 import com.minsk.guru.screen.home.places.places.PlacesFragment
 import com.minsk.guru.screen.home.places.places.PlacesViewModel
 import com.minsk.guru.screen.home.profile.ProfileFragment
@@ -31,16 +31,16 @@ val presentationModule = module {
     }
 
     fragment { SignInFragment() }
-    viewModel { SignInViewModel(get(), get()) }
+    viewModel { SignInViewModel(get(), get(), get(), get()) }
 
     fragment { SignUpFragment() }
-    viewModel { SignUpViewModel(get()) }
+    viewModel { SignUpViewModel(get(), get(), get(), get()) }
 
     fragment { CategoriesFragment() }
-    viewModel { CategoriesViewModel(get()) }
+    viewModel { CategoriesViewModel(get(), get(), get(), get(), get(), get()) }
 
     fragment { PlacesFragment() }
-    viewModel { PlacesViewModel(get()) }
+    viewModel { PlacesViewModel(get(), get(), get(), get(), get(), get()) }
 
     fragment { ProfileFragment() }
     viewModel { ProfileViewModel() }

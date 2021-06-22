@@ -7,7 +7,7 @@ class Place {
     var latitude: Double = 0.0
     var longitude: Double = 0.0
     var name: String = ""
-    var opening_hours: String = ""
+    var openingHours: String = ""
     var phone: String = ""
     var url: String = ""
 
@@ -20,7 +20,7 @@ class Place {
         latitude: Double,
         longitude: Double,
         name: String,
-        opening_hours: String,
+        openingHours: String,
         phone: String,
         url: String
     ) {
@@ -30,7 +30,7 @@ class Place {
         this.latitude = latitude
         this.longitude = longitude
         this.name = name
-        this.opening_hours = opening_hours
+        this.openingHours = openingHours
         this.phone = phone
         this.url = url
     }

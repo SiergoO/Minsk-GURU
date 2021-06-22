@@ -2,19 +2,25 @@ package com.minsk.guru.screen.auth.signin
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.minsk.guru.domain.usecase.auth.SignInUseCase
-import com.minsk.guru.utils.singleResultUseCaseTaskProvider
+import com.minsk.guru.domain.usecase.firebase.auth.GetCurrentUserUseCase
+import com.minsk.guru.domain.usecase.firebase.auth.SignInUseCase
+import com.minsk.guru.domain.usecase.local.user.InsertUserUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
+import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 
 class SignInViewModel(
     private val signInUseCase: SignInUseCase,
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val insertUserUseCase: InsertUserUseCase,
     private val taskExecutorFactory: TaskExecutorFactory
 ) : ViewModel() {
 
     var errorLiveData = MutableLiveData<Throwable>()
     var resultLiveData = MutableLiveData<SignInUseCase.Result>()
     private val taskSignIn = createSignInTask()
+    private val taskGetCurrentUser = createGetCurrentUserTask()
+    private val taskUpdateUser = createUpdateUserTask()
 
     fun signIn(email: String, password: String) =
         taskSignIn.start(SignInUseCase.Param(email, password))
@@ -22,12 +28,37 @@ class SignInViewModel(
     private fun handleSignInResult(data: SignInUseCase.Result) {
         when (data) {
             is SignInUseCase.Result.Failure -> errorLiveData.value = data.error
-            is SignInUseCase.Result.Success -> resultLiveData.value = data
+            is SignInUseCase.Result.Success -> {
+                resultLiveData.value = data
+                taskGetCurrentUser.start(GetCurrentUserUseCase.Param)
+            }
             else -> Unit
         }
     }
 
-    private fun handleSignInError(error: Throwable) {
+    private fun handleGetCurrentUserResult(data: GetCurrentUserUseCase.Result) {
+        when (data) {
+            is GetCurrentUserUseCase.Result.Failure -> errorLiveData.value = data.error
+            is GetCurrentUserUseCase.Result.Success -> {
+                if (data.user != null) {
+                    taskUpdateUser.start(InsertUserUseCase.Param(data.user!!))
+                }
+            }
+            else -> Unit
+        }
+    }
+
+    private fun handleUpdateUserResult(data: InsertUserUseCase.Result) {
+        when (data) {
+            is InsertUserUseCase.Result.Failure -> errorLiveData.value = data.error
+            is InsertUserUseCase.Result.Success -> {
+            }
+            else -> Unit
+        }
+    }
+
+
+    private fun handleError(error: Throwable) {
         errorLiveData.value = error
     }
 
@@ -35,6 +66,20 @@ class SignInViewModel(
         taskExecutorFactory.createTaskExecutor<SignInUseCase.Param, SignInUseCase.Result>(
             singleResultUseCaseTaskProvider { signInUseCase },
             { data -> handleSignInResult(data) },
-            { error -> handleSignInError(error) }
+            { error -> handleError(error) }
+        )
+
+    private fun createGetCurrentUserTask() =
+        taskExecutorFactory.createTaskExecutor<GetCurrentUserUseCase.Param, GetCurrentUserUseCase.Result>(
+            singleResultUseCaseTaskProvider { getCurrentUserUseCase },
+            { data -> handleGetCurrentUserResult(data) },
+            { error -> handleError(error) }
+        )
+
+    private fun createUpdateUserTask() =
+        taskExecutorFactory.createTaskExecutor<InsertUserUseCase.Param, InsertUserUseCase.Result>(
+            singleResultUseCaseTaskProvider { insertUserUseCase },
+            { data -> handleUpdateUserResult(data) },
+            { error -> handleError(error) }
         )
 }
