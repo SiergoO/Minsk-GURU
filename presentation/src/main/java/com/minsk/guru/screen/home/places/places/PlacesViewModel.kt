@@ -3,6 +3,7 @@ package com.minsk.guru.screen.home.places.places
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.model.Place
 import com.minsk.guru.domain.usecase.firebase.places.GetRemotePlacesByCategoryUseCase
 import com.minsk.guru.domain.usecase.local.places.DeleteLocalPlaceUseCase
@@ -13,6 +14,7 @@ import com.minsk.guru.utils.createTaskExecutor
 import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 
 class PlacesViewModel(
+    private val userIdHolder: UserIdHolder,
     private val getRemotePlacesByCategoryUseCase: GetRemotePlacesByCategoryUseCase,
     private val getVisitedLocalPlacesByCategoryUseCase: GetVisitedLocalPlacesByCategoryUseCase,
     private val insertLocalPlaceUseCase: InsertLocalPlaceUseCase,
@@ -32,14 +34,19 @@ class PlacesViewModel(
 
     fun getPlacesByCategory(categoryName: String?) {
         taskGetRemotePlacesByCategory.start(GetRemotePlacesByCategoryUseCase.Param(categoryName))
-        taskGetVisitedLocalPlacesByCategory.start(GetVisitedLocalPlacesByCategoryUseCase.Param(categoryName))
+        taskGetVisitedLocalPlacesByCategory.start(
+            GetVisitedLocalPlacesByCategoryUseCase.Param(
+                userIdHolder.userId,
+                categoryName
+            )
+        )
     }
 
     fun updateLocalPlace(place: Place, isVisited: Boolean) {
         if (isVisited) {
-            taskInsertPlace.start(InsertLocalPlaceUseCase.Param("orcyLIhh9QZq4XwmHLlqfGhzOY53", place)) //TODO
+            taskInsertPlace.start(InsertLocalPlaceUseCase.Param(userIdHolder.userId, place))
         } else {
-            taskDeletePlace.start(DeleteLocalPlaceUseCase.Param("orcyLIhh9QZq4XwmHLlqfGhzOY53", place))
+            taskDeletePlace.start(DeleteLocalPlaceUseCase.Param(userIdHolder.userId, place))
         }
     }
 
@@ -49,7 +56,8 @@ class PlacesViewModel(
 
     private fun handleGetRemotePlacesByCategory(data: GetRemotePlacesByCategoryUseCase.Result) {
         when (data) {
-            is GetRemotePlacesByCategoryUseCase.Result.Success -> allPlacesByCategoryLiveData.value = data.places
+            is GetRemotePlacesByCategoryUseCase.Result.Success -> allPlacesByCategoryLiveData.value =
+                data.places
             is GetRemotePlacesByCategoryUseCase.Result.Failure -> errorLiveData.value = data.error
             else -> Unit
         }
@@ -57,8 +65,10 @@ class PlacesViewModel(
 
     private fun handleGetVisitedLocalPlacesByCategoryResult(data: GetVisitedLocalPlacesByCategoryUseCase.Result) {
         when (data) {
-            is GetVisitedLocalPlacesByCategoryUseCase.Result.Success -> visitedPlacesByCategoryLiveData.value = data.visitedPlaces
-            is GetVisitedLocalPlacesByCategoryUseCase.Result.Failure -> errorLiveData.value = data.error
+            is GetVisitedLocalPlacesByCategoryUseCase.Result.Success -> visitedPlacesByCategoryLiveData.value =
+                data.visitedPlaces
+            is GetVisitedLocalPlacesByCategoryUseCase.Result.Failure -> errorLiveData.value =
+                data.error
             else -> Unit
         }
     }

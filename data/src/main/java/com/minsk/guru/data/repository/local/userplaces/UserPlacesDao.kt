@@ -11,6 +11,6 @@ interface UserPlacesDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateUserPlace(userPlace: LocalUserPlace)
 
-    @Delete
-    fun deleteUserPlace(userPlace: LocalUserPlace)
+    @Query("DELETE FROM user_places WHERE user_place_id = :placeId")
+    fun deleteUserPlace(placeId: String)
 }

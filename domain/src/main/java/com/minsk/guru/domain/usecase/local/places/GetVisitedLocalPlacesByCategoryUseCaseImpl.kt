@@ -13,7 +13,7 @@ class GetVisitedLocalPlacesByCategoryUseCaseImpl(
 
     override suspend fun run(param: GetVisitedLocalPlacesByCategoryUseCase.Param): GetVisitedLocalPlacesByCategoryUseCase.Result =
         try {
-            val visitedPlaces = placesLocalRepository.getPlacesByCategory(param.categoryName)
+            val visitedPlaces = placesLocalRepository.getPlacesByCategory(param.userId, param.categoryName)
             GetVisitedLocalPlacesByCategoryUseCase.Result.Success(visitedPlaces)
         } catch (error: Throwable) {
             GetVisitedLocalPlacesByCategoryUseCase.Result.Failure(error)

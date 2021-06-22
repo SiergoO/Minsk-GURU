@@ -3,13 +3,15 @@ package com.minsk.guru.data.repository.firebase
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.model.User
 import com.minsk.guru.domain.model.firebase.FirebaseUser
 import com.minsk.guru.domain.repository.firebase.auth.AuthRepository
 
 class AuthRepositoryImpl(
     private val firebaseDatabase: FirebaseDatabase,
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val userIdHolder: UserIdHolder
 ) : AuthRepository {
 
     override fun signIn(email: String, password: String) {
@@ -18,6 +20,7 @@ class AuthRepositoryImpl(
             password
         )
         Tasks.await(taskSignIn)
+            .also { userIdHolder.userId = it?.user?.uid ?: "UNKNOWN_USER" }
     }
 
     override fun signUp(email: String, password: String, name: String, surname: String) {
@@ -25,8 +28,11 @@ class AuthRepositoryImpl(
             email,
             password
         )
-        Tasks.await(taskSignUp).user?.uid?.let {
-            createUser(it, FirebaseUser(email, name, surname))
+        Tasks.await(taskSignUp).user?.uid.let { userId ->
+            if (userId != null) {
+                createUser(userId, FirebaseUser(email, name, surname))
+            }
+            userIdHolder.userId = userId ?: "UNKNOWN_USER"
         }
     }
 

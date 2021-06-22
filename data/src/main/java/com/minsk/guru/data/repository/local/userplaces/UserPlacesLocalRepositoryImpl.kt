@@ -6,9 +6,6 @@ import com.minsk.guru.domain.repository.local.UserPlacesLocalRepository
 class UserPlacesLocalRepositoryImpl(private val userPlacesDao: UserPlacesDao) :
     UserPlacesLocalRepository {
 
-//    override fun getUserVisitedPlaces(userId: String): List<Place> =
-//        userPlacesDao.getUserVisitedPlaces(userId).map { it.toDomainPlace() }
-
     override fun insertUserPlace(userPlace: UserPlace) {
         userPlacesDao.insertUserPlace(userPlace.toLocalUserPlace())
     }
@@ -18,6 +15,6 @@ class UserPlacesLocalRepositoryImpl(private val userPlacesDao: UserPlacesDao) :
     }
 
     override fun deleteUserPlace(userPlace: UserPlace) {
-        userPlacesDao.deleteUserPlace(userPlace.toLocalUserPlace())
+        userPlacesDao.deleteUserPlace(userPlace.placeId)
     }
 }

@@ -8,7 +8,9 @@ import com.minsk.guru.domain.model.UserPlace
 
 @Entity(tableName = TABLE_NAME)
 data class LocalUserPlace(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = ID)
+    var id: Int,
     @ColumnInfo(name = USER_ID)
     val userId: String,
     @ColumnInfo(name = USER_PLACE_ID)
@@ -16,6 +18,7 @@ data class LocalUserPlace(
 ) {
     companion object {
         const val TABLE_NAME = "user_places"
+        const val ID = "id"
         const val USER_ID = "user_id"
         const val USER_PLACE_ID = "user_place_id"
     }
@@ -23,4 +26,4 @@ data class LocalUserPlace(
 
 fun LocalUserPlace.toDomainUser() = UserPlace(userId, userPlaceId)
 
-fun UserPlace.toLocalUserPlace() = LocalUserPlace(userId, placeId)
+fun UserPlace.toLocalUserPlace() = LocalUserPlace(0, userId, placeId)

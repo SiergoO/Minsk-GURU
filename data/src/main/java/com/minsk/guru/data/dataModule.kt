@@ -43,7 +43,8 @@ val dataModule = module(override = true) {
     single<AuthRepository> {
         AuthRepositoryImpl(
             FirebaseDatabase.getInstance(),
-            FirebaseAuth.getInstance()
+            FirebaseAuth.getInstance(),
+            get()
         )
     }
     single {

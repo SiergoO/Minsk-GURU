@@ -1,5 +1,7 @@
 package com.minsk.guru.domain
 
+import com.minsk.guru.domain.adapter.InMemoryUserIdHolder
+import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.usecase.InsertLocalAchievementsUseCase
 import com.minsk.guru.domain.usecase.InsertLocalAchievementsUseCaseImpl
 import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCase
@@ -16,6 +18,11 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
 val domainModule = module {
+
+    single<UserIdHolder> {
+        InMemoryUserIdHolder()
+    }
+
     factory { GetAchievementsUseCaseImpl(get()) }
     factory<SignInUseCase> { SignInUseCaseImpl(get()) }
     factory<SignUpUseCase> { SignUpUseCaseImpl(get()) }
@@ -25,7 +32,7 @@ val domainModule = module {
     factory<InsertLocalAchievementsUseCase> { InsertLocalAchievementsUseCaseImpl(get()) }
     factory<GetCategoriesUseCase> { GetCategoriesUseCaseImpl(get()) }
     factory<InsertLocalPlaceUseCase> { InsertLocalPlaceUseCaseImpl(get(), get()) }
-    factory<DeleteLocalPlaceUseCase> { DeleteLocalPlaceUseCaseImpl(get(), get() ) }
+    factory<DeleteLocalPlaceUseCase> { DeleteLocalPlaceUseCaseImpl(get()) }
     factory<GetRemotePlacesByCategoryUseCase> { GetRemotePlacesByCategoryUseCaseImpl(get()) }
     factory<GetVisitedLocalPlacesByCategoryUseCase> { GetVisitedLocalPlacesByCategoryUseCaseImpl(get()) }
     factory<GetVisitedLocalPlacesUseCase> { GetVisitedLocalPlacesUseCaseImpl(get()) }

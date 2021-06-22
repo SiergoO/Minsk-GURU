@@ -3,6 +3,7 @@ package com.minsk.guru.screen.home.places.categories
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.model.Category
 import com.minsk.guru.domain.model.Place
 import com.minsk.guru.domain.model.firebase.FirebaseAchievement
@@ -16,6 +17,7 @@ import com.minsk.guru.utils.createTaskExecutor
 import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 
 class CategoriesViewModel(
+    private val userIdHolder: UserIdHolder,
     private val getAchievementsUseCase: GetAchievementsUseCaseImpl,
     private val insertLocalAchievementsUseCase: InsertLocalAchievementsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
@@ -39,7 +41,7 @@ class CategoriesViewModel(
 
     fun getCategories() {
         taskGetCategories.start(GetCategoriesUseCase.Param)
-        taskGetVisitedPlaces.start(GetVisitedLocalPlacesUseCase.Param)
+        taskGetVisitedPlaces.start(GetVisitedLocalPlacesUseCase.Param(userIdHolder.userId))
     }
 
     private fun handleGetAchievementsResult(data: GetAchievementsUseCase.Result) {

@@ -9,11 +9,14 @@ class PlacesLocalRepositoryImpl(private val placesDao: PlacesDao) :
     override fun getPlaces(): List<Place> =
         placesDao.getPlaces().map { it.toDomainPlace() }
 
+    override fun getUserVisitedPlaces(userId: String): List<Place> =
+        placesDao.getUserVisitedPlaces(userId).map { it.toDomainPlace() }
+
     override fun getPlaceById(id: Int): Place =
         placesDao.getPlaceById(id).toDomainPlace()
 
-    override fun getPlacesByCategory(categoryName: String?): List<Place> =
-        placesDao.getPlacesByCategory(categoryName).map { it.toDomainPlace() }
+    override fun getPlacesByCategory(userId: String, categoryName: String?): List<Place> =
+        placesDao.getPlacesByCategory(userId, categoryName).map { it.toDomainPlace() }
 
     override fun updatePlace(place: Place) {
         placesDao.updatePlace(place.toLocalPlace())

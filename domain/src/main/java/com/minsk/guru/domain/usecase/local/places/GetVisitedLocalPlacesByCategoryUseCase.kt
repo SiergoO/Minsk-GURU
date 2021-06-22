@@ -6,7 +6,7 @@ import com.minsk.guru.domain.usecase.SingleResultUseCase
 interface GetVisitedLocalPlacesByCategoryUseCase :
     SingleResultUseCase<GetVisitedLocalPlacesByCategoryUseCase.Param, GetVisitedLocalPlacesByCategoryUseCase.Result> {
 
-    data class Param(val categoryName: String?)
+    data class Param(val userId: String, val categoryName: String?)
 
     sealed class Result {
         data class Success(val visitedPlaces: List<Place>) : Result()

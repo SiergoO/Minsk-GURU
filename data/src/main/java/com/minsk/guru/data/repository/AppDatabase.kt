@@ -13,7 +13,7 @@ import com.minsk.guru.data.repository.local.userplaces.UserPlacesDao
 
 @Database(
     entities = [LocalUser::class, LocalAchievement::class, LocalPlace::class, LocalUserPlace::class],
-    version = 4
+    version = 5
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao

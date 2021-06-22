@@ -13,7 +13,8 @@ class GetVisitedLocalPlacesUseCaseImpl(
 
     override suspend fun run(param: GetVisitedLocalPlacesUseCase.Param): GetVisitedLocalPlacesUseCase.Result =
         try {
-            val visitedPlaces = placesLocalRepository.getPlaces()
+            val userId = param.userId
+            val visitedPlaces = placesLocalRepository.getUserVisitedPlaces(userId)
             GetVisitedLocalPlacesUseCase.Result.Success(visitedPlaces)
         } catch (error: Throwable) {
             GetVisitedLocalPlacesUseCase.Result.Failure(error)
