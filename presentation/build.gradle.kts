@@ -1,4 +1,3 @@
-import Libraries.androidXCamera
 import Libraries.glide
 import Libraries.koinAndroid
 
@@ -27,7 +26,6 @@ android {
         versionCode = 1
         versionName = "1.0"
         multiDexEnabled = true
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         getByName("release") {
@@ -81,19 +79,13 @@ dependencies {
     glide()
 
     androidxDependencies()
-
-    testImplementation(TestLibraries.junit4)
-    androidTestImplementation(TestLibraries.testRunner)
-    androidTestImplementation(TestLibraries.espresso)
 }
 
 
 fun DependencyHandlerScope.androidxDependencies() {
-    androidXCamera()
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0")
-    implementation(Libraries.androidxPaging)
     implementation(Libraries.androidxViewModel)
     implementation(Libraries.androidxLiveData)
     implementation(Libraries.androidxLifecycleExtensions)

@@ -20,9 +20,6 @@ import com.minsk.guru.domain.repository.local.AchievementsLocalRepository
 import com.minsk.guru.domain.repository.local.PlacesLocalRepository
 import com.minsk.guru.domain.repository.local.UserLocalRepository
 import com.minsk.guru.domain.repository.local.UserPlacesLocalRepository
-import io.ktor.client.*
-import io.ktor.client.engine.okhttp.*
-import io.ktor.client.features.websocket.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -35,11 +32,6 @@ val dataModule = module(override = true) {
             AppDatabase::class.java,
             BuildConfig.DATABASE_NAME
         ).build()
-    }
-    single {
-        HttpClient(OkHttp) {
-            install(WebSockets)
-        }
     }
     single<PlacesRepository> { PlacesRepositoryImpl(FirebaseDatabase.getInstance()) }
     single<AchievementsRepository> { AchievementsRepositoryImpl(FirebaseDatabase.getInstance()) }

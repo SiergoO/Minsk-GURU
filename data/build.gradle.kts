@@ -43,12 +43,6 @@ android {
         getByName("debug") {
             buildConfigField("String", "DATABASE_NAME", "\"MinskGuruDebugDatabase\"")
         }
-        getByName("release"){
-            buildConfigField("String", "BASE_URL", "\"https://search-maps.yandex.ru\"")
-        }
-        getByName("debug"){
-            buildConfigField("String", "BASE_URL", "\"https://search-maps.yandex.ru\"")
-        }
     }
     buildFeatures {
         dataBinding = true
@@ -72,13 +66,4 @@ dependencies {
     implementation(Libraries.firebaseAuth)
     koinAndroid()
     room()
-    implementation("io.ktor:ktor-client-websockets:1.5.1")
-    implementation("io.ktor:ktor-client-core:1.5.1")
-    implementation("io.ktor:ktor-client-okhttp:1.5.1")
-    implementation(Libraries.androidxPaging)
-    testImplementation(TestLibraries.junit4)
-    androidTestImplementation(TestLibraries.testRunner)
-    androidTestImplementation(TestLibraries.espresso)
-    testImplementation(TestLibraries.mockito)
-    testImplementation(TestLibraries.androidxTest)
 }
