@@ -5,14 +5,14 @@ import androidx.room.*
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user")
-    fun getUser(): LocalUser
+    fun getLocalUser(): LocalUser
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(localUser: LocalUser)
+    fun insertLocalUser(localUser: LocalUser)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateUser(localUser: LocalUser)
+    fun updateLocalUser(localUser: LocalUser)
 
     @Delete
-    fun deleteUser(localUser: LocalUser)
+    fun deleteLocalUser(localUser: LocalUser)
 }

@@ -13,7 +13,7 @@ class GetAchievementsUseCaseImpl(
 
     override suspend fun run(param: GetAchievementsUseCase.Param): GetAchievementsUseCase.Result =
         try {
-            val achievements = achievementsRepository.getAchievements()
+            val achievements = achievementsRepository.getRemoteAchievements()
             GetAchievementsUseCase.Result.Success(achievements)
         } catch (error: Throwable) {
             GetAchievementsUseCase.Result.Failure(error)

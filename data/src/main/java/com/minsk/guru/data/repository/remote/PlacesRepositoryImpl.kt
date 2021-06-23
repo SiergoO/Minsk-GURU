@@ -1,4 +1,4 @@
-package com.minsk.guru.data.repository.firebase
+package com.minsk.guru.data.repository.remote
 
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.database.*

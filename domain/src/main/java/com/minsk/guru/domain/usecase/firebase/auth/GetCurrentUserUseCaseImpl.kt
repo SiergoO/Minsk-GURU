@@ -13,7 +13,7 @@ class GetCurrentUserUseCaseImpl(
 
     override suspend fun run(param: GetCurrentUserUseCase.Param): GetCurrentUserUseCase.Result =
         try {
-            val user = authRepository.getCurrentUser()
+            val user = authRepository.getCurrentRemoteUser()
             GetCurrentUserUseCase.Result.Success(user)
         } catch (error: Throwable) {
             GetCurrentUserUseCase.Result.Failure(error)
