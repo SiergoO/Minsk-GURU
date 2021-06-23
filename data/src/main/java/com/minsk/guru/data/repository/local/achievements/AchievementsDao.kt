@@ -5,17 +5,17 @@ import androidx.room.*
 @Dao
 interface AchievementsDao {
     @Query("SELECT * FROM achievements")
-    fun getAchievements(): List<LocalAchievement>
+    fun getLocalAchievements(): List<LocalAchievement>
 
     @Query("SELECT * FROM achievements WHERE achievement_id=:id")
-    fun getAchievementById(id: Int): LocalAchievement
+    fun getLocalAchievementById(id: Int): LocalAchievement
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAchievements(achievements: List<LocalAchievement>)
+    fun insertLocalAchievements(achievements: List<LocalAchievement>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateAchievement(achievement: LocalAchievement)
+    fun updateLocalAchievement(achievement: LocalAchievement)
 
     @Delete
-    fun deleteAchievement(achievement: LocalAchievement)
+    fun deleteLocalAchievement(achievement: LocalAchievement)
 }

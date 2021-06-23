@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.model.Category
 import com.minsk.guru.domain.model.Place
-import com.minsk.guru.domain.model.firebase.FirebaseAchievement
+import com.minsk.guru.domain.model.remote.RemoteAchievement
 import com.minsk.guru.domain.usecase.InsertLocalAchievementsUseCase
-import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCase
-import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCaseImpl
+import com.minsk.guru.domain.usecase.firebase.achievements.GetRemoteAchievementsUseCase
+import com.minsk.guru.domain.usecase.firebase.achievements.GetRemoteAchievementsUseCaseImpl
 import com.minsk.guru.domain.usecase.firebase.places.GetCategoriesUseCase
 import com.minsk.guru.domain.usecase.local.places.GetVisitedLocalPlacesUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
@@ -18,14 +18,14 @@ import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 
 class CategoriesViewModel(
     private val userIdHolder: UserIdHolder,
-    private val getAchievementsUseCase: GetAchievementsUseCaseImpl,
+    private val getAchievementsUseCase: GetRemoteAchievementsUseCaseImpl,
     private val insertLocalAchievementsUseCase: InsertLocalAchievementsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getVisitedPlaces: GetVisitedLocalPlacesUseCase,
     private val taskExecutorFactory: TaskExecutorFactory
 ) : ViewModel() {
 
-    var places: LiveData<List<FirebaseAchievement>> = MutableLiveData()
+    var places: LiveData<List<RemoteAchievement>> = MutableLiveData()
 
     var errorLiveData = MutableLiveData<Throwable>()
     var categoriesResultLiveData = MutableLiveData<List<Category>>()
@@ -36,7 +36,7 @@ class CategoriesViewModel(
     private val taskGetVisitedPlaces = createGetVisitedPlacesTask()
 
     init {
-        taskGetAchievements.start(GetAchievementsUseCase.Param)
+        taskGetAchievements.start(GetRemoteAchievementsUseCase.Param)
     }
 
     fun getCategories() {
@@ -44,10 +44,10 @@ class CategoriesViewModel(
         taskGetVisitedPlaces.start(GetVisitedLocalPlacesUseCase.Param(userIdHolder.userId))
     }
 
-    private fun handleGetAchievementsResult(data: GetAchievementsUseCase.Result) {
+    private fun handleGetAchievementsResult(data: GetRemoteAchievementsUseCase.Result) {
         when (data) {
-            is GetAchievementsUseCase.Result.Failure -> errorLiveData.value = data.error
-            is GetAchievementsUseCase.Result.Success -> {
+            is GetRemoteAchievementsUseCase.Result.Failure -> errorLiveData.value = data.error
+            is GetRemoteAchievementsUseCase.Result.Success -> {
                 taskInsertAchievements.start(InsertLocalAchievementsUseCase.Param(data.achievements))
             }
             else -> Unit
@@ -84,7 +84,7 @@ class CategoriesViewModel(
     }
 
     private fun createGetAchievementsTask() =
-        taskExecutorFactory.createTaskExecutor<GetAchievementsUseCase.Param, GetAchievementsUseCase.Result>(
+        taskExecutorFactory.createTaskExecutor<GetRemoteAchievementsUseCase.Param, GetRemoteAchievementsUseCase.Result>(
             singleResultUseCaseTaskProvider { getAchievementsUseCase },
             { data -> handleGetAchievementsResult(data) },
             { error -> handleError(error) }

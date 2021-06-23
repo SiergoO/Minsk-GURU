@@ -21,4 +21,5 @@
 
     <!--achievements-->
     <string name="achievements_percentage">%1$d%%</string>
+    <string name="category_museum">Музеи</string>
 </resources>

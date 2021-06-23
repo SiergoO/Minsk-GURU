@@ -7,16 +7,16 @@ class AchievementsLocalRepositoryImpl(private val achievementsDao: AchievementsD
     AchievementsLocalRepository {
 
     override fun getAchievements(): List<Achievement> =
-        achievementsDao.getAchievements().map { it.toDomainAchievement() }
+        achievementsDao.getLocalAchievements().map { it.toDomainAchievement() }
 
     override fun getAchievementById(id: Int): Achievement =
-        achievementsDao.getAchievementById(id).toDomainAchievement()
+        achievementsDao.getLocalAchievementById(id).toDomainAchievement()
 
     override fun updateAchievement(achievement: Achievement) {
-        achievementsDao.updateAchievement(achievement.toLocalAchievement())
+        achievementsDao.updateLocalAchievement(achievement.toLocalAchievement())
     }
 
     override fun insertAchievements(achievements: List<Achievement>) {
-        achievementsDao.insertAchievements(achievements.map { it.toLocalAchievement() })
+        achievementsDao.insertLocalAchievements(achievements.map { it.toLocalAchievement() })
     }
 }

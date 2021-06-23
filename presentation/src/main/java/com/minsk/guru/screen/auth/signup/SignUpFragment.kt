@@ -48,10 +48,10 @@ class SignUpFragment(private val layout: Int = R.layout.fragment_sign_up) : Frag
         binding.apply {
             btnSignUp.setOnClickListener {
                 viewModel?.signUp(
-                    binding.editEmail.text.toString(),
-                    binding.editPassword.text.toString(),
-                    binding.editName.text.toString(),
-                    binding.editSurname.text.toString()
+                    editEmail.text.toString(),
+                    editPassword.text.toString(),
+                    editName.text.toString(),
+                    editSurname.text.toString()
                 )
             }
         }

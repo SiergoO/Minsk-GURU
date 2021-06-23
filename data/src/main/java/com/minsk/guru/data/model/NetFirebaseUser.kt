@@ -1,6 +1,6 @@
 package com.minsk.guru.data.model
 
-import com.minsk.guru.domain.model.firebase.FirebaseUser
+import com.minsk.guru.domain.model.remote.RemoteUser
 
 data class NetFirebaseUser(
     var email: String,
@@ -8,6 +8,6 @@ data class NetFirebaseUser(
     var surname: String
 )
 
-fun NetFirebaseUser.toDomainModel() = FirebaseUser(email, name, surname)
+fun NetFirebaseUser.toDomainModel() = RemoteUser(email, name, surname)
 
-fun FirebaseUser.toNetModel() = NetFirebaseUser(email, name, surname)
+fun RemoteUser.toNetModel() = NetFirebaseUser(email, name, surname)

@@ -7,26 +7,26 @@ class PlacesLocalRepositoryImpl(private val placesDao: PlacesDao) :
     PlacesLocalRepository {
 
     override fun getPlaces(): List<Place> =
-        placesDao.getPlaces().map { it.toDomainPlace() }
+        placesDao.getLocalPlaces().map { it.toDomainPlace() }
 
-    override fun getUserVisitedPlaces(userId: String): List<Place> =
-        placesDao.getUserVisitedPlaces(userId).map { it.toDomainPlace() }
+    override fun getPlacesVisitedByUser(userId: String): List<Place> =
+        placesDao.getLocalPlacesVisitedByUser(userId).map { it.toDomainPlace() }
 
     override fun getPlaceById(id: Int): Place =
-        placesDao.getPlaceById(id).toDomainPlace()
+        placesDao.getLocalPlaceById(id).toDomainPlace()
 
     override fun getPlacesByCategory(userId: String, categoryName: String?): List<Place> =
-        placesDao.getPlacesByCategory(userId, categoryName).map { it.toDomainPlace() }
+        placesDao.getLocalPlacesByCategory(userId, categoryName).map { it.toDomainPlace() }
 
     override fun updatePlace(place: Place) {
-        placesDao.updatePlace(place.toLocalPlace())
+        placesDao.updateLocalPlace(place.toLocalPlace())
     }
 
     override fun insertPlace(place: Place) {
-        placesDao.insertPlace(place.toLocalPlace())
+        placesDao.insertLocalPlace(place.toLocalPlace())
     }
 
     override fun deletePlace(place: Place) {
-        placesDao.deletePlace(place.toLocalPlace())
+        placesDao.deleteLocalPlace(place.toLocalPlace())
     }
 }

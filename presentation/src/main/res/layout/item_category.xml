@@ -21,10 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:indeterminate="false"
-            android:progressTint="@color/colorPrimary"
-            android:progressBackgroundTint="@android:color/transparent"
             android:max="100"
             android:progress="40"
+            android:progressBackgroundTint="@android:color/transparent"
+            android:progressTint="@color/colorPrimary"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
             android:layout_marginStart="12dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Музеи"
+            android:text="@string/category_museum"
             android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/barrier"
@@ -71,10 +71,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|top"
                 android:layout_marginTop="12dp"
-                android:text="123/222"
                 android:textColor="#5E8F7E"
                 android:textSize="13sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                tools:text="123/222" />
 
             <View
                 android:layout_width="match_parent"
@@ -90,10 +90,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="12dp"
-                android:text="55%"
                 android:textColor="#5E8F7E"
                 android:textSize="16sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                tools:text="55%" />
 
         </androidx.cardview.widget.CardView>
 

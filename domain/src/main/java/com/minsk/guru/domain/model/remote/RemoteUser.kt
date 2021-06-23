@@ -1,8 +1,8 @@
-package com.minsk.guru.domain.model.firebase
+package com.minsk.guru.domain.model.remote
 
 import com.minsk.guru.domain.model.User
 
-class FirebaseUser {
+class RemoteUser {
     var email: String = ""
     var name: String = ""
     var surname: String = ""

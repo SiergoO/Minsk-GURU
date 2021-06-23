@@ -1,11 +1,11 @@
-package com.minsk.guru.data.repository.firebase
+package com.minsk.guru.data.repository.remote
 
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.model.User
-import com.minsk.guru.domain.model.firebase.FirebaseUser
+import com.minsk.guru.domain.model.remote.RemoteUser
 import com.minsk.guru.domain.repository.firebase.auth.AuthRepository
 
 class AuthRepositoryImpl(
@@ -30,22 +30,22 @@ class AuthRepositoryImpl(
         )
         Tasks.await(taskSignUp).user?.uid.let { userId ->
             if (userId != null) {
-                createUser(userId, FirebaseUser(email, name, surname))
+                createRemoteUser(userId, RemoteUser(email, name, surname))
             }
             userIdHolder.userId = userId ?: "UNKNOWN_USER"
         }
     }
 
-    override fun getCurrentUser(): User {
+    override fun getCurrentRemoteUser(): User {
         val userUId: String = firebaseAuth.currentUser!!.uid
         val taskGetUser =
             firebaseDatabase.reference.child("users").child(userUId).get()
-        Tasks.await(taskGetUser).getValue(FirebaseUser::class.java).let { firebaseUser ->
+        Tasks.await(taskGetUser).getValue(RemoteUser::class.java).let { firebaseUser ->
             return firebaseUser?.toDomainModel()!!.copy(id = userUId)
         }
     }
 
-    private fun createUser(id: String, user: FirebaseUser) {
+    private fun createRemoteUser(id: String, user: RemoteUser) {
         firebaseDatabase.reference.child("users").child(id).setValue(user)
     }
 }

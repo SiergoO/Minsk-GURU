@@ -1,11 +1,11 @@
 package com.minsk.guru.data.model
 
-import com.minsk.guru.domain.model.Achievements
-import com.minsk.guru.domain.model.firebase.FirebaseAchievement
+import com.minsk.guru.domain.model.remote.RemoteAchievements
+import com.minsk.guru.domain.model.remote.RemoteAchievement
 
 data class NetAchievements(
     val achievements: MutableList<NetAchievement>
 )
 
 fun NetAchievements.toDomainModel() =
-    Achievements(achievements.map { it.toDomainModel() }.toList() as ArrayList<FirebaseAchievement>)
+    RemoteAchievements(achievements.map { it.toDomainModel() }.toList() as ArrayList<RemoteAchievement>)

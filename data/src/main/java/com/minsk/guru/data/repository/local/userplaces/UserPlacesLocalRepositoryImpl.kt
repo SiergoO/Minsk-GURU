@@ -7,14 +7,14 @@ class UserPlacesLocalRepositoryImpl(private val userPlacesDao: UserPlacesDao) :
     UserPlacesLocalRepository {
 
     override fun insertUserPlace(userPlace: UserPlace) {
-        userPlacesDao.insertUserPlace(userPlace.toLocalUserPlace())
+        userPlacesDao.insertLocalUserPlace(userPlace.toLocalUserPlace())
     }
 
     override fun updateUserPlace(userPlace: UserPlace) {
-        userPlacesDao.updateUserPlace(userPlace.toLocalUserPlace())
+        userPlacesDao.updateLocalUserPlace(userPlace.toLocalUserPlace())
     }
 
     override fun deleteUserPlace(userPlace: UserPlace) {
-        userPlacesDao.deleteUserPlace(userPlace.placeId)
+        userPlacesDao.deleteLocalUserPlace(userPlace.placeId)
     }
 }

@@ -6,11 +6,11 @@ import androidx.room.*
 interface UserPlacesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUserPlace(userPlace: LocalUserPlace)
+    fun insertLocalUserPlace(userPlace: LocalUserPlace)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateUserPlace(userPlace: LocalUserPlace)
+    fun updateLocalUserPlace(userPlace: LocalUserPlace)
 
     @Query("DELETE FROM user_places WHERE user_place_id = :placeId")
-    fun deleteUserPlace(placeId: String)
+    fun deleteLocalUserPlace(placeId: String)
 }

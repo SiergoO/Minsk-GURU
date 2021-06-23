@@ -1,4 +1,4 @@
-package com.minsk.guru.screen.home.base
+package com.minsk.guru.screen.base
 
 import androidx.appcompat.app.AppCompatActivity
 

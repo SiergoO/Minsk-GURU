@@ -1,6 +1,6 @@
 package com.minsk.guru.data.model
 
-import com.minsk.guru.domain.model.firebase.FirebaseAchievement
+import com.minsk.guru.domain.model.remote.RemoteAchievement
 
 data class NetAchievement(
     val category: String,
@@ -11,4 +11,4 @@ data class NetAchievement(
 )
 
 fun NetAchievement.toDomainModel() =
-    FirebaseAchievement(category, count, description, name, placesIds)
+    RemoteAchievement(category, count, description, name, placesIds)

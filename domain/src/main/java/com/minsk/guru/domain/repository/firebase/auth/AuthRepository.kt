@@ -6,5 +6,5 @@ interface AuthRepository {
 
     fun signIn(email: String, password: String)
     fun signUp(email: String, password: String, name: String, surname: String)
-    fun getCurrentUser(): User
+    fun getCurrentRemoteUser(): User
 }

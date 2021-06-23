@@ -1,8 +1,8 @@
-package com.minsk.guru.domain.model.firebase
+package com.minsk.guru.domain.model.remote
 
 import com.minsk.guru.domain.model.Achievement
 
-class FirebaseAchievement {
+class RemoteAchievement {
     var category: String = ""
     var count: Int = 0
     var description: String = ""
