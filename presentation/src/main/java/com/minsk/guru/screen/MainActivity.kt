@@ -1,19 +1,19 @@
-package com.minsk.guru.screen.auth
+package com.minsk.guru.screen
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.minsk.guru.R
-import com.minsk.guru.databinding.ActivityAuthBinding
-import com.minsk.guru.screen.home.base.BaseActivity
+import com.minsk.guru.databinding.ActivityMainBinding
+import com.minsk.guru.screen.base.BaseActivity
 
-class AuthActivity: BaseActivity() {
-    lateinit var binding: ActivityAuthBinding
+class MainActivity: BaseActivity() {
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
             this,
-            R.layout.activity_auth
+            R.layout.activity_main
         )
     }
 }

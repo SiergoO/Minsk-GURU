@@ -57,7 +57,6 @@ class SignInViewModel(
         }
     }
 
-
     private fun handleError(error: Throwable) {
         errorLiveData.value = error
     }
