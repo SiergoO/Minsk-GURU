@@ -3,8 +3,8 @@ package com.minsk.guru.domain.usecase.firebase.achievements
 import com.minsk.guru.domain.model.Achievement
 import com.minsk.guru.domain.usecase.SingleResultUseCase
 
-interface GetAchievementsUseCase:
-    SingleResultUseCase<GetAchievementsUseCase.Param, GetAchievementsUseCase.Result> {
+interface GetRemoteAchievementsUseCase:
+    SingleResultUseCase<GetRemoteAchievementsUseCase.Param, GetRemoteAchievementsUseCase.Result> {
 
     object Param
 

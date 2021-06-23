@@ -5,17 +5,17 @@ import com.minsk.guru.domain.usecase.CoroutineSingleResultUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-class InsertUserUseCaseImpl(
+class InsertLocalUserUseCaseImpl(
     private val userLocalRepository: UserLocalRepository,
     ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : CoroutineSingleResultUseCase<InsertUserUseCase.Param, InsertUserUseCase.Result>(ioDispatcher),
-    InsertUserUseCase {
+) : CoroutineSingleResultUseCase<InsertLocalUserUseCase.Param, InsertLocalUserUseCase.Result>(ioDispatcher),
+    InsertLocalUserUseCase {
 
-    override suspend fun run(param: InsertUserUseCase.Param): InsertUserUseCase.Result =
+    override suspend fun run(param: InsertLocalUserUseCase.Param): InsertLocalUserUseCase.Result =
         try {
             userLocalRepository.insertUser(param.user)
-            InsertUserUseCase.Result.Success
+            InsertLocalUserUseCase.Result.Success
         } catch (error: Throwable) {
-            InsertUserUseCase.Result.Failure(error)
+            InsertLocalUserUseCase.Result.Failure(error)
         }
 }

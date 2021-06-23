@@ -4,7 +4,7 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.database.*
 import com.minsk.guru.domain.model.Category
 import com.minsk.guru.domain.model.Place
-import com.minsk.guru.domain.model.Places
+import com.minsk.guru.domain.model.remote.RemotePlaces
 import com.minsk.guru.domain.repository.firebase.places.PlacesRepository
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +22,8 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val places = snapshot.getValue(Places::class.java)
-                        ?: Places(mutableListOf())
+                    val places = snapshot.getValue(RemotePlaces::class.java)
+                        ?: RemotePlaces(mutableListOf())
                     placesDeferred.complete(places.places)
                 }
             })
@@ -39,8 +39,8 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val places = snapshot.getValue(Places::class.java)
-                        ?: Places(mutableListOf())
+                    val places = snapshot.getValue(RemotePlaces::class.java)
+                        ?: RemotePlaces(mutableListOf())
                     val filteredPlaces =
                         places.places.filter { place -> place.category.contains(categoryName.toString()) }
                     placesDeferred.complete(filteredPlaces)
@@ -69,7 +69,17 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
             this.category.split(',').map { it.trim().capitalize(Locale.getDefault()) }
         for (category in splitCategoriesList) {
             list.add(
-                Place(address, category, id, latitude, longitude, name, openingHours, phone, url)
+                Place(
+                    address,
+                    category,
+                    id,
+                    latitude,
+                    longitude,
+                    name,
+                    openingHours,
+                    phone,
+                    url
+                )
             )
         }
         return list

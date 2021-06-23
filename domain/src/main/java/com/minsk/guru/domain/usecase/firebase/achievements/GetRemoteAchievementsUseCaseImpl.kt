@@ -5,17 +5,17 @@ import com.minsk.guru.domain.usecase.CoroutineSingleResultUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-class GetAchievementsUseCaseImpl(
+class GetRemoteAchievementsUseCaseImpl(
     private val achievementsRepository: AchievementsRepository,
     ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : CoroutineSingleResultUseCase<GetAchievementsUseCase.Param, GetAchievementsUseCase.Result>(ioDispatcher),
-    GetAchievementsUseCase {
+) : CoroutineSingleResultUseCase<GetRemoteAchievementsUseCase.Param, GetRemoteAchievementsUseCase.Result>(ioDispatcher),
+    GetRemoteAchievementsUseCase {
 
-    override suspend fun run(param: GetAchievementsUseCase.Param): GetAchievementsUseCase.Result =
+    override suspend fun run(param: GetRemoteAchievementsUseCase.Param): GetRemoteAchievementsUseCase.Result =
         try {
             val achievements = achievementsRepository.getRemoteAchievements()
-            GetAchievementsUseCase.Result.Success(achievements)
+            GetRemoteAchievementsUseCase.Result.Success(achievements)
         } catch (error: Throwable) {
-            GetAchievementsUseCase.Result.Failure(error)
+            GetRemoteAchievementsUseCase.Result.Failure(error)
         }
 }

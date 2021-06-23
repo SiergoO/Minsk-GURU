@@ -4,7 +4,7 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.GenericTypeIndicator
 import com.minsk.guru.domain.model.Achievement
-import com.minsk.guru.domain.model.firebase.FirebaseAchievement
+import com.minsk.guru.domain.model.remote.RemoteAchievement
 import com.minsk.guru.domain.repository.firebase.achievements.AchievementsRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -14,7 +14,7 @@ class AchievementsRepositoryImpl(private val firebaseDatabase: FirebaseDatabase)
     override fun getRemoteAchievements(): List<Achievement> {
         val taskGetAchievements = firebaseDatabase.reference.child("achievements").get()
         Tasks.await(taskGetAchievements)
-            .getValue(object : GenericTypeIndicator<List<FirebaseAchievement>>() {}).let { list ->
+            .getValue(object : GenericTypeIndicator<List<RemoteAchievement>>() {}).let { list ->
                 return list!!.map { it.toDomainModel().copy(id = list.indexOf(it)) }
             }
     }

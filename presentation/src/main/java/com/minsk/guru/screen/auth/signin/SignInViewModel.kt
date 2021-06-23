@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.minsk.guru.domain.usecase.firebase.auth.GetCurrentUserUseCase
 import com.minsk.guru.domain.usecase.firebase.auth.SignInUseCase
-import com.minsk.guru.domain.usecase.local.user.InsertUserUseCase
+import com.minsk.guru.domain.usecase.local.user.InsertLocalUserUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
 import com.minsk.guru.utils.singleResultUseCaseTaskProvider
@@ -12,7 +12,7 @@ import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 class SignInViewModel(
     private val signInUseCase: SignInUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
-    private val insertUserUseCase: InsertUserUseCase,
+    private val insertLocalUserUseCase: InsertLocalUserUseCase,
     private val taskExecutorFactory: TaskExecutorFactory
 ) : ViewModel() {
 
@@ -41,17 +41,17 @@ class SignInViewModel(
             is GetCurrentUserUseCase.Result.Failure -> errorLiveData.value = data.error
             is GetCurrentUserUseCase.Result.Success -> {
                 if (data.user != null) {
-                    taskUpdateUser.start(InsertUserUseCase.Param(data.user!!))
+                    taskUpdateUser.start(InsertLocalUserUseCase.Param(data.user!!))
                 }
             }
             else -> Unit
         }
     }
 
-    private fun handleUpdateUserResult(data: InsertUserUseCase.Result) {
+    private fun handleUpdateUserResult(data: InsertLocalUserUseCase.Result) {
         when (data) {
-            is InsertUserUseCase.Result.Failure -> errorLiveData.value = data.error
-            is InsertUserUseCase.Result.Success -> {
+            is InsertLocalUserUseCase.Result.Failure -> errorLiveData.value = data.error
+            is InsertLocalUserUseCase.Result.Success -> {
             }
             else -> Unit
         }
@@ -77,8 +77,8 @@ class SignInViewModel(
         )
 
     private fun createUpdateUserTask() =
-        taskExecutorFactory.createTaskExecutor<InsertUserUseCase.Param, InsertUserUseCase.Result>(
-            singleResultUseCaseTaskProvider { insertUserUseCase },
+        taskExecutorFactory.createTaskExecutor<InsertLocalUserUseCase.Param, InsertLocalUserUseCase.Result>(
+            singleResultUseCaseTaskProvider { insertLocalUserUseCase },
             { data -> handleUpdateUserResult(data) },
             { error -> handleError(error) }
         )
