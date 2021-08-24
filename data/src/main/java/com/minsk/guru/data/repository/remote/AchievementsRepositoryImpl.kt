@@ -11,7 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 class AchievementsRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) :
     AchievementsRepository {
     @ExperimentalCoroutinesApi
-    override fun getRemoteAchievements(): List<Achievement> {
+    override fun getAchievements(): List<Achievement> {
         val taskGetAchievements = firebaseDatabase.reference.child("achievements").get()
         Tasks.await(taskGetAchievements)
             .getValue(object : GenericTypeIndicator<List<RemoteAchievement>>() {}).let { list ->

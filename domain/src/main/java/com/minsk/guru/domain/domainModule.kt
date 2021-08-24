@@ -2,10 +2,8 @@ package com.minsk.guru.domain
 
 import com.minsk.guru.domain.adapter.InMemoryUserIdHolder
 import com.minsk.guru.domain.adapter.UserIdHolder
-import com.minsk.guru.domain.usecase.InsertLocalAchievementsUseCase
-import com.minsk.guru.domain.usecase.InsertLocalAchievementsUseCaseImpl
-import com.minsk.guru.domain.usecase.firebase.achievements.GetRemoteAchievementsUseCase
-import com.minsk.guru.domain.usecase.firebase.achievements.GetRemoteAchievementsUseCaseImpl
+import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCase
+import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCaseImpl
 import com.minsk.guru.domain.usecase.firebase.auth.*
 import com.minsk.guru.domain.usecase.firebase.places.GetCategoriesUseCase
 import com.minsk.guru.domain.usecase.firebase.places.GetCategoriesUseCaseImpl
@@ -30,9 +28,8 @@ val domainModule = module {
     factory<InsertLocalUserUseCase> { InsertLocalUserUseCaseImpl(get()) }
 
     // achievements
-    factory { GetRemoteAchievementsUseCaseImpl(get()) }
-    factory<GetRemoteAchievementsUseCase> { GetRemoteAchievementsUseCaseImpl(get()) }
-    factory<InsertLocalAchievementsUseCase> { InsertLocalAchievementsUseCaseImpl(get()) }
+    factory { GetAchievementsUseCaseImpl(get()) }
+    factory<GetAchievementsUseCase> { GetAchievementsUseCaseImpl(get()) }
 
     // categories
     factory<GetCategoriesUseCase> { GetCategoriesUseCaseImpl(get()) }
