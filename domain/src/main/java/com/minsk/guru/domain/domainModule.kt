@@ -2,16 +2,10 @@ package com.minsk.guru.domain
 
 import com.minsk.guru.domain.adapter.InMemoryUserIdHolder
 import com.minsk.guru.domain.adapter.UserIdHolder
-import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCase
-import com.minsk.guru.domain.usecase.firebase.achievements.GetAchievementsUseCaseImpl
-import com.minsk.guru.domain.usecase.firebase.auth.*
-import com.minsk.guru.domain.usecase.firebase.places.GetCategoriesUseCase
-import com.minsk.guru.domain.usecase.firebase.places.GetCategoriesUseCaseImpl
-import com.minsk.guru.domain.usecase.firebase.places.GetRemotePlacesByCategoryUseCase
-import com.minsk.guru.domain.usecase.firebase.places.GetRemotePlacesByCategoryUseCaseImpl
-import com.minsk.guru.domain.usecase.local.places.*
-import com.minsk.guru.domain.usecase.local.user.InsertLocalUserUseCase
-import com.minsk.guru.domain.usecase.local.user.InsertLocalUserUseCaseImpl
+import com.minsk.guru.domain.usecase.achievements.GetAchievementsUseCase
+import com.minsk.guru.domain.usecase.achievements.GetAchievementsUseCaseImpl
+import com.minsk.guru.domain.usecase.auth.*
+import com.minsk.guru.domain.usecase.places.*
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -25,7 +19,6 @@ val domainModule = module {
     factory<SignInUseCase> { SignInUseCaseImpl(get()) }
     factory<SignUpUseCase> { SignUpUseCaseImpl(get()) }
     factory<GetCurrentUserUseCase> { GetCurrentUserUseCaseImpl(get()) }
-    factory<InsertLocalUserUseCase> { InsertLocalUserUseCaseImpl(get()) }
 
     // achievements
     factory { GetAchievementsUseCaseImpl(get()) }
@@ -35,11 +28,11 @@ val domainModule = module {
     factory<GetCategoriesUseCase> { GetCategoriesUseCaseImpl(get()) }
 
     // places
-    factory<InsertLocalPlaceUseCase> { InsertLocalPlaceUseCaseImpl(get(), get()) }
-    factory<DeleteLocalPlaceUseCase> { DeleteLocalPlaceUseCaseImpl(get()) }
-    factory<GetRemotePlacesByCategoryUseCase> { GetRemotePlacesByCategoryUseCaseImpl(get()) }
-    factory<GetVisitedLocalPlacesByCategoryUseCase> { GetVisitedLocalPlacesByCategoryUseCaseImpl(get()) }
-    factory<GetVisitedLocalPlacesUseCase> { GetVisitedLocalPlacesUseCaseImpl(get()) }
+    factory<GetPlacesByCategoryUseCase> { GetPlacesByCategoryUseCaseImpl(get()) }
+    factory<GetVisitedPlacesUseCase> { GetVisitedPlacesUseCaseImpl(get()) }
+    factory<GetVisitedPlacesByCategoryUseCase> { GetVisitedPlacesByCategoryUseCaseImpl(get()) }
+    factory<InsertVisitedPlaceUseCase> { InsertVisitedPlaceUseCaseImpl(get()) }
+    factory<DeleteVisitedPlaceUseCase> { DeleteVisitedPlaceUseCaseImpl(get()) }
 }
 
 val startDomainKoin = {

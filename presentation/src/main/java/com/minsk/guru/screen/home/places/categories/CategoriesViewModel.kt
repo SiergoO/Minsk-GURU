@@ -7,8 +7,8 @@ import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.model.Category
 import com.minsk.guru.domain.model.Place
 import com.minsk.guru.domain.model.remote.RemoteAchievement
-import com.minsk.guru.domain.usecase.firebase.places.GetCategoriesUseCase
-import com.minsk.guru.domain.usecase.local.places.GetVisitedLocalPlacesUseCase
+import com.minsk.guru.domain.usecase.places.GetCategoriesUseCase
+import com.minsk.guru.domain.usecase.places.GetVisitedPlacesUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
 import com.minsk.guru.utils.singleResultUseCaseTaskProvider
@@ -16,7 +16,7 @@ import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 class CategoriesViewModel(
     private val userIdHolder: UserIdHolder,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val getVisitedPlaces: GetVisitedLocalPlacesUseCase,
+    private val getVisitedPlaces: GetVisitedPlacesUseCase,
     private val taskExecutorFactory: TaskExecutorFactory
 ) : ViewModel() {
 
@@ -30,7 +30,7 @@ class CategoriesViewModel(
 
     fun getCategories() {
         taskGetCategories.start(GetCategoriesUseCase.Param)
-        taskGetVisitedPlaces.start(GetVisitedLocalPlacesUseCase.Param(userIdHolder.userId))
+        taskGetVisitedPlaces.start(GetVisitedPlacesUseCase.Param(userIdHolder.userId))
     }
 
     private fun handleGetCategoriesResult(data: GetCategoriesUseCase.Result) {
@@ -42,10 +42,10 @@ class CategoriesViewModel(
         }
     }
 
-    private fun handleGetVisitedPlacesResult(data: GetVisitedLocalPlacesUseCase.Result) {
+    private fun handleGetVisitedPlacesResult(data: GetVisitedPlacesUseCase.Result) {
         when (data) {
-            is GetVisitedLocalPlacesUseCase.Result.Failure -> errorLiveData.value = data.error
-            is GetVisitedLocalPlacesUseCase.Result.Success -> visitedPlacesResultLiveData.value =
+            is GetVisitedPlacesUseCase.Result.Failure -> errorLiveData.value = data.error
+            is GetVisitedPlacesUseCase.Result.Success -> visitedPlacesResultLiveData.value =
                 data.visitedPlaces
             else -> Unit
         }
@@ -63,7 +63,7 @@ class CategoriesViewModel(
         )
 
     private fun createGetVisitedPlacesTask() =
-        taskExecutorFactory.createTaskExecutor<GetVisitedLocalPlacesUseCase.Param, GetVisitedLocalPlacesUseCase.Result>(
+        taskExecutorFactory.createTaskExecutor<GetVisitedPlacesUseCase.Param, GetVisitedPlacesUseCase.Result>(
             singleResultUseCaseTaskProvider { getVisitedPlaces },
             { data -> handleGetVisitedPlacesResult(data) },
             { error -> handleError(error) }

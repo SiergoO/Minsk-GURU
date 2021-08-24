@@ -5,20 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.model.Place
-import com.minsk.guru.domain.usecase.firebase.places.GetRemotePlacesByCategoryUseCase
-import com.minsk.guru.domain.usecase.local.places.DeleteLocalPlaceUseCase
-import com.minsk.guru.domain.usecase.local.places.GetVisitedLocalPlacesByCategoryUseCase
-import com.minsk.guru.domain.usecase.local.places.InsertLocalPlaceUseCase
+import com.minsk.guru.domain.usecase.places.DeleteVisitedPlaceUseCase
+import com.minsk.guru.domain.usecase.places.GetPlacesByCategoryUseCase
+import com.minsk.guru.domain.usecase.places.GetVisitedPlacesByCategoryUseCase
+import com.minsk.guru.domain.usecase.places.InsertVisitedPlaceUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
 import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 
 class PlacesViewModel(
     private val userIdHolder: UserIdHolder,
-    private val getRemotePlacesByCategoryUseCase: GetRemotePlacesByCategoryUseCase,
-    private val getVisitedLocalPlacesByCategoryUseCase: GetVisitedLocalPlacesByCategoryUseCase,
-    private val insertLocalPlaceUseCase: InsertLocalPlaceUseCase,
-    private val deleteLocalPlaceUseCase: DeleteLocalPlaceUseCase,
+    private val insertVisitedPlaceUseCase: InsertVisitedPlaceUseCase,
+    private val deleteVisitedPlaceUseCase: DeleteVisitedPlaceUseCase,
+    private val getPlacesByCategoryUseCase: GetPlacesByCategoryUseCase,
+    private val getVisitedPlacesByCategoryUseCase: GetVisitedPlacesByCategoryUseCase,
     private val taskExecutorFactory: TaskExecutorFactory
 ) : ViewModel() {
 
@@ -33,9 +33,9 @@ class PlacesViewModel(
     var visitedPlacesByCategoryLiveData = MutableLiveData<List<Place>>()
 
     fun getPlacesByCategory(categoryName: String?) {
-        taskGetRemotePlacesByCategory.start(GetRemotePlacesByCategoryUseCase.Param(categoryName))
+        taskGetRemotePlacesByCategory.start(GetPlacesByCategoryUseCase.Param(categoryName))
         taskGetVisitedLocalPlacesByCategory.start(
-            GetVisitedLocalPlacesByCategoryUseCase.Param(
+            GetVisitedPlacesByCategoryUseCase.Param(
                 userIdHolder.userId,
                 categoryName
             )
@@ -44,9 +44,9 @@ class PlacesViewModel(
 
     fun updateLocalPlace(place: Place, isVisited: Boolean) {
         if (isVisited) {
-            taskInsertPlace.start(InsertLocalPlaceUseCase.Param(userIdHolder.userId, place))
+            taskInsertPlace.start(InsertVisitedPlaceUseCase.Param(userIdHolder.userId, place))
         } else {
-            taskDeletePlace.start(DeleteLocalPlaceUseCase.Param(userIdHolder.userId, place))
+            taskDeletePlace.start(DeleteVisitedPlaceUseCase.Param(userIdHolder.userId, place))
         }
     }
 
@@ -54,64 +54,64 @@ class PlacesViewModel(
         errorLiveData.value = error
     }
 
-    private fun handleGetRemotePlacesByCategory(data: GetRemotePlacesByCategoryUseCase.Result) {
+    private fun handleGetRemotePlacesByCategory(data: GetPlacesByCategoryUseCase.Result) {
         when (data) {
-            is GetRemotePlacesByCategoryUseCase.Result.Success -> allPlacesByCategoryLiveData.value =
+            is GetPlacesByCategoryUseCase.Result.Success -> allPlacesByCategoryLiveData.value =
                 data.places
-            is GetRemotePlacesByCategoryUseCase.Result.Failure -> errorLiveData.value = data.error
+            is GetPlacesByCategoryUseCase.Result.Failure -> errorLiveData.value = data.error
             else -> Unit
         }
     }
 
-    private fun handleGetVisitedLocalPlacesByCategoryResult(data: GetVisitedLocalPlacesByCategoryUseCase.Result) {
+    private fun handleGetVisitedLocalPlacesByCategoryResult(data: GetVisitedPlacesByCategoryUseCase.Result) {
         when (data) {
-            is GetVisitedLocalPlacesByCategoryUseCase.Result.Success -> visitedPlacesByCategoryLiveData.value =
+            is GetVisitedPlacesByCategoryUseCase.Result.Success -> visitedPlacesByCategoryLiveData.value =
                 data.visitedPlaces
-            is GetVisitedLocalPlacesByCategoryUseCase.Result.Failure -> errorLiveData.value =
+            is GetVisitedPlacesByCategoryUseCase.Result.Failure -> errorLiveData.value =
                 data.error
             else -> Unit
         }
     }
 
-    private fun handleInsertPlaceResult(data: InsertLocalPlaceUseCase.Result) {
+    private fun handleInsertVisitedPlaceResult(data: InsertVisitedPlaceUseCase.Result) {
         when (data) {
-            is InsertLocalPlaceUseCase.Result.Failure -> errorLiveData.value = data.error
+            is InsertVisitedPlaceUseCase.Result.Failure -> errorLiveData.value = data.error
             else -> Unit
         }
     }
 
-    private fun handleDeletePlaceResult(data: DeleteLocalPlaceUseCase.Result) {
+    private fun handleDeleteVisitedPlaceResult(data: DeleteVisitedPlaceUseCase.Result) {
         when (data) {
-            is DeleteLocalPlaceUseCase.Result.Failure -> errorLiveData.value = data.error
+            is DeleteVisitedPlaceUseCase.Result.Failure -> errorLiveData.value = data.error
             else -> Unit
         }
     }
 
     private fun createGetRemotePlacesByCategoryTask() =
-        taskExecutorFactory.createTaskExecutor<GetRemotePlacesByCategoryUseCase.Param, GetRemotePlacesByCategoryUseCase.Result>(
-            singleResultUseCaseTaskProvider { getRemotePlacesByCategoryUseCase },
+        taskExecutorFactory.createTaskExecutor<GetPlacesByCategoryUseCase.Param, GetPlacesByCategoryUseCase.Result>(
+            singleResultUseCaseTaskProvider { getPlacesByCategoryUseCase },
             { data -> handleGetRemotePlacesByCategory(data) },
             { error -> handleError(error) }
         )
 
     private fun createGetVisitedLocalPlacesByCategoryTask() =
-        taskExecutorFactory.createTaskExecutor<GetVisitedLocalPlacesByCategoryUseCase.Param, GetVisitedLocalPlacesByCategoryUseCase.Result>(
-            singleResultUseCaseTaskProvider { getVisitedLocalPlacesByCategoryUseCase },
+        taskExecutorFactory.createTaskExecutor<GetVisitedPlacesByCategoryUseCase.Param, GetVisitedPlacesByCategoryUseCase.Result>(
+            singleResultUseCaseTaskProvider { getVisitedPlacesByCategoryUseCase },
             { data -> handleGetVisitedLocalPlacesByCategoryResult(data) },
             { error -> handleError(error) }
         )
 
     private fun createInsertPlaceTask() =
-        taskExecutorFactory.createTaskExecutor<InsertLocalPlaceUseCase.Param, InsertLocalPlaceUseCase.Result>(
-            singleResultUseCaseTaskProvider { insertLocalPlaceUseCase },
-            { data -> handleInsertPlaceResult(data) },
+        taskExecutorFactory.createTaskExecutor<InsertVisitedPlaceUseCase.Param, InsertVisitedPlaceUseCase.Result>(
+            singleResultUseCaseTaskProvider { insertVisitedPlaceUseCase },
+            { data -> handleInsertVisitedPlaceResult(data) },
             { error -> handleError(error) }
         )
 
     private fun createDeletePlaceTask() =
-        taskExecutorFactory.createTaskExecutor<DeleteLocalPlaceUseCase.Param, DeleteLocalPlaceUseCase.Result>(
-            singleResultUseCaseTaskProvider { deleteLocalPlaceUseCase },
-            { data -> handleDeletePlaceResult(data) },
+        taskExecutorFactory.createTaskExecutor<DeleteVisitedPlaceUseCase.Param, DeleteVisitedPlaceUseCase.Result>(
+            singleResultUseCaseTaskProvider { deleteVisitedPlaceUseCase },
+            { data -> handleDeleteVisitedPlaceResult(data) },
             { error -> handleError(error) }
         )
 }
