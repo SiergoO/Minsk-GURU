@@ -31,13 +31,13 @@ val presentationModule = module {
     }
 
     fragment { SignInFragment() }
-    viewModel { SignInViewModel(get(), get(), get(), get()) }
+    viewModel { SignInViewModel(get(), get()) }
 
     fragment { SignUpFragment() }
-    viewModel { SignUpViewModel(get(), get(), get(), get()) }
+    viewModel { SignUpViewModel(get(), get()) }
 
     fragment { CategoriesFragment() }
-    viewModel { CategoriesViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { CategoriesViewModel(get(), get(), get(), get()) }
 
     fragment { PlacesFragment() }
     viewModel { PlacesViewModel(get(), get(), get(), get(), get(), get()) }
