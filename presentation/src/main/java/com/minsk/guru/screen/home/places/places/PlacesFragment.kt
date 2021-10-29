@@ -21,7 +21,7 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
     private var _binding: FragmentPlacesBinding? = null
     val binding: FragmentPlacesBinding
         get() = _binding!!
-    private lateinit var placesAdapter: PlacesAdapter
+    private var placesAdapter: PlacesAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,12 +36,12 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
         )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        viewModel.getPlacesByCategory(arguments?.getString("categoryName"))
-        viewModel.allPlacesByCategoryLiveData.observe(viewLifecycleOwner) { all ->
-            placesAdapter.setAllPlaces(all)
+        viewModel.getPlacesByCategory(arguments?.getString("categoryName")?:"")
+        viewModel.placesByCategory.observe(viewLifecycleOwner) { all ->
+            placesAdapter?.setAllPlaces(all)
         }
-        viewModel.visitedPlacesByCategoryLiveData.observe(viewLifecycleOwner) { visited ->
-            placesAdapter.setVisitedPlaces(visited)
+        viewModel.visitedPlacesByCategory.observe(viewLifecycleOwner) { visited ->
+            placesAdapter?.setVisitedPlaces(visited)
         }
         return binding.root
     }
@@ -67,5 +67,6 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        placesAdapter = null
     }
 }

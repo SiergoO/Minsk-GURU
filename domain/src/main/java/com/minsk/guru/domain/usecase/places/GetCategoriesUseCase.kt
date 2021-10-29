@@ -1,15 +1,15 @@
 package com.minsk.guru.domain.usecase.places
 
-import com.minsk.guru.domain.model.Category
+import com.minsk.guru.domain.model.UserCategory
 import com.minsk.guru.domain.usecase.SingleResultUseCase
 
-interface GetCategoriesUseCase:
+interface GetCategoriesUseCase :
     SingleResultUseCase<GetCategoriesUseCase.Param, GetCategoriesUseCase.Result> {
 
-    object Param
+    data class Param (val userId: String)
 
     sealed class Result {
-        data class Success(val categories: List<Category>) : Result()
+        data class Success(val categories: List<UserCategory>) : Result()
         data class Failure(val error: Throwable) : Result()
     }
 }

@@ -31,8 +31,7 @@ val domainModule = module {
     factory<GetPlacesByCategoryUseCase> { GetPlacesByCategoryUseCaseImpl(get()) }
     factory<GetVisitedPlacesUseCase> { GetVisitedPlacesUseCaseImpl(get()) }
     factory<GetVisitedPlacesByCategoryUseCase> { GetVisitedPlacesByCategoryUseCaseImpl(get()) }
-    factory<InsertVisitedPlaceUseCase> { InsertVisitedPlaceUseCaseImpl(get()) }
-    factory<DeleteVisitedPlaceUseCase> { DeleteVisitedPlaceUseCaseImpl(get()) }
+    factory<UpdatePlaceVisitStatusUseCase> { UpdatePlaceVisitStatusUseCaseImpl(get()) }
 }
 
 val startDomainKoin = {

@@ -4,83 +4,72 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.R
 import com.minsk.guru.databinding.ItemCategoryBinding
-import com.minsk.guru.domain.model.Category
-import com.minsk.guru.domain.model.Place
+import com.minsk.guru.domain.model.UserCategory
 import kotlin.math.roundToInt
 
 class CategoriesAdapter(
     private val context: Context?,
-    callback: Callback? = null
+    private val categories: List<UserCategory>,
+    private val callback: Callback? = null
 ) : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
-
-    var callback: Callback? = null
-    private val layoutInflater = LayoutInflater.from(context)
-    private var categories: List<Category> = listOf()
-    private var visitedPlaces: List<Place> = listOf()
-
-    init {
-        this.callback = callback
-    }
-
-    fun setCategories(items: List<Category>) {
-        this.categories = items
-        notifyDataSetChanged()
-    }
-
-    fun setVisitedPlaces(items: List<Place>) {
-        this.visitedPlaces = items
-        notifyDataSetChanged()
-    }
 
     override fun getItemCount(): Int =
         categories.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(ItemCategoryBinding.inflate(LayoutInflater.from(context), parent, false))
+        ViewHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(context),
+                R.layout.item_category,
+                parent,
+                false
+            )
+        )
 
     override fun onBindViewHolder(holder: CategoriesAdapter.ViewHolder, position: Int) {
         categories[position].let { category ->
-            holder.bind(category, visitedPlaces.filter { it.category.contains(category.name) })
+            holder.binding.userCategory = category
+            holder.bind(category)
         }
     }
 
-    private fun handleItemClicked(position: Int) {
+    private fun handleCategoryClicked(position: Int) {
         val category = categories[position]
         callback?.onCategoryClicked(category)
     }
 
-
     inner class ViewHolder(
-        private val binding: ItemCategoryBinding
+        val binding: ItemCategoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
                 adapterPosition.let { position ->
                     if (RecyclerView.NO_POSITION != position) {
-                        handleItemClicked(position)
+                        handleCategoryClicked(position)
                     }
                 }
             }
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(item: Category, visitedPlaces: List<Place>) {
+        fun bind(item: UserCategory) {
             binding.apply {
                 val placesAmount = item.placesIds.size
-                val percentage = (visitedPlaces.size / placesAmount.toDouble() * 100.0).roundToInt()
-                category.text = item.name
+                val percentage =
+                    (item.visitedPlaces.size / placesAmount.toDouble() * 100.0).roundToInt()
                 tvPercentage.text = context?.getString(R.string.achievements_percentage, percentage)
-                tvProgress.text = "${visitedPlaces.size}/$placesAmount"
+                tvProgress.text = "${item.visitedPlaces.size}/$placesAmount"
                 progressAchievements.progress = percentage
             }
         }
     }
 
     interface Callback {
-        fun onCategoryClicked(category: Category)
+        fun onCategoryClicked(category: UserCategory)
     }
 }

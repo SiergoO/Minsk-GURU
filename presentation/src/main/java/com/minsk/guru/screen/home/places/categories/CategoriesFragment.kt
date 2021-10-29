@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentCategoriesBinding
-import com.minsk.guru.domain.model.Category
+import com.minsk.guru.domain.model.UserCategory
+import com.minsk.guru.utils.showError
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategoriesFragment(private val layout: Int = R.layout.fragment_categories) :
@@ -23,7 +24,7 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
     private var _binding: FragmentCategoriesBinding? = null
     val binding: FragmentCategoriesBinding
         get() = _binding!!
-    private lateinit var categoriesAdapter: CategoriesAdapter
+    private var categoriesAdapter: CategoriesAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,41 +37,42 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
             container,
             false
         )
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        viewModel.getCategories()
-        viewModel.categoriesResultLiveData.observe(viewLifecycleOwner) { categories ->
-            categoriesAdapter.setCategories(categories)
-        }
-        viewModel.visitedPlacesResultLiveData.observe(viewLifecycleOwner) { visitedPlaces ->
-            categoriesAdapter.setVisitedPlaces(visitedPlaces)
+        binding.apply {
+            lifecycleOwner = this@CategoriesFragment
+            binding.viewModel = viewModel
         }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.achievements.apply {
-            categoriesAdapter = CategoriesAdapter(context,
-                object : CategoriesAdapter.Callback {
-
-                    override fun onCategoryClicked(category: Category) {
-                        val bundle =
-                            bundleOf("categoryName" to category.name)
-                        findNavController().navigate(
-                            R.id.action_categoriesFragment_to_placesFragment,
-                            bundle
-                        )
-                    }
-                })
-            this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            this.adapter = categoriesAdapter
-            setHasFixedSize(true)
-            super.onViewCreated(view, savedInstanceState)
+            viewModel.categories.observe(viewLifecycleOwner) {
+                categoriesAdapter = CategoriesAdapter(
+                    context,
+                    it,
+                    object : CategoriesAdapter.Callback {
+                        override fun onCategoryClicked(category: UserCategory) {
+                            val bundle = bundleOf("categoryName" to category.name)
+                            findNavController().navigate(
+                                R.id.action_categoriesFragment_to_placesFragment,
+                                bundle
+                            )
+                        }
+                    })
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                adapter = categoriesAdapter
+                setHasFixedSize(true)
+            }
+            viewModel.error.observe(viewLifecycleOwner) {
+                showError(it)
+            }
         }
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        categoriesAdapter = null
     }
 }

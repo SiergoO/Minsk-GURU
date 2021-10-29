@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentSignInBinding
+import com.minsk.guru.utils.showError
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInFragment(layout: Int = R.layout.fragment_sign_in) : Fragment(layout) {
@@ -32,13 +32,6 @@ class SignInFragment(layout: Int = R.layout.fragment_sign_in) : Fragment(layout)
         )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        viewModel.resultLiveData.observe(viewLifecycleOwner) {
-            findNavController().navigate(R.id.action_signInFragment_to_HomeFragment)
-        }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
-            Snackbar.make(this.requireView(), it.cause?.message.toString(), Snackbar.LENGTH_LONG)
-                .show()
-        }
         return binding.root
     }
 
@@ -46,6 +39,12 @@ class SignInFragment(layout: Int = R.layout.fragment_sign_in) : Fragment(layout)
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            viewModel?.resultLiveData?.observe(viewLifecycleOwner) {
+                findNavController().navigate(R.id.action_signInFragment_to_HomeFragment)
+            }
+            viewModel?.errorLiveData?.observe(viewLifecycleOwner) {
+                root.showError(it)
+            }
             btnSignIn.setOnClickListener {
                 viewModel?.signIn(
                     (binding.layoutEmail.findViewById(R.id.edit_email) as TextInputEditText).text.toString(),

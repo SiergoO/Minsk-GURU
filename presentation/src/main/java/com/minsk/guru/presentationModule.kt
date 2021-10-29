@@ -37,10 +37,10 @@ val presentationModule = module {
     viewModel { SignUpViewModel(get(), get()) }
 
     fragment { CategoriesFragment() }
-    viewModel { CategoriesViewModel(get(), get(), get(), get()) }
+    viewModel { CategoriesViewModel(get(), get(), get()) }
 
     fragment { PlacesFragment() }
-    viewModel { PlacesViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { PlacesViewModel(get(), get(), get(), get(), get()) }
 
     fragment { ProfileFragment() }
     viewModel { ProfileViewModel() }
