@@ -8,7 +8,6 @@ import com.minsk.guru.domain.model.remote.RemotePlaces
 import com.minsk.guru.domain.repository.firebase.places.PlacesRepository
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
 import java.util.*
 
@@ -58,13 +57,13 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
                 val categoriesMap = placesWithUniqueCategory.groupBy { it.category }
                 val categoriesList = mutableListOf<Category>()
                 for (category in categoriesMap.keys) {
-                    categoriesList.add(Category(category, categoriesMap[category]!!.map { it.id }))
+                    val categoryPlaces = list.filter { place -> categoriesMap[category]!!.any {it.id == place.id} }
+                    categoriesList.add(Category(category, categoryPlaces))
                 }
                 return categoriesList
             }
     }
 
-    @ExperimentalCoroutinesApi
     override fun getPlacesVisitedByUser(userId: String): List<Place> {
         val taskGetPlacesVisitedByUser =
             firebaseDatabase.reference.child("users").child(userId).child("visitedPlaces").get()
@@ -72,28 +71,20 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
             .getValue(object : GenericTypeIndicator<Map<String, Place>>() {})?.values?.toList()?: listOf()
     }
 
-    override fun getVisitedPlacesByCategory(userId: String, categoryName: String?): List<Place> {
+    override fun getVisitedPlacesByCategory(userId: String, categoryName: String): List<Place> {
         val taskGetVisitedPlacesByCategory =
             firebaseDatabase.reference.child("users").child(userId).child("visitedPlaces").get()
         return Tasks.await(taskGetVisitedPlacesByCategory)
             .getValue(object : GenericTypeIndicator<Map<String, Place>>() {})?.values?.toList()
-        ?.filter { it.category == categoryName } ?: listOf()
+        ?.filter { it.category.contains(categoryName, true)  } ?: listOf()
     }
 
-    override fun insertVisitedPlace(userId: String, place: Place) {
-        firebaseDatabase.reference.child("users")
+    override fun updatePlaceVisitStatus(userId: String, place: Place, isVisited: Boolean) {
+        val visitedPlace = firebaseDatabase.reference.child("users")
             .child(userId)
             .child("visitedPlaces")
             .child(place.id)
-            .setValue(place)
-    }
-
-    override fun deleteVisitedPlace(userId: String, placeId: String) {
-        firebaseDatabase.reference.child("users")
-            .child(userId)
-            .child("visitedPlaces")
-            .child(placeId)
-            .removeValue()
+        if (isVisited) visitedPlace.setValue(place) else visitedPlace.removeValue()
     }
 
     private fun Place.splitByCategory(): List<Place> {
