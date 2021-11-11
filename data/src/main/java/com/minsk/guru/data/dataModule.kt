@@ -1,6 +1,7 @@
 package com.minsk.guru.data
 
 import android.app.Application
+import com.google.android.libraries.places.api.Places
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.minsk.guru.data.repository.AchievementsRepositoryImpl
@@ -16,7 +17,9 @@ import org.koin.dsl.module
 
 val dataModule = module(override = true) {
 
-    single<PlacesRepository> { PlacesRepositoryImpl(FirebaseDatabase.getInstance()) }
+    single<PlacesRepository> {
+        PlacesRepositoryImpl(FirebaseDatabase.getInstance(), Places.createClient(androidContext()))
+    }
     single<AchievementsRepository> { AchievementsRepositoryImpl(FirebaseDatabase.getInstance()) }
     single<AuthRepository> {
         AuthRepositoryImpl(

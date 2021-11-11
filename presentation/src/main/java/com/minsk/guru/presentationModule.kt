@@ -1,6 +1,8 @@
 package com.minsk.guru
 
 import android.app.Application
+import com.google.android.libraries.places.api.Places
+import com.minsk.guru.data.BuildConfig
 import com.minsk.guru.data.dataModule
 import com.minsk.guru.domain.domainModule
 import com.minsk.guru.screen.auth.signin.SignInFragment
@@ -53,5 +55,6 @@ val startPresentationKoin = { application: Application ->
         androidContext(application)
         modules(dataModule, domainModule, presentationModule)
         logger(AndroidLogger())
+        Places.initialize(application.applicationContext, BuildConfig.GOOGLE_API_KEY)
     }
 }

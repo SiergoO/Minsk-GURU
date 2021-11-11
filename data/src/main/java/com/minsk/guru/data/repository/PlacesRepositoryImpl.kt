@@ -1,6 +1,7 @@
 package com.minsk.guru.data.repository
 
 import com.google.android.gms.tasks.Tasks
+import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.firebase.database.*
 import com.minsk.guru.domain.model.Category
 import com.minsk.guru.domain.model.Place
@@ -11,7 +12,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : PlacesRepository {
+class PlacesRepositoryImpl(
+    private val firebaseDatabase: FirebaseDatabase,
+    private val placesClient: PlacesClient
+) : PlacesRepository {
 
     override suspend fun getAll(): List<Place> =
         withContext(Dispatchers.IO) {

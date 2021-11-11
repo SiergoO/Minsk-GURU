@@ -1,6 +1,6 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
-const val kotlinVersion = "1.4.21"
+const val kotlinVersion = "1.5.31"
 
 object Libraries {
     private object Versions {
@@ -14,7 +14,7 @@ object Libraries {
         const val coroutines = "1.4.2"
         const val serialization = "1.0.1"
         const val lifecycle = "2.2.0"
-        const val koin = "2.2.2"
+        const val koin = "2.2.3"
         const val recyclerview = "1.1.0"
         const val recyclerViewSelection = "1.0.0"
         const val room = "2.3.0"
@@ -26,6 +26,7 @@ object Libraries {
         const val gson = "2.8.5"
         const val converterGson = "2.5.0"
         const val okHttp = "3.12.0"
+        const val googlePlaces = "2.5.0"
     }
 
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
@@ -34,6 +35,8 @@ object Libraries {
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     const val firebasePerformance = "com.google.firebase:firebase-perf-ktx"
+
+    const val googlePlaces = "com.google.android.libraries.places:places:${Versions.googlePlaces}"
 
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     const val appCompat = "androidx.appcompat:appcompat:${Versions.jetpack}"
@@ -54,12 +57,12 @@ object Libraries {
     const val converterGson = "com.squareup.retrofit2:converter-gson:${Versions.converterGson}"
     const val okHttp = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
 
-    const val koinKotlin = "org.koin:koin-core:${Versions.koin}"
-    private const val koinTest = "org.koin:koin-test:${Versions.koin}"
-    private const val koinAndroid = "org.koin:koin-android:${Versions.koin}"
-    private const val koinAndroidx = "org.koin:koin-androidx-scope:${Versions.koin}"
-    private const val koinViewModel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
-    private const val koinFragment = "org.koin:koin-androidx-fragment:${Versions.koin}"
+    const val koinKotlin = "io.insert-koin:koin-core:${Versions.koin}"
+    private const val koinTest = "io.insert-koin:koin-test:${Versions.koin}"
+    private const val koinAndroid = "io.insert-koin:koin-android:${Versions.koin}"
+    private const val koinAndroidx = "io.insert-koin:koin-androidx-scope:${Versions.koin}"
+    private const val koinViewModel = "io.insert-koin:koin-androidx-viewmodel:${Versions.koin}"
+    private const val koinFragment = "io.insert-koin:koin-androidx-fragment:${Versions.koin}"
 
     const val androidxLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     const val androidxViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
