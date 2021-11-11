@@ -6,26 +6,25 @@ import com.minsk.guru.domain.usecase.CoroutineSingleResultUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-class GetCategoriesUseCaseImpl(
+class GetUserCategoriesUseCaseImpl(
     private val placesRepository: PlacesRepository,
     ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : CoroutineSingleResultUseCase<GetCategoriesUseCase.Param, GetCategoriesUseCase.Result>(
+) : CoroutineSingleResultUseCase<GetUserCategoriesUseCase.Param, GetUserCategoriesUseCase.Result>(
     ioDispatcher
-), GetCategoriesUseCase {
+), GetUserCategoriesUseCase {
 
-    override suspend fun run(param: GetCategoriesUseCase.Param): GetCategoriesUseCase.Result =
+    override suspend fun run(param: GetUserCategoriesUseCase.Param): GetUserCategoriesUseCase.Result =
         try {
-            val list: List<UserCategory>
             val categories = placesRepository.getCategories()
             val visitedPlaces = placesRepository.getPlacesVisitedByUser(param.userId)
-            list = categories.map { category ->
+            val list = categories.map { category ->
                 UserCategory(
                     category.name,
-                    category.placesIds,
-                    visitedPlaces.filter { place -> category.placesIds.contains(place.id) })
+                    category.places,
+                    visitedPlaces.filter { place -> category.places.any {it.id == place.id} })
             }
-            GetCategoriesUseCase.Result.Success(list)
+            GetUserCategoriesUseCase.Result.Success(list)
         } catch (error: Throwable) {
-            GetCategoriesUseCase.Result.Failure(error)
+            GetUserCategoriesUseCase.Result.Failure(error)
         }
 }

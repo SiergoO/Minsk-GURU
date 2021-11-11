@@ -21,6 +21,12 @@
         android:id="@+id/placesFragment"
         android:name="com.minsk.guru.screen.home.places.places.PlacesFragment"
         android:label="PlacesFragment"
-        tools:layout="@layout/fragment_places" />
+        tools:layout="@layout/fragment_places">
+
+        <argument
+            android:name="userCategory"
+            app:argType="com.minsk.guru.model.UserCategory" />
+
+    </fragment>
 
 </navigation>

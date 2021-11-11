@@ -8,6 +8,7 @@ plugins {
     id(BuildPlugins.firebasePerformance)
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinKapt)
+    id(BuildPlugins.kotlinParcelize)
 }
 
 android {

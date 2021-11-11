@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentPlacesBinding
 import com.minsk.guru.domain.model.Place
+import com.minsk.guru.model.toDomainModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragment(layout) {
@@ -36,27 +37,25 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
         )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        viewModel.getPlacesByCategory(arguments?.getString("categoryName")?:"")
-        viewModel.placesByCategory.observe(viewLifecycleOwner) { all ->
-            placesAdapter?.setAllPlaces(all)
-        }
-        viewModel.visitedPlacesByCategory.observe(viewLifecycleOwner) { visited ->
-            placesAdapter?.setVisitedPlaces(visited)
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.places.apply {
-            placesAdapter = PlacesAdapter(context, object : PlacesAdapter.OnPlaceClickListener {
-                override fun onPlaceClicked(place: Place) {
-                    Toast.makeText(context, "${place.id} clicked", Toast.LENGTH_SHORT).show()
-                }
-            }, object : PlacesAdapter.OnIsVisitedCheckboxClickListener {
-                override fun onIsVisitedCheckboxClicked(place: Place, isVisited: Boolean) {
-                    viewModel.updateLocalPlace(place, isVisited)
-                }
-            })
+            placesAdapter = PlacesAdapter(
+                context,
+                requireArguments().getParcelable<com.minsk.guru.model.UserCategory>(KEY_USER_CATEGORY)!!
+                    .toDomainModel(),
+                object : PlacesAdapter.OnPlaceClickListener {
+                    override fun onPlaceClicked(place: Place) {
+                        Toast.makeText(context, "${place.id} clicked", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                object : PlacesAdapter.OnIsVisitedCheckboxClickListener {
+                    override fun onIsVisitedCheckboxClicked(place: Place, isVisited: Boolean) {
+                        viewModel.updateLocalPlace(place, isVisited)
+                    }
+                })
             this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             this.adapter = placesAdapter
             setHasFixedSize(true)
@@ -68,5 +67,9 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
         super.onDestroy()
         _binding = null
         placesAdapter = null
+    }
+
+    companion object {
+        private const val KEY_USER_CATEGORY = "userCategory"
     }
 }

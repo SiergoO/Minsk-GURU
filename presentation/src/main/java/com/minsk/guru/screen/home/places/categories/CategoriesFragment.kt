@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentCategoriesBinding
 import com.minsk.guru.domain.model.UserCategory
+import com.minsk.guru.model.toUiModel
 import com.minsk.guru.utils.showError
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,13 +47,13 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.achievements.apply {
-            viewModel.categories.observe(viewLifecycleOwner) {
+            viewModel.userCategories.observe(viewLifecycleOwner) {
                 categoriesAdapter = CategoriesAdapter(
                     context,
                     it,
-                    object : CategoriesAdapter.Callback {
-                        override fun onCategoryClicked(category: UserCategory) {
-                            val bundle = bundleOf("categoryName" to category.name)
+                    object : CategoriesAdapter.CategoryClickListener {
+                        override fun onCategoryClicked(userCategory: UserCategory) {
+                            val bundle = bundleOf(KEY_USER_CATEGORY to userCategory.toUiModel())
                             findNavController().navigate(
                                 R.id.action_categoriesFragment_to_placesFragment,
                                 bundle
@@ -74,5 +75,9 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
         super.onDestroy()
         _binding = null
         categoriesAdapter = null
+    }
+
+    companion object {
+        private const val KEY_USER_CATEGORY = "userCategory"
     }
 }

@@ -57,7 +57,8 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
                 val categoriesMap = placesWithUniqueCategory.groupBy { it.category }
                 val categoriesList = mutableListOf<Category>()
                 for (category in categoriesMap.keys) {
-                    categoriesList.add(Category(category, categoriesMap[category]!!.map { it.id }))
+                    val categoryPlaces = list.filter { place -> categoriesMap[category]!!.any {it.id == place.id} }
+                    categoriesList.add(Category(category, categoryPlaces))
                 }
                 return categoriesList
             }

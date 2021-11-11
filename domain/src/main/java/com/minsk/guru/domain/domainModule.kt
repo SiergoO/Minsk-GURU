@@ -25,7 +25,7 @@ val domainModule = module {
     factory<GetAchievementsUseCase> { GetAchievementsUseCaseImpl(get()) }
 
     // categories
-    factory<GetCategoriesUseCase> { GetCategoriesUseCaseImpl(get()) }
+    factory<GetUserCategoriesUseCase> { GetUserCategoriesUseCaseImpl(get()) }
 
     // places
     factory<GetPlacesByCategoryUseCase> { GetPlacesByCategoryUseCaseImpl(get()) }

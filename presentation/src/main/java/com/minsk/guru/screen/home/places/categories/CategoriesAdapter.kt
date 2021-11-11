@@ -13,12 +13,12 @@ import kotlin.math.roundToInt
 
 class CategoriesAdapter(
     private val context: Context?,
-    private val categories: List<UserCategory>,
-    private val callback: Callback? = null
+    private val userCategories: List<UserCategory>,
+    private val categoryClickListener: CategoryClickListener? = null
 ) : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int =
-        categories.size
+        userCategories.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
@@ -31,15 +31,14 @@ class CategoriesAdapter(
         )
 
     override fun onBindViewHolder(holder: CategoriesAdapter.ViewHolder, position: Int) {
-        categories[position].let { category ->
-            holder.binding.userCategory = category
-            holder.bind(category)
+        userCategories[position].let { userCategory ->
+            holder.binding.userCategory = userCategory
+            holder.bind(userCategory)
         }
     }
 
     private fun handleCategoryClicked(position: Int) {
-        val category = categories[position]
-        callback?.onCategoryClicked(category)
+        categoryClickListener?.onCategoryClicked(userCategories[position])
     }
 
     inner class ViewHolder(
@@ -59,7 +58,7 @@ class CategoriesAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(item: UserCategory) {
             binding.apply {
-                val placesAmount = item.placesIds.size
+                val placesAmount = item.categoryPlaces.size
                 val percentage =
                     (item.visitedPlaces.size / placesAmount.toDouble() * 100.0).roundToInt()
                 tvPercentage.text = context?.getString(R.string.achievements_percentage, percentage)
@@ -69,7 +68,7 @@ class CategoriesAdapter(
         }
     }
 
-    interface Callback {
-        fun onCategoryClicked(category: UserCategory)
+    interface CategoryClickListener {
+        fun onCategoryClicked(userCategory: UserCategory)
     }
 }
