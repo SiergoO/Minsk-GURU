@@ -41,11 +41,15 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val category =
+            requireArguments().getParcelable<com.minsk.guru.model.UserCategory>(KEY_USER_CATEGORY)!!
+                .toDomainModel()
+        viewModel.visitedPlaces.observe(viewLifecycleOwner) { visitedPlaces ->
+            placesAdapter!!.setVisitedPlaces(visitedPlaces)
+        }
         binding.places.apply {
             placesAdapter = PlacesAdapter(
                 context,
-                requireArguments().getParcelable<com.minsk.guru.model.UserCategory>(KEY_USER_CATEGORY)!!
-                    .toDomainModel(),
                 object : PlacesAdapter.OnPlaceClickListener {
                     override fun onPlaceClicked(place: Place) {
                         Toast.makeText(context, "${place.id} clicked", Toast.LENGTH_SHORT).show()
@@ -53,13 +57,14 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
                 },
                 object : PlacesAdapter.OnIsVisitedCheckboxClickListener {
                     override fun onIsVisitedCheckboxClicked(place: Place, isVisited: Boolean) {
-                        viewModel.updateLocalPlace(place, isVisited)
+                        viewModel.updateLocalPlace(place, category.name, isVisited)
                     }
                 })
             this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             this.adapter = placesAdapter
             setHasFixedSize(true)
         }
+        placesAdapter!!.set(category.categoryPlaces, category.visitedPlaces)
         super.onViewCreated(view, savedInstanceState)
     }
 

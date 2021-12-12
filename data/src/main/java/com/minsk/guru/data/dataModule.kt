@@ -18,7 +18,7 @@ import org.koin.dsl.module
 val dataModule = module(override = true) {
 
     single<PlacesRepository> {
-        PlacesRepositoryImpl(FirebaseDatabase.getInstance(), Places.createClient(androidContext()))
+        PlacesRepositoryImpl(FirebaseDatabase.getInstance())
     }
     single<AchievementsRepository> { AchievementsRepositoryImpl(FirebaseDatabase.getInstance()) }
     single<AuthRepository> {

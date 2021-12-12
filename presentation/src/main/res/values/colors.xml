@@ -6,6 +6,6 @@
     <color name="background">#FFECECEC</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#7E7E7E</color>
-    <color name="hint">#D8D8D8</color>
+    <color name="hint">#FBFCF3</color>
     <color name="card_statistic">#F3F3F3</color>
 </resources>

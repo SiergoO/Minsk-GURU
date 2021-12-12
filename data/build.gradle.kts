@@ -37,14 +37,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "GOOGLE_API_KEY", "\"AIzaSyCvK8YVOdMb2cW_tXRjqy-vf-vSehyhxgk\"")
         }
         getByName("debug") {
-            buildConfigField("String", "GOOGLE_API_KEY", "\"AIzaSyCvK8YVOdMb2cW_tXRjqy-vf-vSehyhxgk\"")
         }
-    }
-    buildFeatures {
-        dataBinding = true
     }
 }
 
