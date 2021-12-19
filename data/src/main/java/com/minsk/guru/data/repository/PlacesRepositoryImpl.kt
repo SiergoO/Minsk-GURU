@@ -11,7 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : PlacesRepository {
+class PlacesRepositoryImpl(
+    private val firebaseDatabase: FirebaseDatabase,
+) : PlacesRepository {
 
     override suspend fun getAll(): List<Place> =
         withContext(Dispatchers.IO) {
@@ -57,7 +59,8 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
                 val categoriesMap = placesWithUniqueCategory.groupBy { it.category }
                 val categoriesList = mutableListOf<Category>()
                 for (category in categoriesMap.keys) {
-                    val categoryPlaces = list.filter { place -> categoriesMap[category]!!.any {it.id == place.id} }
+                    val categoryPlaces =
+                        list.filter { place -> categoriesMap[category]!!.any { it.id == place.id } }
                     categoriesList.add(Category(category, categoryPlaces))
                 }
                 return categoriesList
@@ -68,7 +71,8 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
         val taskGetPlacesVisitedByUser =
             firebaseDatabase.reference.child("users").child(userId).child("visitedPlaces").get()
         return Tasks.await(taskGetPlacesVisitedByUser)
-            .getValue(object : GenericTypeIndicator<Map<String, Place>>() {})?.values?.toList()?: listOf()
+            .getValue(object : GenericTypeIndicator<Map<String, Place>>() {})?.values?.toList()
+            ?: listOf()
     }
 
     override fun getVisitedPlacesByCategory(userId: String, categoryName: String): List<Place> {
@@ -76,7 +80,7 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
             firebaseDatabase.reference.child("users").child(userId).child("visitedPlaces").get()
         return Tasks.await(taskGetVisitedPlacesByCategory)
             .getValue(object : GenericTypeIndicator<Map<String, Place>>() {})?.values?.toList()
-        ?.filter { it.category.contains(categoryName, true)  } ?: listOf()
+            ?.filter { it.category.contains(categoryName, true) } ?: listOf()
     }
 
     override fun updatePlaceVisitStatus(userId: String, place: Place, isVisited: Boolean) {
@@ -84,13 +88,18 @@ class PlacesRepositoryImpl(private val firebaseDatabase: FirebaseDatabase) : Pla
             .child(userId)
             .child("visitedPlaces")
             .child(place.id)
-        if (isVisited) visitedPlace.setValue(place) else visitedPlace.removeValue()
+        val taskUpdatePlaceVisitStatus =
+            if (isVisited) visitedPlace.setValue(place) else visitedPlace.removeValue()
+        Tasks.await(taskUpdatePlaceVisitStatus)
     }
 
     private fun Place.splitByCategory(): List<Place> {
         val list = mutableListOf<Place>()
         val splitCategoriesList =
-            this.category.split(',').map { it.trim().capitalize(Locale.getDefault()) }
+            this.category.split(',').map { category ->
+                category.trim()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            }
         for (category in splitCategoriesList) {
             list.add(
                 Place(

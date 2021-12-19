@@ -1,7 +1,7 @@
 object BuildPlugins {
 
     object Versions {
-        const val buildToolsVersion = "4.1.2"
+        const val buildToolsVersion = "7.0.3"
         const val googleServices = "4.3.4"
         const val firebaseCrashlyticsClasspath = "2.3.0"
         const val firebasePerformanceClasspath = "1.3.2"

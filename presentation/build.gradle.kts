@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion(AndroidSdk.compile)
+    compileSdk = AndroidSdk.compile
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -22,8 +22,8 @@ android {
     }
     defaultConfig {
         applicationId = "com.minsk.guru"
-        minSdkVersion(AndroidSdk.min)
-        targetSdkVersion(AndroidSdk.target)
+        minSdk = AndroidSdk.min
+        targetSdk = AndroidSdk.target
         versionCode = 1
         versionName = "1.0"
         multiDexEnabled = true
@@ -62,6 +62,7 @@ dependencies {
     implementation(Libraries.firebasePerformance)
     implementation(Libraries.firebaseDatabase)
     implementation(Libraries.firebaseAuth)
+    implementation(Libraries.googlePlaces)
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
@@ -71,8 +72,8 @@ dependencies {
     implementation(Libraries.converterGson)
     implementation(Libraries.okHttp)
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.android.support:recyclerview-v7:28.0.0")
 

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.model.Place
-import com.minsk.guru.domain.model.UserCategory
 import com.minsk.guru.domain.usecase.places.UpdatePlaceVisitStatusUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
@@ -19,13 +18,17 @@ class PlacesViewModel(
 
     private val taskUpdatePlaceVisitStatus = createUpdatePlaceVisitStatusTask()
 
+    private val _visitedPlaces = MutableLiveData<List<Place>>()
+    val visitedPlaces: LiveData<List<Place>>
+        get() = _visitedPlaces
+
     private val _error = MutableLiveData<Throwable>()
     val error: LiveData<Throwable>
         get() = _error
 
-    fun updateLocalPlace(place: Place, isVisited: Boolean) {
+    fun updateLocalPlace(place: Place, categoryName: String, isVisited: Boolean) {
         taskUpdatePlaceVisitStatus.start(
-            UpdatePlaceVisitStatusUseCase.Param(userIdHolder.userId, place, isVisited)
+            UpdatePlaceVisitStatusUseCase.Param(userIdHolder.userId, place, categoryName, isVisited)
         )
     }
 
@@ -35,6 +38,7 @@ class PlacesViewModel(
 
     private fun handlePlaceVisitStatusUpdated(data: UpdatePlaceVisitStatusUseCase.Result) {
         when (data) {
+            is UpdatePlaceVisitStatusUseCase.Result.Success -> _visitedPlaces.value = data.visitedPlaces
             is UpdatePlaceVisitStatusUseCase.Result.Failure -> _error.value = data.error
             else -> Unit
         }

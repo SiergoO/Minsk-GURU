@@ -2,7 +2,8 @@ import Libraries.koinAndroid
 import Libraries.room
 
 repositories {
-    jcenter()
+    mavenCentral()
+    google()
 }
 
 plugins {
@@ -14,7 +15,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion(AndroidSdk.compile)
+    compileSdk = AndroidSdk.compile
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -23,10 +24,8 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     defaultConfig {
-        minSdkVersion(AndroidSdk.min)
-        targetSdkVersion(AndroidSdk.target)
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = AndroidSdk.min
+        targetSdk = AndroidSdk.target
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
         consumerProguardFile("consumer-rules.pro")
     }
@@ -38,14 +37,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "DATABASE_NAME", "\"MinskGuruDatabase\"")
         }
         getByName("debug") {
-            buildConfigField("String", "DATABASE_NAME", "\"MinskGuruDebugDatabase\"")
         }
-    }
-    buildFeatures {
-        dataBinding = true
     }
 }
 
@@ -64,6 +58,7 @@ dependencies {
     implementation(Libraries.okHttp)
     implementation(Libraries.firebaseDatabase)
     implementation(Libraries.firebaseAuth)
+    implementation(Libraries.googlePlaces)
     koinAndroid()
     room()
 }

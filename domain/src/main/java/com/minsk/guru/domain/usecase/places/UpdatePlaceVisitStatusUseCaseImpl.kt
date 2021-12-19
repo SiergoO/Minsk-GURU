@@ -14,7 +14,8 @@ class UpdatePlaceVisitStatusUseCaseImpl(
     override suspend fun run(param: UpdatePlaceVisitStatusUseCase.Param): UpdatePlaceVisitStatusUseCase.Result =
         try {
             placesRepository.updatePlaceVisitStatus(param.userId, param.place, param.isVisited)
-            UpdatePlaceVisitStatusUseCase.Result.Success
+            val visitedPlaces = placesRepository.getVisitedPlacesByCategory(param.userId, param.categoryName)
+            UpdatePlaceVisitStatusUseCase.Result.Success(visitedPlaces)
         } catch (error: Throwable) {
             UpdatePlaceVisitStatusUseCase.Result.Failure(error)
         }

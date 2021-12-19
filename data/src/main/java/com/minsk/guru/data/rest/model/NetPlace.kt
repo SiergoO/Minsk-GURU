@@ -1,4 +1,4 @@
-package com.minsk.guru.data.model
+package com.minsk.guru.data.rest.model
 
 import com.minsk.guru.domain.model.Place
 
