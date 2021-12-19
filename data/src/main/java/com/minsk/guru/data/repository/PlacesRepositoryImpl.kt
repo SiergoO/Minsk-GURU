@@ -10,6 +10,8 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.LinkedHashMap
 
 class PlacesRepositoryImpl(
     private val firebaseDatabase: FirebaseDatabase,
@@ -52,19 +54,10 @@ class PlacesRepositoryImpl(
         }
 
     override fun getCategories(): List<Category> {
-        val taskGetPlaces = firebaseDatabase.reference.child("places").get()
-        Tasks.await(taskGetPlaces)
-            .getValue(object : GenericTypeIndicator<List<Place>>() {}).let { list ->
-                val placesWithUniqueCategory = list!!.flatMap { it.splitByCategory() }
-                val categoriesMap = placesWithUniqueCategory.groupBy { it.category }
-                val categoriesList = mutableListOf<Category>()
-                for (category in categoriesMap.keys) {
-                    val categoryPlaces =
-                        list.filter { place -> categoriesMap[category]!!.any { it.id == place.id } }
-                    categoriesList.add(Category(category, categoryPlaces))
-                }
-                return categoriesList
-            }
+        val taskGetCategories = firebaseDatabase.reference.child("categories").orderByKey().get()
+        return Tasks.await(taskGetCategories)
+            .getValue(object : GenericTypeIndicator<Map<String, List<Place>>>() {})
+            ?.map { Category(it.key, it.value) }?.sortedBy { it.name } ?: listOf()
     }
 
     override fun getPlacesVisitedByUser(userId: String): List<Place> {
@@ -91,30 +84,5 @@ class PlacesRepositoryImpl(
         val taskUpdatePlaceVisitStatus =
             if (isVisited) visitedPlace.setValue(place) else visitedPlace.removeValue()
         Tasks.await(taskUpdatePlaceVisitStatus)
-    }
-
-    private fun Place.splitByCategory(): List<Place> {
-        val list = mutableListOf<Place>()
-        val splitCategoriesList =
-            this.category.split(',').map { category ->
-                category.trim()
-                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
-            }
-        for (category in splitCategoriesList) {
-            list.add(
-                Place(
-                    address,
-                    category,
-                    id,
-                    latitude,
-                    longitude,
-                    name,
-                    openingHours,
-                    phone,
-                    url
-                )
-            )
-        }
-        return list
     }
 }
