@@ -36,6 +36,10 @@ android {
                 "proguard-rules.pro"
             )
             multiDexEnabled = true
+            buildConfigField("String", "FIREBASE_DATABASE_BASE_URL", "\"https://minsk-guru-default-rtdb.firebaseio.com/\"")
+        }
+        getByName("debug") {
+            buildConfigField("String", "FIREBASE_DATABASE_BASE_URL", "\"https://minsk-guru-default-rtdb.firebaseio.com/\"")
         }
     }
     buildFeatures {
@@ -61,8 +65,9 @@ dependencies {
     implementation(Libraries.firebaseCrashlytics)
     implementation(Libraries.firebasePerformance)
     implementation(Libraries.firebaseDatabase)
+    implementation(Libraries.firebaseUiDatabase)
     implementation(Libraries.firebaseAuth)
-    implementation(Libraries.googlePlaces)
+    implementation(Libraries.paging)
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")

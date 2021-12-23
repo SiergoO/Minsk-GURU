@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentCategoriesBinding
 import com.minsk.guru.domain.model.UserCategory
 import com.minsk.guru.model.toUiModel
 import com.minsk.guru.utils.showError
+import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategoriesFragment(private val layout: Int = R.layout.fragment_categories) :
@@ -46,35 +49,55 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.achievements.apply {
-            viewModel.userCategories.observe(viewLifecycleOwner) {
-                categoriesAdapter = CategoriesAdapter(
-                    context,
-                    it,
-                    object : CategoriesAdapter.CategoryClickListener {
-                        override fun onCategoryClicked(userCategory: UserCategory) {
-                            val bundle = bundleOf(KEY_USER_CATEGORY to userCategory.toUiModel())
-                            findNavController().navigate(
-                                R.id.action_categoriesFragment_to_placesFragment,
-                                bundle
-                            )
-                        }
-                    })
+        viewModel.visitedPlaces.observe(viewLifecycleOwner) { visitedPlaces ->
+            viewModel.createPagingOptions(this, visitedPlaces)
+        }
+        viewModel.options.observe(viewLifecycleOwner) { options ->
+            categoriesAdapter = CategoriesAdapter(
+                options,
+                context,
+                object : CategoriesAdapter.CategoryClickListener {
+                    override fun onCategoryClicked(userCategory: UserCategory) {
+                        val bundle = bundleOf(KEY_USER_CATEGORY to userCategory.toUiModel())
+                        findNavController().navigate(
+                            R.id.action_categoriesFragment_to_placesFragment,
+                            bundle
+                        )
+                    }
+                })
+            binding.achievements.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 adapter = categoriesAdapter
-                setHasFixedSize(true)
+                setHasFixedSize(false)
+                lifecycleScope.launch {
+                    viewModel.handleLoadingStates(categoriesAdapter?.loadStateFlow)
+                }
+
             }
-            viewModel.error.observe(viewLifecycleOwner) {
-                showError(it)
-            }
+        }
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+        viewModel.error.observe(viewLifecycleOwner) {
+            view.showError(it)
         }
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
         categoriesAdapter = null
+    }
+
+    private fun showLoading(show: Boolean) {
+        if (show) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.achievements.alpha = 0.5f
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.achievements.alpha = 1f
+        }
     }
 
     companion object {

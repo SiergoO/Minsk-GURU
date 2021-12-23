@@ -10,8 +10,6 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
-import kotlin.collections.HashMap
-import kotlin.collections.LinkedHashMap
 
 class PlacesRepositoryImpl(
     private val firebaseDatabase: FirebaseDatabase,
@@ -22,7 +20,6 @@ class PlacesRepositoryImpl(
             val placesDeferred = CompletableDeferred<List<Place>>()
             firebaseDatabase.reference.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
-
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {

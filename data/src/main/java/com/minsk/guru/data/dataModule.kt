@@ -1,7 +1,6 @@
 package com.minsk.guru.data
 
 import android.app.Application
-import com.google.android.libraries.places.api.Places
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.minsk.guru.data.repository.AchievementsRepositoryImpl

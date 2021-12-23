@@ -3,7 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/fragment_categories.xml" value="0.1" />
+        <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/fragment_categories.xml" value="0.12" />
         <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/fragment_home.xml" value="0.14895833333333333" />
         <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/fragment_places.xml" value="0.1" />
         <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/item_category.xml" value="0.1" />
@@ -20,4 +20,11 @@
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
+  </component>
 </project>
