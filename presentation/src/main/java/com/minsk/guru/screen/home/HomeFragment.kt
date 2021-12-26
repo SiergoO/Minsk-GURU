@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -44,6 +45,16 @@ class HomeFragment(private val layout: Int = R.layout.fragment_home) : Fragment(
                 true
             }
         }
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findInnerNavController().navigateUp()
+            }
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewbinding = null
     }
 
     private fun findInnerNavController(): NavController =

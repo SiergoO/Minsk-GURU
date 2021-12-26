@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentSignInBinding
 import com.minsk.guru.utils.showError
@@ -36,14 +39,22 @@ class SignInFragment(layout: Int = R.layout.fragment_sign_in) : Fragment(layout)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.apply {
-            viewModel?.resultLiveData?.observe(viewLifecycleOwner) {
-                findNavController().navigate(R.id.action_signInFragment_to_HomeFragment)
+        lifecycleScope.launchWhenResumed {
+            if (viewModel.checkLoggedIn()) {
+                findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
             }
-            viewModel?.errorLiveData?.observe(viewLifecycleOwner) {
-                root.showError(it)
+        }
+        binding.apply {
+            viewModel?.signInResult?.observe(viewLifecycleOwner) {
+                viewModel?.logEvent(
+                    FirebaseAnalytics.Event.LOGIN,
+                    bundleOf(Pair(FirebaseAnalytics.Param.METHOD, FirebaseAnalytics.Event.LOGIN))
+                )
+                findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+            }
+            viewModel?.error?.observe(viewLifecycleOwner) { error ->
+                viewModel?.logError(error.message ?: getString(R.string.error_default))
+                showError(error)
             }
             btnSignIn.setOnClickListener {
                 viewModel?.signIn(
@@ -51,7 +62,13 @@ class SignInFragment(layout: Int = R.layout.fragment_sign_in) : Fragment(layout)
                     (binding.layoutPassword.findViewById(R.id.edit_password) as TextInputEditText).text.toString()
                 )
             }
-            signUp.setOnClickListener { findNavController().navigate(R.id.action_signInFragment_to_signUpFragment) }
+            btnSignUp.setOnClickListener { findNavController().navigate(R.id.action_signInFragment_to_signUpFragment) }
         }
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

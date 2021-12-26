@@ -1,5 +1,6 @@
 package com.minsk.guru.screen.home.places.categories
 
+import android.os.Bundle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,17 +9,16 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingConfig
 import com.firebase.ui.database.paging.DatabasePagingOptions
-import com.google.android.gms.common.util.CollectionUtils
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.database.*
 import com.minsk.guru.BuildConfig
 import com.minsk.guru.domain.adapter.UserIdHolder
-import com.minsk.guru.domain.model.Category
 import com.minsk.guru.domain.model.Place
 import com.minsk.guru.domain.model.UserCategory
 import com.minsk.guru.domain.usecase.places.GetVisitedPlacesUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
-import com.minsk.guru.utils.showError
 import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -26,7 +26,9 @@ import kotlinx.coroutines.flow.collectLatest
 class CategoriesViewModel(
     private val userIdHolder: UserIdHolder,
     private val getVisitedPlacesUseCase: GetVisitedPlacesUseCase,
-    private val taskExecutorFactory: TaskExecutorFactory
+    private val taskExecutorFactory: TaskExecutorFactory,
+    private val firebaseAnalytics: FirebaseAnalytics,
+    private val firebaseCrashlytics: FirebaseCrashlytics
 ) : ViewModel() {
 
     private val _visitedPlaces = MutableLiveData<List<Place>>()
@@ -45,29 +47,42 @@ class CategoriesViewModel(
     val error: LiveData<Throwable>
         get() = _error
 
-    private val taskGetVisitedPlacesByCategory = createGetVisitedPlacesTask()
+    private val taskGetVisitedPlaces = createGetVisitedPlacesTask()
 
-    init {
-        taskGetVisitedPlacesByCategory.start(GetVisitedPlacesUseCase.Param(userIdHolder.userId))
+    fun fetchVisitedPlaces() {
+        taskGetVisitedPlaces.start(GetVisitedPlacesUseCase.Param(userIdHolder.userId))
     }
 
-    fun createPagingOptions(lifecycleOwner: LifecycleOwner, visitedPlaces: List<Place>) {
+    // Unfortunately, putting this logic to repository won't make more readable, so implemented logic here
+    // Throwing lifecycleOwner in parameters to viewModel is wrong according to MVVM architecture. Getting rid of it cause crashes.
+    fun createPagingOptions(lifecycleOwner: LifecycleOwner) {
         FirebaseDatabase.getInstance(BuildConfig.FIREBASE_DATABASE_BASE_URL).reference.addValueEventListener(
             object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val config = PagingConfig(10)
+                    fetchVisitedPlaces()
+                    val config = PagingConfig(20, 20, true, 30)
                     val query = snapshot.child("categories").ref
-                    val options = DatabasePagingOptions.Builder<UserCategory>()
-                        .setLifecycleOwner(lifecycleOwner)
-                        .setQuery(query, config) { dataSnapshot ->
-                            val categoryName = dataSnapshot.key ?: ""
-                            dataSnapshot.getValue(object :
-                                GenericTypeIndicator<List<Place>>() {})!!.let { places ->
-                                UserCategory(categoryName, places, visitedPlaces.filter { it.category.contains(categoryName, true) })
+                        val options = DatabasePagingOptions.Builder<UserCategory>()
+                            .setLifecycleOwner(lifecycleOwner)
+                            .setQuery(query, config) { dataSnapshot ->
+                                val categoryName = dataSnapshot.key ?: ""
+                                dataSnapshot.getValue(object :
+                                    GenericTypeIndicator<List<Place>>() {})!!.let { places ->
+                                    UserCategory(
+                                        categoryName,
+                                        places,
+                                        visitedPlaces.value?.filter {
+                                            it.category.contains(
+                                                categoryName,
+                                                true
+                                            )
+                                        }?: listOf())
+                                }
                             }
-                        }
-                        .build()
-                    _options.value = options
+                            .build()
+                    if (_options.value == null) {
+                        _options.value = options
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -109,10 +124,14 @@ class CategoriesViewModel(
         }
     }
 
+    fun logEvent(name: String, params: Bundle?) = firebaseAnalytics.logEvent(name, params)
+
+    fun logError(message: String) = firebaseCrashlytics.log(message)
+
     private fun handleError(error: Throwable) {
         _error.value = error
     }
-    
+
     private fun handleGetVisitedPlacesResult(data: GetVisitedPlacesUseCase.Result?) {
         when (data) {
             is GetVisitedPlacesUseCase.Result.Failure -> _error.value = data.error

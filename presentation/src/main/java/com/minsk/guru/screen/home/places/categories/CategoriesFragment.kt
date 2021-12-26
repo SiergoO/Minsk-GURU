@@ -28,6 +28,7 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
     private var _binding: FragmentCategoriesBinding? = null
     val binding: FragmentCategoriesBinding
         get() = _binding!!
+
     private var categoriesAdapter: CategoriesAdapter? = null
 
     override fun onCreateView(
@@ -45,12 +46,13 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
             lifecycleOwner = this@CategoriesFragment
             binding.viewModel = viewModel
         }
+        viewModel.fetchVisitedPlaces()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.visitedPlaces.observe(viewLifecycleOwner) { visitedPlaces ->
-            viewModel.createPagingOptions(this, visitedPlaces)
+        viewModel.visitedPlaces.observe(viewLifecycleOwner) {
+            viewModel.createPagingOptions(this)
         }
         viewModel.options.observe(viewLifecycleOwner) { options ->
             categoriesAdapter = CategoriesAdapter(
@@ -58,6 +60,10 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
                 context,
                 object : CategoriesAdapter.CategoryClickListener {
                     override fun onCategoryClicked(userCategory: UserCategory) {
+                        viewModel.logEvent(
+                            EVENT_CATEGORY_SELECTED,
+                            bundleOf(Pair(ARG_CATEGORY_NAME, userCategory.name))
+                        )
                         val bundle = bundleOf(KEY_USER_CATEGORY to userCategory.toUiModel())
                         findNavController().navigate(
                             R.id.action_categoriesFragment_to_placesFragment,
@@ -66,20 +72,20 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
                     }
                 })
             binding.achievements.apply {
-                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 adapter = categoriesAdapter
-                setHasFixedSize(false)
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 lifecycleScope.launch {
                     viewModel.handleLoadingStates(categoriesAdapter?.loadStateFlow)
                 }
-
+                setHasFixedSize(false)
             }
         }
         viewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-        viewModel.error.observe(viewLifecycleOwner) {
-            view.showError(it)
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            viewModel.logError(error.message ?: getString(R.string.error_default))
+            showError(error)
         }
         super.onViewCreated(view, savedInstanceState)
     }
@@ -102,5 +108,7 @@ class CategoriesFragment(private val layout: Int = R.layout.fragment_categories)
 
     companion object {
         private const val KEY_USER_CATEGORY = "userCategory"
+        private const val EVENT_CATEGORY_SELECTED = "category_selected"
+        private const val ARG_CATEGORY_NAME = "categoryName"
     }
 }

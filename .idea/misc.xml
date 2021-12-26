@@ -3,11 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/activity_intro.xml" value="0.20520833333333333" />
+        <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/activity_main.xml" value="0.271286231884058" />
         <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/fragment_categories.xml" value="0.12" />
         <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/fragment_home.xml" value="0.14895833333333333" />
         <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/fragment_places.xml" value="0.1" />
+        <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/fragment_profile.xml" value="0.271286231884058" />
+        <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/fragment_sign_in.xml" value="0.271286231884058" />
+        <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/fragment_sign_up.xml" value="0.20520833333333333" />
         <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/item_category.xml" value="0.1" />
         <entry key="..\:/Projects/GURU/presentation/src/main/res/layout/item_place.xml" value="0.33" />
+        <entry key="..\:/Projects/GURU/presentation/src/main/res/menu/home_menu_bottom.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/MinskGURU/presentation/src/main/res/layout/activity_home.xml" value="0.34782608695652173" />
         <entry key="..\:/Projects/MinskGURU/presentation/src/main/res/layout/fragment_categories.xml" value="0.20520833333333333" />
         <entry key="..\:/Projects/MinskGURU/presentation/src/main/res/layout/fragment_home.xml" value="0.21333333333333335" />

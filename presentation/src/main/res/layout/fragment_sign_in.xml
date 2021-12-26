@@ -71,28 +71,28 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/forgot_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/auth_forgot_password"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="@+id/layout_password"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_password" />
+        <!--                <TextView-->
+        <!--                    android:id="@+id/forgot_password"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_margin="8dp"-->
+        <!--                    android:clickable="true"-->
+        <!--                    android:focusable="true"-->
+        <!--                    android:text="@string/auth_forgot_password"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    app:layout_constraintEnd_toEndOf="@+id/layout_password"-->
+        <!--                    app:layout_constraintStart_toStartOf="parent"-->
+        <!--                    app:layout_constraintTop_toBottomOf="@id/layout_password" />-->
 
         <LinearLayout
             android:id="@+id/layout_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="56dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@id/layout_password"
             app:layout_constraintStart_toStartOf="@id/layout_password"
-            app:layout_constraintTop_toBottomOf="@id/forgot_password">
+            app:layout_constraintTop_toBottomOf="@id/layout_password">
 
             <TextView
                 android:id="@+id/btn_sign_in"
@@ -120,7 +120,7 @@
                 android:text="@string/auth_don_t_have_an_account" />
 
             <TextView
-                android:id="@+id/sign_up"
+                android:id="@+id/btn_sign_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"

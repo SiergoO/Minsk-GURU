@@ -1,7 +1,10 @@
 package com.minsk.guru.data
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.database.FirebaseDatabase
 import com.minsk.guru.data.repository.AchievementsRepositoryImpl
 import com.minsk.guru.data.repository.AuthRepositoryImpl
@@ -16,14 +19,26 @@ import org.koin.dsl.module
 
 val dataModule = module(override = true) {
 
+    single { FirebaseApp.getInstance() }
+
+    single { FirebaseAuth.getInstance(get()) }
+
+    factory { get<FirebaseAuth>().currentUser }
+
+    single { FirebaseAnalytics.getInstance(androidContext().applicationContext) }
+
+    single { FirebaseCrashlytics.getInstance() }
+
+    single { FirebaseDatabase.getInstance(get(), BuildConfig.FIREBASE_DATABASE_BASE_URL) }
+
     single<PlacesRepository> {
-        PlacesRepositoryImpl(FirebaseDatabase.getInstance())
+        PlacesRepositoryImpl(get())
     }
-    single<AchievementsRepository> { AchievementsRepositoryImpl(FirebaseDatabase.getInstance()) }
+    single<AchievementsRepository> { AchievementsRepositoryImpl(get()) }
     single<AuthRepository> {
         AuthRepositoryImpl(
-            FirebaseDatabase.getInstance(),
-            FirebaseAuth.getInstance(),
+            get(),
+            get(),
             get()
         )
     }
@@ -32,6 +47,7 @@ val dataModule = module(override = true) {
 val startDataKoin = { application: Application ->
     startKoin {
         androidContext(application)
+        FirebaseApp.initializeApp(application.applicationContext)
         modules(domainModule, dataModule)
     }
 }

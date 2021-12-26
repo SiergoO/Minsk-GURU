@@ -1,8 +1,11 @@
 package com.minsk.guru.screen.home.places.places
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.model.Place
 import com.minsk.guru.domain.usecase.places.UpdatePlaceVisitStatusUseCase
@@ -13,7 +16,9 @@ import com.minsk.guru.utils.singleResultUseCaseTaskProvider
 class PlacesViewModel(
     private val userIdHolder: UserIdHolder,
     private val updatePlaceVisitStatusUseCase: UpdatePlaceVisitStatusUseCase,
-    private val taskExecutorFactory: TaskExecutorFactory
+    private val taskExecutorFactory: TaskExecutorFactory,
+    private val firebaseAnalytics: FirebaseAnalytics,
+    private val firebaseCrashlytics: FirebaseCrashlytics
 ) : ViewModel() {
 
     private val taskUpdatePlaceVisitStatus = createUpdatePlaceVisitStatusTask()
@@ -31,6 +36,10 @@ class PlacesViewModel(
             UpdatePlaceVisitStatusUseCase.Param(userIdHolder.userId, place, categoryName, isVisited)
         )
     }
+
+    fun logEvent(name: String, params: Bundle?) = firebaseAnalytics.logEvent(name, params)
+
+    fun logError(message: String) = firebaseCrashlytics.log(message)
 
     private fun handleError(error: Throwable) {
         _error.value = error
