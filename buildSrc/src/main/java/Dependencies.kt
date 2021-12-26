@@ -37,6 +37,7 @@ object Libraries {
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     const val firebasePerformance = "com.google.firebase:firebase-perf-ktx"
+    const val firebaseStorage = "com.google.firebase:firebase-storage-ktx"
 
     const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
 

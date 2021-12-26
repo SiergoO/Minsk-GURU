@@ -27,6 +27,9 @@
     <!--places-->
     <string name="visited_yet">Visited yet?</string>
 
+    <!--profile-->
+    <string name="full_name">%1$s %2$s</string>
+
     <!--error-->
     <string name="error_default">Unknown error</string>
 </resources>

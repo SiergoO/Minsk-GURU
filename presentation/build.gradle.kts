@@ -64,6 +64,7 @@ dependencies {
     implementation(Libraries.firebaseAnalytics)
     implementation(Libraries.firebaseCrashlytics)
     implementation(Libraries.firebasePerformance)
+    implementation(Libraries.firebaseStorage)
     implementation(Libraries.firebaseDatabase)
     implementation(Libraries.firebaseUiDatabase)
     implementation(Libraries.firebaseAuth)

@@ -54,6 +54,7 @@ dependencies {
     implementation(Libraries.firebaseAnalytics)
     implementation(Libraries.firebaseCrashlytics)
     implementation(Libraries.firebasePerformance)
+    implementation(Libraries.firebaseStorage)
     implementation(Libraries.retrofit)
     implementation(Libraries.gson)
     implementation(Libraries.converterGson)

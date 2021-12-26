@@ -43,7 +43,7 @@ val presentationModule = module {
     viewModel { PlacesViewModel(get(), get(), get(), get(), get()) }
 
     fragment { ProfileFragment() }
-    viewModel { ProfileViewModel(get(), get()) }
+    viewModel { ProfileViewModel(get(), get(), get(), get(), get()) }
 }
 
 @ExperimentalCoroutinesApi

@@ -30,7 +30,7 @@ class AuthRepositoryImpl(
         )
         Tasks.await(taskSignUp).user?.uid.let { userId ->
             if (userId != null) {
-                createRemoteUser(userId, RemoteUser(email, name, surname))
+                createRemoteUser(userId, RemoteUser(email, name, surname, "", mapOf()))
             }
             userIdHolder.userId = userId ?: "UNKNOWN_USER"
         }

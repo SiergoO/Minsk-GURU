@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentProfileBinding
 import com.minsk.guru.utils.showError
@@ -37,6 +38,14 @@ class ProfileFragment(private val layout: Int = R.layout.fragment_profile) : Fra
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.profileInfo.observe(viewLifecycleOwner) { profile ->
+            Glide.with(this)
+                .load(profile.profilePhotoLink)
+                .centerCrop()
+                .into(binding.imgProfile)
+            binding.txtUserFullName.text = getString(R.string.full_name, profile.name, profile.surname)
+            binding.txtUserEmail.text = profile.email
+        }
         viewModel.error.observe(viewLifecycleOwner) { error ->
             viewModel.logError(error.message?: getString(R.string.error_default))
             showError(error)

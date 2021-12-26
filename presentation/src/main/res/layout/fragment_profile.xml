@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,8 +15,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/img_profile"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_user_full_name"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Sergey D"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_profile" />
+
+        <TextView
+            android:id="@+id/txt_user_email"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="pinsk-style@mail.ru"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_user_full_name" />
+
         <TextView
             android:id="@+id/btn_log_out"
+            style="@style/App.Button.Transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
@@ -23,7 +62,6 @@
             android:focusable="true"
             android:text="@string/log_out"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -6,6 +6,8 @@ import com.minsk.guru.domain.usecase.achievements.GetAchievementsUseCase
 import com.minsk.guru.domain.usecase.achievements.GetAchievementsUseCaseImpl
 import com.minsk.guru.domain.usecase.auth.*
 import com.minsk.guru.domain.usecase.places.*
+import com.minsk.guru.domain.usecase.profile.GetProfileInfoUseCase
+import com.minsk.guru.domain.usecase.profile.GetProfileInfoUseCaseImpl
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -18,7 +20,6 @@ val domainModule = module {
     // user
     factory<SignInUseCase> { SignInUseCaseImpl(get()) }
     factory<SignUpUseCase> { SignUpUseCaseImpl(get()) }
-    factory<GetCurrentUserUseCase> { GetCurrentUserUseCaseImpl(get()) }
 
     // achievements
     factory { GetAchievementsUseCaseImpl(get()) }
@@ -32,6 +33,9 @@ val domainModule = module {
     factory<GetVisitedPlacesUseCase> { GetVisitedPlacesUseCaseImpl(get()) }
     factory<GetVisitedPlacesByCategoryUseCase> { GetVisitedPlacesByCategoryUseCaseImpl(get()) }
     factory<UpdatePlaceVisitStatusUseCase> { UpdatePlaceVisitStatusUseCaseImpl(get()) }
+
+    //profile
+    factory<GetProfileInfoUseCase> { GetProfileInfoUseCaseImpl(get()) }
 }
 
 val startDomainKoin = {
