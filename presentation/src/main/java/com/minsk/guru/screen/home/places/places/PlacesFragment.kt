@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentPlacesBinding
 import com.minsk.guru.domain.model.Place
 import com.minsk.guru.model.toDomainModel
+import com.minsk.guru.utils.showError
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragment(layout) {
@@ -22,6 +24,7 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
     private var _binding: FragmentPlacesBinding? = null
     val binding: FragmentPlacesBinding
         get() = _binding!!
+
     private var placesAdapter: PlacesAdapter? = null
 
     override fun onCreateView(
@@ -47,6 +50,10 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
         viewModel.visitedPlaces.observe(viewLifecycleOwner) { visitedPlaces ->
             placesAdapter!!.setVisitedPlaces(visitedPlaces)
         }
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            viewModel.logError(error.message ?: getString(R.string.error_default))
+            showError(error)
+        }
         binding.places.apply {
             placesAdapter = PlacesAdapter(
                 context,
@@ -57,6 +64,10 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
                 },
                 object : PlacesAdapter.OnIsVisitedCheckboxClickListener {
                     override fun onIsVisitedCheckboxClicked(place: Place, isVisited: Boolean) {
+                        viewModel.logEvent(
+                            EVENT_PLACE_VISITED_CHECKBOX_CHECKED,
+                            bundleOf(Pair(ARG_PLACE_NAME, place.name))
+                        )
                         viewModel.updateLocalPlace(place, category.name, isVisited)
                     }
                 })
@@ -76,5 +87,7 @@ class PlacesFragment(private val layout: Int = R.layout.fragment_places) : Fragm
 
     companion object {
         private const val KEY_USER_CATEGORY = "userCategory"
+        private const val EVENT_PLACE_VISITED_CHECKBOX_CHECKED = "placeVisitedCheckboxChecked"
+        private const val ARG_PLACE_NAME = "placeName"
     }
 }

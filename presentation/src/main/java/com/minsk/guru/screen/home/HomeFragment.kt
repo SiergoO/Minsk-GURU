@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentHomeBinding
@@ -37,7 +39,22 @@ class HomeFragment(private val layout: Int = R.layout.fragment_home) : Fragment(
         super.onViewCreated(view, savedInstanceState)
         viewbinding.bottomNavigation.apply {
             setupWithNavController(findInnerNavController())
+            setOnItemSelectedListener { item ->
+                if (item.itemId != viewbinding.bottomNavigation.selectedItemId)
+                    NavigationUI.onNavDestinationSelected(item, findInnerNavController())
+                true
+            }
         }
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findInnerNavController().navigateUp()
+            }
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewbinding = null
     }
 
     private fun findInnerNavController(): NavController =

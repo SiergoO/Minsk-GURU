@@ -37,8 +37,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "FIREBASE_DATABASE_BASE_URL", "\"https://minsk-guru-default-rtdb.firebaseio.com/\"")
         }
         getByName("debug") {
+            buildConfigField("String", "FIREBASE_DATABASE_BASE_URL", "\"https://minsk-guru-default-rtdb.firebaseio.com/\"")
         }
     }
 }
@@ -52,13 +54,15 @@ dependencies {
     implementation(Libraries.firebaseAnalytics)
     implementation(Libraries.firebaseCrashlytics)
     implementation(Libraries.firebasePerformance)
+    implementation(Libraries.firebaseStorage)
     implementation(Libraries.retrofit)
     implementation(Libraries.gson)
     implementation(Libraries.converterGson)
     implementation(Libraries.okHttp)
     implementation(Libraries.firebaseDatabase)
+    implementation(Libraries.firebaseUiDatabase)
     implementation(Libraries.firebaseAuth)
-    implementation(Libraries.googlePlaces)
+    implementation(Libraries.paging)
     koinAndroid()
     room()
 }

@@ -31,19 +31,19 @@ val presentationModule = module {
     }
 
     fragment { SignInFragment() }
-    viewModel { SignInViewModel(get(), get()) }
+    viewModel { SignInViewModel(get(), get(), get(), get(), get()) }
 
     fragment { SignUpFragment() }
-    viewModel { SignUpViewModel(get(), get()) }
+    viewModel { SignUpViewModel(get(), get(), get(), get()) }
 
     fragment { CategoriesFragment() }
-    viewModel { CategoriesViewModel(get(), get(), get()) }
+    viewModel { CategoriesViewModel(get(), get(), get(), get(), get()) }
 
     fragment { PlacesFragment() }
-    viewModel { PlacesViewModel(get(), get(), get()) }
+    viewModel { PlacesViewModel(get(), get(), get(), get(), get()) }
 
     fragment { ProfileFragment() }
-    viewModel { ProfileViewModel() }
+    viewModel { ProfileViewModel(get(), get(), get(), get(), get()) }
 }
 
 @ExperimentalCoroutinesApi
