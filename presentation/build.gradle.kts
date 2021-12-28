@@ -37,9 +37,11 @@ android {
             )
             multiDexEnabled = true
             buildConfigField("String", "FIREBASE_DATABASE_BASE_URL", "\"https://minsk-guru-default-rtdb.firebaseio.com/\"")
+            buildConfigField("String", "YANDEX_MAPS_API_KEY", "\"81880f45-b473-4960-8f65-db87a47928d9\"")
         }
         getByName("debug") {
             buildConfigField("String", "FIREBASE_DATABASE_BASE_URL", "\"https://minsk-guru-default-rtdb.firebaseio.com/\"")
+            buildConfigField("String", "YANDEX_MAPS_API_KEY", "\"81880f45-b473-4960-8f65-db87a47928d9\"")
         }
     }
     buildFeatures {
@@ -68,6 +70,7 @@ dependencies {
     implementation(Libraries.firebaseDatabase)
     implementation(Libraries.firebaseUiDatabase)
     implementation(Libraries.firebaseAuth)
+    implementation(Libraries.yandexMaps)
     implementation(Libraries.paging)
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")

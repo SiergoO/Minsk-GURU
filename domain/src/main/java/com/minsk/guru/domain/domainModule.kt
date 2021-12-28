@@ -4,7 +4,10 @@ import com.minsk.guru.domain.adapter.InMemoryUserIdHolder
 import com.minsk.guru.domain.adapter.UserIdHolder
 import com.minsk.guru.domain.usecase.achievements.GetAchievementsUseCase
 import com.minsk.guru.domain.usecase.achievements.GetAchievementsUseCaseImpl
-import com.minsk.guru.domain.usecase.auth.*
+import com.minsk.guru.domain.usecase.auth.SignInUseCase
+import com.minsk.guru.domain.usecase.auth.SignInUseCaseImpl
+import com.minsk.guru.domain.usecase.auth.SignUpUseCase
+import com.minsk.guru.domain.usecase.auth.SignUpUseCaseImpl
 import com.minsk.guru.domain.usecase.places.*
 import com.minsk.guru.domain.usecase.profile.GetProfileInfoUseCase
 import com.minsk.guru.domain.usecase.profile.GetProfileInfoUseCaseImpl
@@ -33,6 +36,9 @@ val domainModule = module {
     factory<GetVisitedPlacesUseCase> { GetVisitedPlacesUseCaseImpl(get()) }
     factory<GetVisitedPlacesByCategoryUseCase> { GetVisitedPlacesByCategoryUseCaseImpl(get()) }
     factory<UpdatePlaceVisitStatusUseCase> { UpdatePlaceVisitStatusUseCaseImpl(get()) }
+
+    //add places
+    factory<GetAllPlacesUseCase> { GetAllPlacesUseCaseImpl(get()) }
 
     //profile
     factory<GetProfileInfoUseCase> { GetProfileInfoUseCaseImpl(get()) }

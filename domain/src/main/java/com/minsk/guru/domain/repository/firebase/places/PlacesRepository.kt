@@ -4,7 +4,7 @@ import com.minsk.guru.domain.model.Category
 import com.minsk.guru.domain.model.Place
 
 interface PlacesRepository {
-    suspend fun getAll(): List<Place> // TODO delete suspend
+    fun getAllPlaces(): List<Place>
     suspend fun getByCategory(categoryName: String?): List<Place> // TODO delete suspend
     fun getCategories(): List<Category>
     fun getPlacesVisitedByUser(userId: String): List<Place>

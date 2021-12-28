@@ -23,6 +23,7 @@ object Libraries {
         const val firebaseUiDatabase = "8.0.0"
         const val firebaseBom = "29.0.3"
         const val firebaseAuth = "21.0.1"
+        const val yandexMaps = "4.0.0"
         const val retrofit = "2.6.0"
         const val gson = "2.8.5"
         const val converterGson = "2.6.0"
@@ -38,6 +39,8 @@ object Libraries {
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     const val firebasePerformance = "com.google.firebase:firebase-perf-ktx"
     const val firebaseStorage = "com.google.firebase:firebase-storage-ktx"
+
+    const val yandexMaps = "com.yandex.android:maps.mobile:${Versions.yandexMaps}-full"
 
     const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
 
