@@ -4,22 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.graphics.get
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.minsk.guru.BuildConfig
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentAddPlacesBinding
+import com.minsk.guru.utils.map.TextImageProvider
 import com.minsk.guru.utils.map.getDefaultCameraPosition
 import com.minsk.guru.utils.map.getPlaceMarkImage
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
-import com.yandex.mapkit.map.IconStyle
-import com.yandex.mapkit.map.MapType
+import com.yandex.mapkit.map.*
 import com.yandex.runtime.image.ImageProvider
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) : Fragment(layout) {
+class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) : Fragment(layout),
+    ClusterListener, ClusterTapListener {
 
     private val viewModel: AddPlacesViewModel by viewModel()
 
@@ -60,15 +63,17 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
             mapType = MapType.MAP
             move(
                 getDefaultCameraPosition(),
-                Animation(Animation.Type.SMOOTH, 2f),
+                Animation(Animation.Type.SMOOTH, ANIMATION_DURATION_SEC),
                 null
             )
         }
         viewModel.places.observe(viewLifecycleOwner) { places ->
             val placesPoints: List<Point> = places.map { Point(it.latitude, it.longitude) }
             val imageProvider = ImageProvider.fromBitmap(getPlaceMarkImage(false))
-            binding.mapView.map.mapObjects.apply {
+            val clusteredCollection = binding.mapView.map.mapObjects.addClusterizedPlacemarkCollection(this)
+            clusteredCollection.apply {
                 addPlacemarks(placesPoints, imageProvider, IconStyle())
+                clusterPlacemarks(CLUSTER_RADIUS, CLUSTER_MIN_ZOOM)
             }
         }
         super.onViewCreated(view, savedInstanceState)
@@ -83,5 +88,27 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun onClusterAdded(cluster: Cluster) {
+        cluster.apply {
+            appearance.setIcon(TextImageProvider(requireActivity(), cluster.size.toString()))
+            addClusterTapListener(this@AddPlacesFragment)
+        }
+    }
+
+    override fun onClusterTap(cluster: Cluster): Boolean {
+        Toast.makeText(
+            context,
+            "Tapped cluster with %d items cluster with ${cluster.size} elements inside",
+            Toast.LENGTH_SHORT
+        ).show()
+        return true
+    }
+
+    companion object {
+        private const val ANIMATION_DURATION_SEC = 2f
+        private const val CLUSTER_RADIUS = 60.0
+        private const val CLUSTER_MIN_ZOOM = 12
     }
 }
