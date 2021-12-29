@@ -45,7 +45,7 @@ val presentationModule = module {
     viewModel { PlacesViewModel(get(), get(), get(), get(), get()) }
 
     fragment { AddPlacesFragment() }
-    viewModel { AddPlacesViewModel(get(), get()) }
+    viewModel { AddPlacesViewModel(get(), get(), get(), get()) }
 
     fragment { ProfileFragment() }
     viewModel { ProfileViewModel(get(), get(), get(), get(), get()) }
