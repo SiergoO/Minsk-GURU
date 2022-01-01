@@ -11,6 +11,7 @@ import com.minsk.guru.domain.usecase.places.GetVisitedPlacesUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
 import com.minsk.guru.utils.singleResultUseCaseTaskProvider
+import com.yandex.mapkit.map.PlacemarkMapObject
 
 class AddPlacesViewModel(
     userIdHolder: UserIdHolder,
@@ -18,6 +19,8 @@ class AddPlacesViewModel(
     private val getUserPlacesUseCase: GetAllPlacesUseCase,
     private val getVisitedPlacesUseCase: GetVisitedPlacesUseCase
 ) : ViewModel() {
+
+    var lastCheckedPlaceMark: PlacemarkMapObject? = null
 
     private val _places = MutableLiveData<List<Place>>()
     val places: LiveData<List<Place>>

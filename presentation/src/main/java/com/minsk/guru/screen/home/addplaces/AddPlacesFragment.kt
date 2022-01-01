@@ -1,10 +1,12 @@
 package com.minsk.guru.screen.home.addplaces
 
+import android.graphics.PointF
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
@@ -12,18 +14,17 @@ import androidx.fragment.app.Fragment
 import com.minsk.guru.BuildConfig
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentAddPlacesBinding
-import com.minsk.guru.utils.map.TextImageProvider
-import com.minsk.guru.utils.map.getDefaultCameraPosition
-import com.minsk.guru.utils.map.getPlaceMarkImage
+import com.minsk.guru.utils.map.*
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.*
 import com.yandex.runtime.image.ImageProvider
+import com.yandex.runtime.ui_view.ViewProvider
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) : Fragment(layout),
-    ClusterListener, ClusterTapListener {
+    ClusterListener, ClusterTapListener, MapObjectTapListener {
 
     private val viewModel: AddPlacesViewModel by viewModel()
 
@@ -73,13 +74,20 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
             if (places.first.isNotEmpty() && places.second.isNotEmpty()) {
                 val visitedPlacesPoints: List<Point> = places.second.map { Point(it.latitude, it.longitude) }
                 val placesPoints: List<Point> =
-                    places.first.map { Point(it.latitude, it.longitude) }
+                    places.first.map { Point(it.latitude, it.longitude) }.filterNot { point -> visitedPlacesPoints.any { point.latitude == it.latitude && point.longitude == it.longitude} }
                 val imageProviderDefault = ImageProvider.fromBitmap(getPlaceMarkImage(false))
                 val imageProviderVisited = ImageProvider.fromBitmap(getPlaceMarkImage(true))
-                binding.mapView.map.addMapObjectLayer("1").addClusterizedPlacemarkCollection(this).apply {
-                    addPlacemarks(placesPoints, imageProviderDefault, IconStyle())
-                    addPlacemarks(visitedPlacesPoints, imageProviderVisited, IconStyle())
+                binding.mapView.map.mapObjects.addClusterizedPlacemarkCollection(this).apply {
+                    addPlacemarks(placesPoints, imageProviderDefault, getDefaultIconStyle()).forEach {
+                        it.userData = "icon"
+                        it.zIndex = 1f
+                    }
+                    addPlacemarks(visitedPlacesPoints, imageProviderVisited, getDefaultIconStyle()).forEach {
+                        it.userData = "icon"
+                        it.zIndex = 1f
+                    }
                     clusterPlacemarks(CLUSTER_RADIUS, CLUSTER_MIN_ZOOM)
+                    addTapListener(this@AddPlacesFragment)
                 }
             }
         }
@@ -117,5 +125,57 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
         private const val ANIMATION_DURATION_SEC = 2f
         private const val CLUSTER_RADIUS = 60.0
         private const val CLUSTER_MIN_ZOOM = 15
+    }
+
+    override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
+        val pmo = mapObject as PlacemarkMapObject
+        clearLastSelectedPositionPlaceMarkView(pmo)
+        val selectedPlace = pmo.getPlace(viewModel.places.value)
+        val isVisited = viewModel.visitedPlaces.value?.any { it.id == selectedPlace?.id } ?: false
+        pmo.apply {
+            when (userData) {
+                "view" -> {
+                    setIcon(
+                        ImageProvider.fromBitmap(getPlaceMarkImage(isVisited)),
+                        IconStyle().setAnchor(PointF(0.5f, 1f))
+                    )
+                    zIndex = 1f
+                    pmo.userData = "icon"
+                }
+                "icon" -> {
+                    val placeInfoView = layoutInflater.inflate(R.layout.layout_place_info, binding.mapView, false)
+                    setView(ViewProvider(placeInfoView.apply {
+                        findViewById<TextView>(R.id.tv_place_name).text = selectedPlace?.name ?: getString(R.string.unknown)
+                        findViewById<TextView>(R.id.tv_place_address).text = selectedPlace?.address ?: getString(R.string.unknown)
+                        findViewById<TextView>(R.id.tv_place_category).text = selectedPlace?.category ?: getString(R.string.unknown)
+                    }))
+                    zIndex = 2f
+                    pmo.userData = "view"
+                }
+                else -> {
+                    // do nothing
+                }
+            }
+            if (pmo.userData == "icon") {
+                // Nav to prove visited screen
+                pmo.userData = "icon"
+            }
+        }
+        viewModel.lastCheckedPlaceMark = pmo
+        return true
+    }
+
+    private fun clearLastSelectedPositionPlaceMarkView(pmo: PlacemarkMapObject) {
+        viewModel.lastCheckedPlaceMark?.let {
+            val lastSelectedPlace = it.getPlace(viewModel.places.value)
+            val isVisited =
+                viewModel.visitedPlaces.value?.any { visited -> visited.id == lastSelectedPlace?.id } ?: false
+            it.userData = pmo.userData
+            it.zIndex = 1f
+            it.setIcon(
+                ImageProvider.fromBitmap(getPlaceMarkImage(isVisited)),
+                IconStyle().setAnchor(PointF(0.5f, 1f))
+            )
+        }
     }
 }

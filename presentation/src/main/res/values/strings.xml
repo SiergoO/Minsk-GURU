@@ -5,6 +5,7 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
     <string name="log_out">Log Out</string>
+    <string name="unknown">Unknown</string>
 
     <!--bottom navigation-->
     <string name="bottom_navigation_places">Places</string>
