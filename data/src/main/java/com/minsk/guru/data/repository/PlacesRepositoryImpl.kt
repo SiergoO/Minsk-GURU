@@ -15,21 +15,12 @@ class PlacesRepositoryImpl(
     private val firebaseDatabase: FirebaseDatabase,
 ) : PlacesRepository {
 
-    override suspend fun getAll(): List<Place> =
-        withContext(Dispatchers.IO) {
-            val placesDeferred = CompletableDeferred<List<Place>>()
-            firebaseDatabase.reference.addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                }
+    override fun getAllPlaces(): List<Place> {
+        val taskGetAllPlaces = firebaseDatabase.reference.child("places").get()
+        return Tasks.await(taskGetAllPlaces)
+            .getValue(object : GenericTypeIndicator<List<Place>>() {}) ?: listOf()
+    }
 
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val places = snapshot.getValue(RemotePlaces::class.java)
-                        ?: RemotePlaces(mutableListOf())
-                    placesDeferred.complete(places.places)
-                }
-            })
-            return@withContext placesDeferred.await()
-        }
 
     override suspend fun getByCategory(categoryName: String?): List<Place> =
         withContext(Dispatchers.IO) {

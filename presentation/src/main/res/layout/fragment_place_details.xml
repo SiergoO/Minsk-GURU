@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+        <import type="androidx.fragment.app.Fragment" />
+
+        <variable
+            name="viewModel"
+            type="com.minsk.guru.screen.home.addplaces.placedetails.PlaceDetailsViewModel" />
+
+        <variable
+            name="place"
+            type="com.minsk.guru.domain.model.Place" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_place_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="@{place.name}"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_place_address"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="TIDEN" />
+
+                <TextView
+                    android:id="@+id/tv_place_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{place.address}"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_place_category"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_name"
+                    tools:text="ул. Кульман, 3" />
+
+                <TextView
+                    android:id="@+id/tv_place_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{place.category}"
+                    app:layout_constraintBottom_toTopOf="@id/tv_place_opening_hours"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_address"
+                    tools:text="Кафе" />
+
+                <TextView
+                    android:id="@+id/tv_place_opening_hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{ !TextUtils.isEmpty(place.opening_hours) &amp;&amp; place.opening_hours != null ? place.opening_hours : @string/empty_opening_hours }"
+                    app:layout_constraintBottom_toTopOf="@id/tv_place_phone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_category"
+                    tools:text="9:00 - 16:00" />
+
+                <TextView
+                    android:id="@+id/tv_place_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{ !TextUtils.isEmpty(place.phone) &amp;&amp; place.phone != null ? place.phone : @string/empty_phone }"
+                    app:layout_constraintBottom_toTopOf="@id/tv_place_url"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_opening_hours"
+                    tools:text="+375296333333" />
+
+                <TextView
+                    android:id="@+id/tv_place_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:autoLink="web"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{ !TextUtils.isEmpty(place.url) &amp;&amp; place.url != null ? place.url : @string/empty_url }"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_phone"
+                    tools:text="minskguru.by" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_is_visited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@string/is_visited_hint"
+            android:textColor="@color/colorSecondary"
+            android:textSize="28sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <TextView
+            android:id="@+id/tv_prove_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/prove_failed_hint"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="28sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <TextView
+            android:id="@+id/tv_prove_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/prove_you_ve_been_here_hint"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <LinearLayout
+            android:id="@+id/layout_calculation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/tv_prove_hint"
+            app:layout_constraintStart_toStartOf="@+id/tv_prove_hint"
+            app:layout_constraintTop_toBottomOf="@+id/tv_prove_hint">
+
+            <TextView
+                android:id="@+id/tv_prove_calculation_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/prove_calculation_body"
+                android:textColor="@color/colorSecondary"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/edit_calculation_result"
+                android:layout_width="52dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:inputType="number"
+                android:maxLength="3"
+                android:maxLines="1"
+                android:textColor="@color/colorSecondary"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_prove_calculation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tv_prove_hint, layout_calculation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

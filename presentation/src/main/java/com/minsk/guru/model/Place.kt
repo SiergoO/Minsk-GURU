@@ -20,7 +20,7 @@ data class Place(
 ) : Parcelable
 
 fun DomainPlace.toUiModel() = UiPlace(
-    address, category, id, latitude, longitude, name, openingHours, phone, url
+    address, category, id, latitude, longitude, name, opening_hours, phone, url
 )
 
 fun UiPlace.toDomainModel() = DomainPlace(

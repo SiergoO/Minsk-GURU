@@ -40,8 +40,9 @@ class HomeFragment(private val layout: Int = R.layout.fragment_home) : Fragment(
         viewbinding.bottomNavigation.apply {
             setupWithNavController(findInnerNavController())
             setOnItemSelectedListener { item ->
-                if (item.itemId != viewbinding.bottomNavigation.selectedItemId)
+                if (item.itemId != viewbinding.bottomNavigation.selectedItemId) {
                     NavigationUI.onNavDestinationSelected(item, findInnerNavController())
+                }
                 true
             }
         }

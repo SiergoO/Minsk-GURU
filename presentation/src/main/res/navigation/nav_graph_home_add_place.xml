@@ -7,8 +7,30 @@
 
     <fragment
         android:id="@+id/addPlaceFragment"
-        android:name="com.minsk.guru.screen.home.addplaces.AddPlacesFragment"
+        android:name="com.minsk.guru.screen.home.addplaces.addplaces.AddPlacesFragment"
         android:label="AddPlacesFragment"
-        tools:layout="@layout/fragment_add_places" />
+        tools:layout="@layout/fragment_add_places">
+
+        <action
+            android:id="@+id/action_addPlacesFragment_to_placeDetailsFragment"
+            app:destination="@id/placeDetailsFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/placeDetailsFragment"
+        android:name="com.minsk.guru.screen.home.addplaces.placedetails.PlaceDetailsFragment"
+        android:label="PlaceDetailsFragment"
+        tools:layout="@layout/fragment_place_details" >
+
+        <argument
+            android:name="place"
+            app:argType="com.minsk.guru.model.Place" />
+
+        <argument
+            android:name="isVisited"
+            app:argType="boolean" />
+
+    </fragment>
 
 </navigation>
