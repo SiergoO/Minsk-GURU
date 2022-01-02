@@ -4,7 +4,7 @@ const val kotlinVersion = "1.5.31"
 
 object Libraries {
     private object Versions {
-        const val navigation = "2.3.3"
+        const val navigation = "2.4.0-rc01"
         const val navigationCompose = "1.0.0-alpha06"
         const val jetpack = "1.2.0"
         const val material = "1.4.0-beta01"
@@ -40,7 +40,7 @@ object Libraries {
     const val firebasePerformance = "com.google.firebase:firebase-perf-ktx"
     const val firebaseStorage = "com.google.firebase:firebase-storage-ktx"
 
-    const val yandexMaps = "com.yandex.android:maps.mobile:${Versions.yandexMaps}-full"
+    const val yandexMaps = "com.yandex.android:maps.mobile:${Versions.yandexMaps}-lite"
 
     const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
 

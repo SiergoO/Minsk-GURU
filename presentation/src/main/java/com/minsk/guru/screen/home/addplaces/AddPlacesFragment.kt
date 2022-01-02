@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.minsk.guru.BuildConfig
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentAddPlacesBinding
 import com.minsk.guru.utils.map.*
@@ -19,12 +18,13 @@ import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.*
+import com.yandex.mapkit.map.Map
 import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.ui_view.ViewProvider
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) : Fragment(layout),
-    ClusterListener, ClusterTapListener, MapObjectTapListener {
+    ClusterListener, ClusterTapListener, MapObjectTapListener, CameraListener {
 
     private val viewModel: AddPlacesViewModel by viewModel()
 
@@ -33,8 +33,7 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
         get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MapKitFactory.setApiKey(BuildConfig.YANDEX_MAPS_API_KEY)
-        MapKitFactory.initialize(requireContext())
+        MapKitFactory.initialize(activity?.applicationContext)
         super.onCreate(savedInstanceState)
     }
 
@@ -63,18 +62,24 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.mapView.map.apply {
-            mapType = MapType.MAP
             move(
-                getDefaultCameraPosition(),
-                Animation(Animation.Type.SMOOTH, ANIMATION_DURATION_SEC),
+                viewModel.lastCameraPosition ?: getDefaultCameraPosition(),
+                Animation(
+                    Animation.Type.SMOOTH,
+                    viewModel.lastCameraPosition.let { if (it != null) 0f else ANIMATION_DURATION_SEC }),
                 null
             )
+            addCameraListener(this@AddPlacesFragment)
         }
         viewModel.visitedAndAllPlaces.observe(viewLifecycleOwner) { places ->
             if (places.first.isNotEmpty() && places.second.isNotEmpty()) {
                 val visitedPlacesPoints: List<Point> = places.second.map { Point(it.latitude, it.longitude) }
                 val placesPoints: List<Point> =
-                    places.first.map { Point(it.latitude, it.longitude) }.filterNot { point -> visitedPlacesPoints.any { point.latitude == it.latitude && point.longitude == it.longitude} }
+                    places.first.map { Point(it.latitude, it.longitude) }.filterNot { point ->
+                        visitedPlacesPoints.any {
+                            point.latitude == it.latitude && point.longitude == it.longitude
+                        }
+                    }
                 val imageProviderDefault = ImageProvider.fromBitmap(getPlaceMarkImage(false))
                 val imageProviderVisited = ImageProvider.fromBitmap(getPlaceMarkImage(true))
                 binding.mapView.map.mapObjects.addClusterizedPlacemarkCollection(this).apply {
@@ -101,6 +106,9 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
     }
 
     override fun onDestroyView() {
+        binding.mapView.map.removeCameraListener(this)
+        binding.mapView.map.mapObjects.removeTapListener(this)
+        viewModel.lastCheckedPlaceMark = null
         _binding = null
         super.onDestroyView()
     }
@@ -122,7 +130,7 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
     }
 
     companion object {
-        private const val ANIMATION_DURATION_SEC = 2f
+        private const val ANIMATION_DURATION_SEC = 1f
         private const val CLUSTER_RADIUS = 60.0
         private const val CLUSTER_MIN_ZOOM = 15
     }
@@ -163,6 +171,10 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
         }
         viewModel.lastCheckedPlaceMark = pmo
         return true
+    }
+
+    override fun onCameraPositionChanged(map: Map, cameraPosition: CameraPosition, cameraUpdateReason: CameraUpdateReason, smth: Boolean) {
+        viewModel.lastCameraPosition = cameraPosition
     }
 
     private fun clearLastSelectedPositionPlaceMarkView(pmo: PlacemarkMapObject) {
