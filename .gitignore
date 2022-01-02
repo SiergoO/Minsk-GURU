@@ -18,3 +18,4 @@ data/build/
 domain/build/
 presentation/build/
 .idea/misc.xml
+.idea/deploymentTargetDropDown.xml

@@ -23,6 +23,7 @@ class AddPlacesViewModel(
 ) : ViewModel() {
 
     var lastCheckedPlaceMark: PlacemarkMapObject? = null
+    var userPlaceMark: PlacemarkMapObject? = null
     var lastCameraPosition: CameraPosition? = null
 
     private val _places = MutableLiveData<List<Place>>()
