@@ -1,4 +1,4 @@
-package com.minsk.guru.screen.home.addplaces
+package com.minsk.guru.screen.home.addplaces.addplaces
 
 import android.Manifest
 import android.graphics.PointF
@@ -11,10 +11,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.minsk.guru.R
 import com.minsk.guru.databinding.FragmentAddPlacesBinding
+import com.minsk.guru.model.toUiModel
 import com.minsk.guru.utils.map.*
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
@@ -38,6 +41,8 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
         private const val MINIMAL_TIME: Long = 500
         private const val MINIMAL_DISTANCE = 20.0
         private const val USE_IN_BACKGROUND = false
+        private const val KEY_PLACE = "place"
+        private const val KEY_IS_VISITED = "isVisited"
     }
 
     private val viewModel: AddPlacesViewModel by viewModel()
@@ -79,6 +84,7 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         requestLocationPermissions()
+        viewModel.renewVisitedPlaces()
         binding.mapView.map.apply {
             move(
                 viewModel.lastCameraPosition ?: getDefaultCameraPosition(),
@@ -223,7 +229,8 @@ class AddPlacesFragment(private val layout: Int = R.layout.fragment_add_places) 
                 }
             }
             if (pmo.userData == "icon") {
-                // Nav to prove visited screen
+                val bundle = bundleOf(KEY_PLACE to selectedPlace?.toUiModel(), KEY_IS_VISITED to isVisited)
+                findNavController().navigate(R.id.action_addPlacesFragment_to_placeDetailsFragment, bundle)
                 pmo.userData = "icon"
             }
         }

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.minsk.guru.screen.home.addplaces.AddPlacesViewModel" />
+            type="com.minsk.guru.screen.home.addplaces.addplaces.AddPlacesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

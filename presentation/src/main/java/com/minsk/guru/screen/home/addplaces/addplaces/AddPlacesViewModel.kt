@@ -1,4 +1,4 @@
-package com.minsk.guru.screen.home.addplaces
+package com.minsk.guru.screen.home.addplaces.addplaces
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -11,12 +11,11 @@ import com.minsk.guru.domain.usecase.places.GetVisitedPlacesUseCase
 import com.minsk.guru.utils.TaskExecutorFactory
 import com.minsk.guru.utils.createTaskExecutor
 import com.minsk.guru.utils.singleResultUseCaseTaskProvider
-import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.PlacemarkMapObject
 
 class AddPlacesViewModel(
-    userIdHolder: UserIdHolder,
+    private val userIdHolder: UserIdHolder,
     private val taskExecutorFactory: TaskExecutorFactory,
     private val getUserPlacesUseCase: GetAllPlacesUseCase,
     private val getVisitedPlacesUseCase: GetVisitedPlacesUseCase
@@ -45,9 +44,10 @@ class AddPlacesViewModel(
 
     init {
         taskGetPlaces.start(GetAllPlacesUseCase.Param)
-        taskGetVisitedPlaces.start(GetVisitedPlacesUseCase.Param(userIdHolder.userId))
         initializeMediatorLiveData()
     }
+
+    fun renewVisitedPlaces() = taskGetVisitedPlaces.start(GetVisitedPlacesUseCase.Param(userIdHolder.userId))
 
     private fun handleError(error: Throwable) {
         _error.value = error

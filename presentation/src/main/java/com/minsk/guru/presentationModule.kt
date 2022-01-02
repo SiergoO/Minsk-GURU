@@ -7,8 +7,10 @@ import com.minsk.guru.screen.auth.signin.SignInFragment
 import com.minsk.guru.screen.auth.signin.SignInViewModel
 import com.minsk.guru.screen.auth.signup.SignUpFragment
 import com.minsk.guru.screen.auth.signup.SignUpViewModel
-import com.minsk.guru.screen.home.addplaces.AddPlacesFragment
-import com.minsk.guru.screen.home.addplaces.AddPlacesViewModel
+import com.minsk.guru.screen.home.addplaces.addplaces.AddPlacesFragment
+import com.minsk.guru.screen.home.addplaces.addplaces.AddPlacesViewModel
+import com.minsk.guru.screen.home.addplaces.placedetails.PlaceDetailsFragment
+import com.minsk.guru.screen.home.addplaces.placedetails.PlaceDetailsViewModel
 import com.minsk.guru.screen.home.places.categories.CategoriesFragment
 import com.minsk.guru.screen.home.places.categories.CategoriesViewModel
 import com.minsk.guru.screen.home.places.places.PlacesFragment
@@ -46,6 +48,9 @@ val presentationModule = module {
 
     fragment { AddPlacesFragment() }
     viewModel { AddPlacesViewModel(get(), get(), get(), get()) }
+
+    fragment { PlaceDetailsFragment() }
+    viewModel { PlaceDetailsViewModel(get(), get(), get(), get(), get()) }
 
     fragment { ProfileFragment() }
     viewModel { ProfileViewModel(get(), get(), get(), get(), get()) }

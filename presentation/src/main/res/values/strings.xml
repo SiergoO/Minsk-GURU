@@ -35,6 +35,11 @@
     <string name="error_default">Unknown error</string>
 
     <!--place details-->
-    <string name="prove_you_ve_been_here">Prove you\'ve been here:</string>
+    <string name="prove_you_ve_been_here_hint">Prove you\'ve been here:</string>
+    <string name="is_visited_hint">Place is visited.\nNo need to prove.</string>
+    <string name="prove_failed_hint">Prove failed!</string>
     <string name="prove_calculation_body">%1$d + %2$d = </string>
+    <string name="empty_opening_hours">No opening hours info</string>
+    <string name="empty_phone">No phone info</string>
+    <string name="empty_url">No url info</string>
 </resources>
